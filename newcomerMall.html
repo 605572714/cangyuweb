@@ -159,8 +159,8 @@
     </div>
     <script src="js/jquery-2.1.4.min.js"></script>
     <script>
-        // const url = 'http://app.icangyu.com/icyApi/'; //线上接口
-        const url = 'http://testicy.icangyu.com/icyApi/'; //测试接口
+        const url = 'http://app.icangyu.com/icyApi/'; //线上接口
+        // const url = 'http://testicy.icangyu.com/icyApi/'; //测试接口
         $.get(url + 'novice_mall_list', function (res) {
             var Winwidth = document.body.clientWidth,
                 Winheight = document.body.clientHeight;
@@ -184,7 +184,7 @@
                         '<div id="goBuy" class="goBuy">立即购买</div>' +
                         '</div >' + '</a>' + '</div>';
                     console.log(progress[i]);
-                    // $('#progress').eq(i).css({
+                    // $('#progress').eq($(this).index()).css({
                     //     "width": progress[i] * 90 + 'px'
                     // })
                 }

@@ -52,12 +52,13 @@
             margin: auto 8%;
             position: relative;
         }
-        .mallList .detailItem{
+
+        .mallList .detailItem {
             padding: 15px 0px;
             border-bottom: 1px solid #D9D9D9;
         }
 
-        .detailItem:last-child{
+        .detailItem:last-child {
             border-bottom: none;
         }
 
@@ -109,7 +110,7 @@
 
         .content .progress p {
             height: 100%;
-            background: #FCF0F0;
+            background: #bc2e2e;
             width: 100%;
         }
 
@@ -168,8 +169,9 @@
                 var list = res.data.list
                 console.log("获取成功", list)
                 var listHTML = [];
+                var progress = [];
                 for (var i = 0; i < list.length; i++) {
-                    console.log(list[i]);
+                    // console.log(list[i]);
                     listHTML += '<div class="detailItem">' + '<img src = "' + list[i].headlines + ' ">' +
                         '<div class = "content" >  <div class = "title" id = "title" > ' + list[i].title +
                         '</div> <div class = "price" >￥' + list[i].price + '<span> ' + '￥' + list[i].old_price +
@@ -180,15 +182,18 @@
                         '<a href="http://a.app.qq.com/o/simple.jsp?pkgname=icangyu.jade" target="_self" rel="nofollow">' +
                         '<div id="goBuy" class="goBuy">立即购买</div>' +
                         '</div >' + '</a>' + '</div>';
-                    progress = list[i].nums / list[i].nums_total
+                    progress[i] = list[i].nums / list[i].nums_total * 90
+                    $('#progress').eq($(this).index()).css({
+                        "width": progress[i] + 'px'
+                    })
+                    console.log($('progress').eq($(this).index()[i]));
                 }
                 $('#listDetail').html(listHTML)
+
                 $('#title').css({
                     "width": Winwidth * 0.84 - 175 + 'px'
                 })
-                $('#progress').css({
-                    "width": progress * 90 + 'px'
-                })
+
             }
             //领取优惠券
             $('#flbtn').click(function coupon() {
