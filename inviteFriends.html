@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>邀请好友享优惠</title>
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+            border: none;
+            background: rgba(248, 232, 207)
+        }
+
+        img {
+            width: 100vw;
+            position: relative;
+        }
+
+        .share {
+            width: 90vw;
+            height: 6.5vh;
+            line-height: 6.5vh;
+            position: relative;
+            left: 5vw;
+            font-family:PingFangSC-Regular;
+            font-weight:400;
+            background:linear-gradient(180deg,rgba(251,84,84,1) 0%,rgba(211,8,31,1) 100%);
+            color: #fff;
+            text-align: center;
+            border-radius: 4vh;
+            margin-top: 15px; 
+            margin-bottom: 30px;
+            font-size: 4vw;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <img src="img/inviteBack.png"> 
+        <div class="share" onclick="share()">立即邀请</div>
+    </div>
+    <script>
+        function share() {
+            console.log('点击分享')
+        }
+    </script>
+</body>
+
+</html>

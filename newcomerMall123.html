@@ -52,15 +52,15 @@
             margin: auto 8%;
             position: relative;
         }
-
-        .mallList .detailItem {
+        .mallList .detailItem{
             padding: 15px 0px;
             border-bottom: 1px solid #D9D9D9;
         }
 
-        .detailItem:last-child {
+        .detailItem:last-child{
             border-bottom: none;
         }
+
 
         .mallList .listDetail img {
             width: 140px;
@@ -168,33 +168,27 @@
                 var list = res.data.list
                 console.log("获取成功", list)
                 var listHTML = [];
-                var progress = [];
                 for (var i = 0; i < list.length; i++) {
                     console.log(list[i]);
-                    progress[i] = list[i].nums / list[i].nums_total * 90
                     listHTML += '<div class="detailItem">' + '<img src = "' + list[i].headlines + ' ">' +
-                        '<div class = "content" >  <div class = "title" id = "title">' + list[i].title +
-                        '</div> <div class = "price" >￥' + list[i].price + '<span>' + '￥' + list[i].old_price +
+                        '<div class = "content" >  <div class = "title" id = "title" > ' + list[i].title +
+                        '</div> <div class = "price" >￥' + list[i].price + '<span> ' + '￥' + list[i].old_price +
                         '</span>' +
                         '</div>' +
-                        '<div class="progress" ><p id="progress" style="width:' + progress[i] + 'px"><span >' +
-                        '仅剩' + list[i].nums + '件' +
+                        '<div class="progress"><p id="progress"><span >' + '仅剩10件' +
                         '</span>' + '</p></div>' +
                         '<a href="http://a.app.qq.com/o/simple.jsp?pkgname=icangyu.jade" target="_self" rel="nofollow">' +
                         '<div id="goBuy" class="goBuy">立即购买</div>' +
                         '</div >' + '</a>' + '</div>';
-                    console.log(progress[i]);
-                    // $('#progress').eq(i).css({
-                    //     "width": progress[i] * 90 + 'px'
-                    // })
+                    progress = list[i].nums / list[i].nums_total
                 }
                 $('#listDetail').html(listHTML)
-                // $('#title').css({
-                //     "width": Winwidth * 0.84 - 175 + 'px'
-                // })
-                // $('#progress').css({
-                //     "width": progress * 90 + 'px'
-                // })
+                $('#title').css({
+                    "width": Winwidth * 0.84 - 175 + 'px'
+                })
+                $('#progress').css({
+                    "width": progress * 90 + 'px'
+                })
             }
             //领取优惠券
             $('#flbtn').click(function coupon() {
