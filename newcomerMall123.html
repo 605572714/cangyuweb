@@ -167,27 +167,44 @@
                 Winheight = document.body.clientHeight;
             if (res.result == 100) {
                 var list = res.data.list
-                console.log("获取成功", list)
+                // console.log("获取成功", list)
                 var listHTML = [];
-                var progress = [];
-                for (var i = 0; i < list.length; i++) {
-                    // console.log(list[i]);
-                    listHTML += '<div class="detailItem">' + '<img src = "' + list[i].headlines + ' ">' +
-                        '<div class = "content" >  <div class = "title" id = "title" > ' + list[i].title +
-                        '</div> <div class = "price" >￥' + list[i].price + '<span> ' + '￥' + list[i].old_price +
+                var progress = '';
+                // for (var i = 0; i < list.length; i++) {
+                //     // console.log(list[i]);
+                //     listHTML += '<div class="detailItem">' + '<img src = "' + list[i].headlines + ' ">' +
+                //         '<div class = "content" >  <div class = "title" id = "title" > ' + list[i].title +
+                //         '</div> <div class = "price" >￥' + list[i].price + '<span> ' + '￥' + list[i].old_price +
+                //         '</span>' +
+                //         '</div>' +
+                //         '<div class="progress"><p id="progress"><span >' + '仅剩10件' +
+                //         '</span>' + '</p></div>' +
+                //         '<a href="http://a.app.qq.com/o/simple.jsp?pkgname=icangyu.jade" target="_self" rel="nofollow">' +
+                //         '<div id="goBuy" class="goBuy">立即购买</div>' +
+                //         '</div >' + '</a>' + '</div>';
+                //     progress[i] = list[i].nums / list[i].nums_total * 90
+                //     $('#progress').eq($(this).index()).css({
+                //         "width": progress[i] + 'px'
+                //     })
+                //     console.log($('progress').eq($(this).index()[i]));
+                // }
+                $.each(list, function (index, obj) {
+                    // console.log(index, obj);
+                    listHTML += '<div class="detailItem">' + '<img src = "' + obj.headlines + ' ">' +
+                        '<div class = "content" >  <div class = "title" id = "title" > ' + obj.title +
+                        '</div> <div class = "price" >￥' + obj.price + '<span> ' + '￥' + obj.old_price +
                         '</span>' +
                         '</div>' +
-                        '<div class="progress"><p id="progress"><span >' + '仅剩10件' +
+                        '<div class="progress"><p id="progress"><span >' + '仅剩' + obj.nums + '件' +
                         '</span>' + '</p></div>' +
                         '<a href="http://a.app.qq.com/o/simple.jsp?pkgname=icangyu.jade" target="_self" rel="nofollow">' +
                         '<div id="goBuy" class="goBuy">立即购买</div>' +
                         '</div >' + '</a>' + '</div>';
-                    progress[i] = list[i].nums / list[i].nums_total * 90
+                    progress = obj.nums / obj.nums_total * 90
                     $('#progress').eq($(this).index()).css({
-                        "width": progress[i] + 'px'
+                        'width': progress + 'px'
                     })
-                    console.log($('progress').eq($(this).index()[i]));
-                }
+                })
                 $('#listDetail').html(listHTML)
 
                 $('#title').css({

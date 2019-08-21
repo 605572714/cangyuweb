@@ -11,7 +11,7 @@
             padding: 0px;
             margin: 0px;
             border: none;
-            background: rgba(248, 232, 207)
+            background: #f0e6c8;
         }
 
         img {
@@ -20,32 +20,30 @@
         }
 
         .share {
-            width: 90vw;
-            height: 6.5vh;
-            line-height: 6.5vh;
+            width: 94vw;
+            padding: 2vw 0px;
             position: relative;
-            left: 5vw;
+            left: 3vw;
             font-family:PingFangSC-Regular;
             font-weight:400;
             background:linear-gradient(180deg,rgba(251,84,84,1) 0%,rgba(211,8,31,1) 100%);
             color: #fff;
             text-align: center;
             border-radius: 4vh;
-            margin-top: 15px; 
-            margin-bottom: 30px;
-            font-size: 4vw;
+            font-size: 5vw;
+            letter-spacing: 1px;
         }
     </style>
 </head>
 
 <body>
     <div>
-        <img src="img/inviteBack.png"> 
+        <img src="img/invite.png"> 
         <div class="share" onclick="share()">立即邀请</div>
     </div>
     <script>
         function share() {
-            console.log('点击分享')
+            alert('inviteShare')
         }
     </script>
 </body>
