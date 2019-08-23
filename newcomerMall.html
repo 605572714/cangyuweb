@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="js/config.js"></script>
     <title>新人专享礼包</title>
     <style>
         * {
@@ -13,8 +14,8 @@
             font-size: 16px;
         }
 
-        a {
-            text-decoration: none
+        body {
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
         }
 
         .topImg {
@@ -27,14 +28,15 @@
         }
 
         #flbtn {
-            width: 89%;
+            width: 90%;
             margin-left: 5%;
-            height: 60px;
+            height: 14vw;
             background: #E17C7C;
             position: absolute;
-            bottom: 40px;
+            bottom: 7.5vw;
             opacity: 0;
         }
+
 
         .mallList {
             text-align: center;
@@ -48,14 +50,15 @@
         }
 
         .mallList .listDetail {
-            width: 84%;
-            margin: auto 8%;
+            width: 92%;
+            margin: 0px 4%;
             position: relative;
         }
 
         .mallList .detailItem {
             padding: 15px 0px;
-            border-bottom: 1px solid #D9D9D9;
+            border-bottom: 0.5px solid #D9D9D9;
+            overflow: hidden;
         }
 
         .detailItem:last-child {
@@ -65,7 +68,8 @@
         .mallList .listDetail img {
             width: 140px;
             height: 140px;
-            background: #F4F4F4;
+            background: url(img/background.jpg) center no-repeat;
+            background-size: auto 100%;
             position: relative;
             float: left;
             margin-right: 10px;
@@ -80,10 +84,8 @@
         }
 
         .content .title {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
             text-align: left;
+            font-size: 14px;
         }
 
         .content .price {
@@ -125,7 +127,7 @@
 
         .content .goBuy {
             color: #fff;
-            padding: 7px 15px;
+            padding: 5px 10px;
             background: #bc2e2e;
             font-size: 12px;
         }
@@ -134,67 +136,57 @@
 
 <body>
     <div class="topImg">
-        <a href="http://a.app.qq.com/o/simple.jsp?pkgname=icangyu.jade" target="_self" rel="nofollow">
+        <!-- <a href="http://a.app.qq.com/o/simple.jsp?pkgname=icangyu.jade" target="_self" rel="nofollow">
             <div id="flbtn"></div>
-        </a>
-        <img src="img/coupon1.png" alt="">
+        </a> -->
+        <img src="img/coupon0.png" alt="">
     </div>
     <div class="mallList">
         <h1>新人专享价</h1>
-        <div class="listDetail" id='listDetail'>
-            <!-- <div class="detailItem">
-                <img src="" alt="">
-                <div class="content">
-                    <div class="title">花花花</div>
-                    <div class="price">13333<span>4444</span></div>
-                    <div class="progress">
-                        <p id="progress"><span>仅剩10件</span></p>
-                    </div>
-                    <a href="">
-                        <div class="goBuy" id="goBuy">立即购买</div>
-                    </a>
-                </div>
-            </div> -->
-        </div>
+        <div class="listDetail" id='listDetail'></div>
     </div>
     <script src="js/jquery-2.1.4.min.js"></script>
     <script>
+        const _from = HttpHelper.getQuery('from'); //获取user_id
         const url = 'http://app.icangyu.com/icyApi/'; //线上接口
         // const url = 'http://testicy.icangyu.com/icyApi/'; //测试接口
+        console.log(window.navigator.userAgent);
+        
+        function godetail(id) {
+            if (_from) {
+                alert('novice_item_id=' + id)
+                // $('h1').text(window.navigator.userAgent)
+            } else {
+                window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=icangyu.jade"
+                // $('h1').text(window.navigator.userAgent)
+            }
+        }
         $.get(url + 'novice_mall_list', function (res) {
             var Winwidth = document.body.clientWidth,
                 Winheight = document.body.clientHeight;
             if (res.result == 100) {
                 var list = res.data.list
-                console.log("获取成功", list)
+                console.log("获取成功", list, "_from", _from)
                 var listHTML = [];
                 var progress = [];
                 for (var i = 0; i < list.length; i++) {
-                    console.log(list[i]);
                     progress[i] = list[i].nums / list[i].nums_total * 90
-                    listHTML += '<div class="detailItem">' + '<img src = "' + list[i].headlines + ' ">' +
+                    listHTML +=
+                        '<div class="detailItem">' +
+                        '<a onclick="godetail(' + list[i].id + ')"  target="_self" rel="nofollow">' +
+                        '<img src = "' + list[i].headlines + ' ">' +
                         '<div class = "content" >  <div class = "title" id = "title">' + list[i].title +
                         '</div> <div class = "price" >￥' + list[i].price + '<span>' + '￥' + list[i].old_price +
-                        '</span>' + 
+                        '</span>' +
                         '</div>' +
                         '<div class="progress" ><p id="progress" style="width:' + progress[i] + 'px"><span >' +
                         '仅剩' + list[i].nums + '件' +
                         '</span>' + '</p></div>' +
-                        '<a href="http://a.app.qq.com/o/simple.jsp?pkgname=icangyu.jade" target="_self" rel="nofollow">' +
                         '<div id="goBuy" class="goBuy">立即购买</div>' +
                         '</div >' + '</a>' + '</div>';
-                    console.log(progress[i]);
-                    // $('#progress').eq($(this).index()).css({
-                    //     "width": progress[i] * 90 + 'px'
-                    // })
+                    // console.log(progress[i]);
                 }
                 $('#listDetail').html(listHTML)
-                // $('#title').css({
-                //     "width": Winwidth * 0.84 - 175 + 'px'
-                // })
-                // $('#progress').css({
-                //     "width": progress * 90 + 'px'
-                // })
             }
             //领取优惠券
             $('#flbtn').click(function coupon() {
