@@ -1,0 +1,21 @@
+.header {
+    width: 100%;
+}
+
+.header_video {
+    width: 100%;
+}
+
+.header_title {
+    font-size: 18px;
+    margin-top: 15px;
+    margin-left: 0.5rem;
+    color: #333;
+}
+
+.header_price {
+    font-size: 20px;
+    margin-top: 15px;
+    margin-left: 0.5rem;
+    color: #bc2e2e;
+}

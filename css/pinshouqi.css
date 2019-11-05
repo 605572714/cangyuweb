@@ -1,0 +1,77 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.header_img {
+    display: block;
+}
+
+.content {
+    width: 100%;
+    background: linear-gradient(165deg, rgba(255, 236, 227, 1) 0%, rgba(255, 212, 193, 1) 100%);
+    height: 100%;
+}
+
+.detail {
+    display: flex;
+    flex-direction: row;
+    background: #fff;
+    position: relative;
+}
+
+.detail_img {
+    height: 100%;
+}
+
+.detail_right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    position: relative;
+    padding-left: 15px;
+}
+
+
+.detail_right .price {
+    font-size: 18px;
+    color: #B4282D;
+}
+
+.detail_right .goDetail{
+    width: 80px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 13px;
+    color: #fff;
+    background: #BC2E2E;
+    border-radius: 2px;
+}
+
+.contain {
+    width: 90px;
+    height: 15px;
+    border: 1px solid #f0c16f;
+    border-radius: 15px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.contain .progress {
+    background: rgba(251, 200, 112, 0.24);
+    position: relative;
+    width: 90px;
+    height: 15px;
+}
+
+.contain .progress span {
+    position: absolute;
+    width: 90px;
+    height: 15px;
+    text-align: center;
+    line-height: 15px;
+    font-size: 12px;
+    opacity: 1;
+    color: #bd892f;
+}

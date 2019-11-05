@@ -137,9 +137,9 @@
 <body>
     <div class="topImg">
         <!-- <a href="http://a.app.qq.com/o/simple.jsp?pkgname=icangyu.jade" target="_self" rel="nofollow">
-            <div id="flbtn"></div>
+            <div id="flbtn">立即领取</div>
         </a> -->
-        <img src="img/coupon0.png" alt="">
+        <img src="img/coupon4.png" alt="">
     </div>
     <div class="mallList">
         <h1>新人专享价</h1>
@@ -150,12 +150,11 @@
         const _from = HttpHelper.getQuery('from'); //获取user_id
         const url = 'http://app.icangyu.com/icyApi/'; //线上接口
         // const url = 'http://testicy.icangyu.com/icyApi/'; //测试接口
-        console.log(window.navigator.userAgent);
-        
         function godetail(id) {
-            if (_from) {
+            if (_from === 'Jade') {
                 alert('novice_item_id=' + id)
                 // $('h1').text(window.navigator.userAgent)
+
             } else {
                 window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=icangyu.jade"
                 // $('h1').text(window.navigator.userAgent)

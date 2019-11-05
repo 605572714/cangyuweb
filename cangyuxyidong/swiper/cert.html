@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>证书详情</title>
+    <link rel="stylesheet" href="css/my-app.css">
+    <!-- Path to jquary Library JS-->
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="js/template-native.js"></script>
+    <!-- Path to Framework7 Library JS-->
+    <script type="text/javascript" src="dist/js/framework7.min.js"></script>
+    <!-- Banner-->
+    <link rel="stylesheet" href="swiper/swiper.min.css">
+    <script type="text/javascript" src="swiper/swiper.min.js"></script>
+
+
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* 轮播图 */
+        .swiper-container {
+            width: 100%;
+            height: 232px;
+        }
+
+        .swiper-slide {
+            width: 100%;
+            height: 232px;
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+
+
+        .swiper-slide .img-dv,
+        .swiper-slide .img-dv a,
+        .swiper-slide .img-dv a img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .top {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            align-items: center;
+            margin-top: 22px;
+        }
+
+        .top .hr {
+            width: 2em;
+            margin-top: 7px;
+            height: 1px;
+            background: #e9e9e9;
+            border: none;
+            margin-bottom: 13px;
+        }
+
+        .container .line {
+            height: 13px;
+            border: none;
+            width: 100%;
+            background: #f7f7f7;
+        }
+
+        .detail {
+            width: 80%;
+            margin-left: 10%;
+        }
+
+        .detail tbody tr {
+            height: 40px;
+        }
+
+        .detail table {
+            width: 100%;
+        }
+
+        .detail thead tr {
+            text-align: left;
+            height: 45px;
+        }
+
+
+        .detail tbody tr td {
+            border-top: 1px dashed #dcdde3;
+        }
+
+        .detail tbody tr td:first-child {
+            color: #b2b2b2;
+            width: 100px;
+        }
+
+        .author {
+            display: flex;
+            flex-direction: column;
+            margin: 15px;
+            align-items: center;
+        }
+
+        .author .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #666;
+            margin-top: 15px;
+            border: none;
+        }
+
+        .author .avatar::after {
+            display: none;
+        }
+
+        .author .name {
+            margin-top: 7px;
+        }
+
+        .author .content {
+            color: #b2b2b2;
+            margin-top: 11px;
+        }
+
+        .author .img-dv img {
+            background: #f5f4f4;
+            margin-top: 12px;
+            position: relative;
+        }
+
+        /* .author img:after {
+            content: attr(time);
+            position: absolute;
+            text-align: center;
+            width: 82px;
+            height: 19px;
+            background: rgba(255, 255, 255, 1);
+            border-radius: 2px;
+            bottom: 9px;
+            right: 11px;
+        } */
+
+        /* 图片放大 */
+        .clearfix::before,
+        .clearfix::after {
+            display: block;
+            content: '';
+            visibility: hidden;
+            height: 100%;
+            clear: both;
+        }
+
+        body {
+            padding-top: 2%;
+        }
+
+        .my-gallery {
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .my-gallery .img-dv {
+            width: 100%;
+        }
+
+        .my-gallery .img-dv a {
+            display: block;
+            width: 100%;
+            text-align: center
+        }
+
+        .my-gallery .img-dv a img {
+            width: 100%;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="views">
+
+        <!-- Content-->
+        <div class="container">
+            <div class="buy_mess_div"></div>
+            <div class="default_page_div"></div>
+        </div>
+
+
+        <!-- Bottom Tabbar-->
+        <div class="cangyu_bbs_tabber">
+            <a href="javascript:void(0)" class="close"></a>
+            <a href="http://a.app.qq.com/o/simple.jsp?pkgname=icangyu.jade" target="_self" class="download"
+                rel="nofollow">
+                <div class="logo"></div>
+                <div class="banner-label">
+                    <p class="tb" data-node="appName">下载APP</p>
+                    <p class="title-sub">参与藏玉互动</p>
+                </div>
+                <div class="open">立即打开</div>
+            </a>
+        </div>
+
+    </div>
+
+    <script type="text/javascript" src="js/config.js"></script>
+
+    <script>
+        $(".close").click(function () {
+            $(".cangyu_bbs_tabber").hide();
+        });
+    </script>
+
+
+    <script type="text/html" id="default_page">
+        <div>
+    12323333
+        </div>
+
+    </script>
+
+    <script type="text/html" id="buy_mess">
+
+
+        <!-- 顶部轮播图 -->
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <%for(var k = 0; k < data.carousel.length; k ++){%>
+            <figure class="swiper-slide">
+                <div class="img-dv"><a href="<%=data.carousel[k].file_path%>" data-size="1920x1080"><img
+                            src="<%=data.carousel[k].file_path%>"></a></div>
+            </figure>
+            <%}%>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>    
+    </div>
+
+        <!-- 标题 -->
+        <div class="top">
+            <div>商品详情</div>
+            <div class="hr"></div>
+        </div>
+        <div class="line"></div>
+        <!-- 商品参数 -->
+        <div class="detail">
+            <table border="0" cellpadding="0" cellspacing="0">
+                <thead>
+                    <tr>
+                        <td colspan=2>
+                            商品参数
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <%for(var i = 0; i < data.attributes.length; i ++){%>
+            <tr>
+                <td><%=data.attributes[i].title%></td>
+                <td><%=data.attributes[i].value%></td>
+            </tr>
+            <%}%>
+
+                </tbody>
+            </table>
+            <div class="line"></div>
+        </div>
+
+
+        <!-- 作者信息 -->
+        <div class="author">
+            <div class="detail">作者简介</div>
+            <img class="avatar" src="<%=data.author.avatar%>">
+            <div class="name"><%=data.author.name%></div>
+            <div class="content"><%=data.author.content%></div>
+        </div>
+        <div class="line"></div>
+
+
+        <!-- 制作过程 -->
+        <div class="author">
+            <div class="detail">制作过程</div>
+            <div class="my-gallery" data-pswp-uid="2">
+
+                <%for(var k = 0; k < data.album.length; k ++){%>
+
+                <figure>
+                    <div class="img-dv"><a href="<%=data.album[k].file_path%>"> <img src="<%=data.album[k].file_path%>"
+                                time="2017.06.06"></a>
+                    </div>
+                </figure>
+
+                <%}%>
+
+            </div>
+
+        </div>
+    </script>
+
+    <script>
+        var square_id = HttpHelper.getQuery('item_id');
+        //证书详情
+        // $.getJSON(`${CYHOST}/icyApi/share_sale?id=${square_id}`, function (data) {
+        $.getJSON(`http://testicy.icangyu.com/icyApi/certificateDetails?id=${square_id}`, function (data) {
+
+            console.log(data);
+            if (data.result == 100) {
+                var html = template('buy_mess', data);
+                $('.buy_mess_div').html(html);
+            } else {
+                var html = template('default_page', data);
+                $('.default_page_div').html(html);
+            }
+        })
+        // 轮播图
+        var swiper = new Swiper('.swiper-container', {
+            pagination: '.swiper-pagination',
+            paginationClickable: true,
+            loop: true
+        });
+    </script>
+
+
+</body>
+</html>
