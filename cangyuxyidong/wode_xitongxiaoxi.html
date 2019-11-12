@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <title>藏玉</title>
+  <!-- Path to Framework7 Library CSS-->
+  <link rel="stylesheet" href="dist/css/framework7-icons.css">
+  <link rel="stylesheet" href="dist/css/framework7.ios.min.css">
+  <link rel="stylesheet" href="css/my-app.css">
+</head>
+
+<body>
+  <!-- Status bar overlay for fullscreen mode-->
+  <div class="statusbar-overlay"></div>
+  <!-- Panels overlay-->
+  <div class="panel-overlay"></div>
+  <!--弹出发布页面-->
+  <div class="popup popup-fabu">
+    <div class="fabu_btn_list">
+      <a class="qiujianding_btn"></a>
+      <a class="fatiezi_btn"></a>
+      <a class="woxiangmai_btn"></a>
+    </div>
+    <p class="popup_fabu_guanbi"><a href="#" class="close-popup"><i class="f7-icons">close</i></a></p>
+  </div>
+  <!-- Views, and they are tabs-->
+  <!-- We need to set "toolbar-through" class on it to keep space for our tab bar-->
+  <div class="views">
+
+    <div class="pages navbar-through ">
+      <div data-page="jianding_xiangqing" class="page">
+
+        <div class="navbar cangyu_bbs_top_tabber">
+          <div class="navbar-inner">
+            <div class="left with-animation">
+              <a href="index.html#view-4" class="back link"> <i class="icon icon-back"></i></a>
+            </div>
+            <div class="center ">系统消息</div>
+            <div class="right cangyu_bbs_tanchu_pinglun_btn_fabu">
+              <!--<a href="#">保存</a>--></div>
+          </div>
+        </div>
+
+        <div class="page-content">
+          <div class="list-block cangyu_bbs_index">
+            <div class="list-group ">
+              <ul>
+                <li>
+                  <a href="wode_xitongxiaoxi_list.html?id=1" class="item-link item-content">
+                    <div class="item-media"><i class="cangyu_bbs_yanxuan_tongzhi"></i></div>
+                    <div class="item-inner">
+                      <div class="item-title">“严选”入选通知</div>
+                      <!--<div class="item-after"><span class="badge">5</span></div>-->
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="wode_xitongxiaoxi_list.html?id=2" class="item-link item-content">
+                    <div class="item-media"><i class="cangyu_bbs_fukuan_tongzhi"></i></div>
+                    <div class="item-inner">
+                      <div class="item-title">买家付款通知</div>
+                      <!--<div class="item-after"><span class="badge">5</span></div>-->
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="list-group ">
+              <ul>
+                <li>
+                  <a class="item-link item-content" href="wode_xitongxiaoxi_list.html?id=3">
+                    <div class="item-media"><i class="cangyu_bbs_xinxi_tongzhi"></i></div>
+                    <div class="item-inner">
+                      <div class="item-title">系统通用推送消息</div>
+                      <!--<div class="item-after"><span class="badge red">5</span></div>-->
+                    </div>
+                  </a>
+                </li>
+
+              </ul>
+            </div>
+          </div>
+
+          <div class="popup popup-system-notify">
+            <div class="content-block">
+              <p>
+                <a href="#" class="close-popup">返回</a>
+                <span>系统消息</span>
+              </p>
+                           
+              <div>
+                list
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- Path to Framework7 Library JS-->
+  <script type="text/javascript" src="dist/js/framework7.min.js"></script>
+  <!-- Path to your app js-->
+  <script type="text/javascript">
+    var myApp = new Framework7({
+        router: false,
+        swipePanel: 'left'
+    });
+
+    // Export selectors engine
+    var $$ = Dom7;
+
+    $$('#system_notify').on('click', function(){
+      return true;
+    });
+  </script>
+
+</body>
+
+</html>

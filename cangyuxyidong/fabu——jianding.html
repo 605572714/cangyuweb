@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>藏玉</title>
+    <!-- Path to Framework7 Library CSS-->
+    <link rel="stylesheet" href="dist/css/framework7-icons.css">
+    <link rel="stylesheet" href="dist/css/framework7.ios.min.css">
+    <!--<link rel="stylesheet" href="dist/css/framework7.material.min.css">-->
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="css/my-app.css">
+
+  </head>
+
+  <body>
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar-overlay"></div>
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+    <!--弹出发布页面-->
+    <div class="popup popup-fabu">
+   
+        <div class="fabu_btn_list">
+
+            <a class="qiujianding_btn"></a>
+      		<a class="fatiezi_btn"></a>
+      		<a class="woxiangmai_btn"></a>
+      	
+      </div>
+      <p class="popup_fabu_guanbi"><a class="close-popup"><i class="f7-icons">close</i></a></p>
+
+    </div>
+
+    <!-- Views, and they are tabs-->
+    <!-- We need to set "toolbar-through" class on it to keep space for our tab bar-->
+    <div class="views" id="zhangyan_list">
+
+        <div class="pages navbar-through ">
+            <div data-page="jianding_xiangqing" class="page bg_baidi">
+   
+                <div class="navbar cangyu_bbs_top_tabber">
+                    <div class="navbar-inner">
+                        <div class="left with-animation"><a href="javascript:;" onclick="goBack()" class="back link"> <i class="icon icon-back"></i></a></div>
+                        <div class="center">发布鉴定</div>
+                        <div class="right cangyu_bbs_tanchu_pinglun_btn_fabu"><a href="javascript:;" onclick="publish()">发布</a></div>
+                    </div>
+                </div>
+
+                <div class="page-content">
+                    <div class="list-block cangyu_bbs_fabuj_ianding">
+                        <ul>
+
+                            <li class="align-top">
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-input">
+                                            <textarea id="ideaMessage" placeholder="这一刻你的想法"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                    <div class="weui-uploader__bd" onchange="select(this)">
+                        <div class="weui-uploader__input-box">
+                            <input id="uploaderInput" class="weui-uploader__input" type="file" accept="image/*" multiple>
+                        </div>
+                    </div>
+
+                    <div id="imagesContainer" class="upload-container">
+                        <!--<img class="upload-img" src="img/hhhh.jpg" alt="" width="31%" height="100px" />
+                        <img class="upload-img" src="img/005EgInIjw8fai0zeiuqej30hs0hudgh.jpg" alt="" width="31%" height="100px" />
+                        <img class="upload-img" src="img/hhhh.jpg" alt="" width="31%" height="100px" />
+                        <img class="upload-img" src="img/005EgInIjw8fai0zeiuqej30hs0hudgh.jpg" alt="" width="31%" height="100px" />
+                        <img class="upload-img" src="img/hhhh.jpg" alt="" width="31%" height="100px" />-->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+         <!-- Bottom Tabbar-->
+        <div class="toolbar tabbar tabbar-labels cangyu_bbs_tabber_maimai cangyu_bbs_zhuanti_bg">
+            <div class="toolbar-inner">
+
+                <!--<div class="item-input">
+   <input type="text" placeholder="请输入你的评论">
+  </div><a>发送</a>-->
+
+                <a class="link" data-popup=".popup-yaoqing" class="open-popup" onclick="showYaoQingList()">
+                    <div class="cangyu_bbs_btn_yaoqing"><i class="cangyu_bbs_tabber_maimai_zy"></i>邀请掌眼</div>
+                </a>
+                <a class="link" v-for="item in zhangyanren">
+                    <div class="cangyu_bbs_beiyaoqing">
+                        <b>{{ item.nickname }}</b>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="popup popup-yaoqing">
+            <p class="jianding-button"><a class="close-popup">确定</a></p>
+            <div class="list-block jianding-popup">
+                <ul>
+                    <li v-for="item in list">
+                        <a href="#" class="item-link item-content">
+                            <div class="item-media">
+                                <!--<i class="icon icon-f7"></i>-->
+                                <img v-bind:src="item.avatar | alb" alt="" height="50" width="50" />
+                            </div>
+                            <div class="item-inner jianding-hide-link">
+                                <div class="item-title">{{ item.nickname }}</div>
+                                <div class="item-after" v-on:click="addZhangYanRen(item)">邀请</div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    <!-- Path to Framework7 Library JS-->
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="dist/js/framework7.min.js"></script>
+    <script type="text/javascript" src="js/vue/vue.min.js"></script>
+    <script type="text/javascript" src="js/vue-resource/vue-resource.js"></script>
+    <script type="text/javascript" src="js/vue-filter.js"></script>
+    <script type="text/javascript" src="js/config.js"></script>
+    <script>
+        function goBack(){
+            window.history.back();
+        }
+
+        function showYaoQingList(){
+            publishApp.popup('.popup-yaoqing');
+        }
+
+        var diandingVue = new Vue({
+            data: {
+                list: [],
+                zhangyanren: []
+            },
+
+            methods: {
+                addZhangYanRen: function(item){
+                    if(!this.isExistId(item)){
+                        this.$data.zhangyanren.push(item);
+                    }
+                },
+                isExistId: function(newItem){
+                    for(let item of this.$data.zhangyanren){
+                        if(item.id === newItem.id){
+                            return true;
+                        }
+                    }
+
+                    return false;
+                }
+            },
+
+            mounted: function(){
+                let self = this;
+                self.$http.get(`${CYHOST}/icy/palm_list`)
+                    .then(response => {
+                        console.log(response);
+                        if(response.body.result === 100 && response.body.data.list){
+                            for(let item of response.body.data.list){
+                                self.$data.list.push(item);
+                            }
+                        }
+                    }, response => {
+                        console.log(response);
+                    });
+            }
+        });
+
+        diandingVue.$mount('#zhangyan_list');
+
+        let imageContainer = document.querySelector('#imagesContainer');
+        let formData = new FormData();
+        let imageIndex = 0;
+        function select(self){
+            let files = document.querySelector('#uploaderInput').files;
+            if(!files || files.length === 0) return;
+
+            for(let i = 0; i < files.length; i++){
+                let f = files[i];
+                let formKey = `photo${imageIndex}`;
+                formData.append(formKey, f);
+                imageIndex = imageIndex + 1;
+
+                let reader = new FileReader();
+                reader.onload = function(progressEvent){
+                    // console.log(progressEvent);
+                    let obj = progressEvent.target;
+                    if(obj.readyState === 2){
+                        let element = document.createElement('img');
+                        element.setAttribute('class', 'upload-img');
+                        element.setAttribute('src', obj.result);
+                        element.setAttribute('width', '31%');
+                        element.setAttribute('height', '100px');
+
+                        imageContainer.appendChild(element);
+                    }
+                };
+                reader.readAsDataURL(f);
+            }
+        }
+
+        function publish(){
+            let ideaMessage = document.querySelector('#ideaMessage').value;
+            if(!ideaMessage){
+                publishApp.alert('发布消息不能为空', '提示');
+                return;
+            }
+            if(imageIndex < 3){
+                publishApp.alert('最少选择 4 张图片', '提示');
+                return;
+            }
+
+            let palmer = [];
+            for(let item of diandingVue.$data.zhangyanren){
+                palmer.push(item.id);
+            }
+
+            formData.append('token', token);
+            formData.append('content', ideaMessage);
+            formData.append('type', 2);
+            formData.append('palmer', palmer.join(','));
+            jQuery.ajax({
+                url: `${CYHOST}/icy/square_add`,
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                type: 'POST',
+                success: function(data){
+                    var obj = JSON.parse(data);
+                    if(obj.result === 100){
+                        publishApp.alert('发布成功', '提示');
+                        
+                        //清空信息
+                        $('#imagesContainer').html('');
+                        $('#ideaMessage').val('');
+                    } else {
+                        publishApp.alert(obj.info, '提示');
+                    }
+                    console.log(obj);
+                }
+            });
+        }
+
+        // Initialize your app
+        var publishApp = new Framework7({
+            router: false,
+            swipePanel: 'left'
+        });
+
+    </script>
+  </body>
+</html>

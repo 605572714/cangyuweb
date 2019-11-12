@@ -1,0 +1,10 @@
+.leson_tab {
+    padding: 15px;
+    background: #fff;
+    zoom: 1;
+    overflow: hidden;
+    padding-bottom: 0px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+}

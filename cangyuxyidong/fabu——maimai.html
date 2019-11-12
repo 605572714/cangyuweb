@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>藏玉</title>
+    <!-- Path to Framework7 Library CSS-->
+    <link rel="stylesheet" href="dist/css/framework7-icons.css">
+    <link rel="stylesheet" href="dist/css/framework7.ios.min.css">
+    <!--<link rel="stylesheet" href="dist/css/framework7.material.min.css">-->
+    
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="css/my-app.css">
+
+  </head>
+
+  <body>
+    <!-- Status bar overlay for fullscreen mode-->
+
+    <div class="statusbar-overlay"></div>
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+    <!--弹出发布页面-->
+
+    <div class="popup popup-fabu">
+
+      <div class="fabu_btn_list">
+      		<a class="qiujianding_btn"></a>
+      		<a class="fatiezi_btn"></a>
+      		<a class="woxiangmai_btn"></a>
+      </div>
+
+      <p class="popup_fabu_guanbi"><a class="close-popup"><i class="f7-icons">close</i></a></p>
+     
+    </div>
+
+    <!-- Views, and they are tabs-->
+    <!-- We need to set "toolbar-through" class on it to keep space for our tab bar-->
+    <div class="views">
+
+        <div class="pages navbar-through ">
+            <div data-page="jianding_xiangqing" class="page">
+               <!--导航栏-->
+                <div class="navbar cangyu_bbs_top_tabber">
+                    <div class="navbar-inner">
+                        <div class="left with-animation"><a href="javascript:;" onclick="goBack()" class="back link"> <i class="icon icon-back"></i></a></div>
+                        <div class="center ">发布买卖</div>
+                        <div class="right cangyu_bbs_tanchu_pinglun_btn_fabu"><a href="javascript:;" onclick="publish()">发布</a></div>
+                    </div>
+                </div>
+                <!--内容-->
+                <div class="page-content">
+                    <div class="list-block cangyu_bbs_fabuj_ianding bg_baidi clear_bottom10">
+
+                        <ul>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-input">
+                                            <input id="productName" type="text" placeholder="商品名称" name="name">
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+   
+                            <li class="align-top">
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-input">
+                                            <textarea id="ideaMessage" placeholder="详细描述一下宝贝吧" ></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <div class="weui-uploader__bd" onchange="select(this)">
+                            <div class="weui-uploader__input-box">
+                                <input id="uploaderInput" class="weui-uploader__input" type="file" accept="image/*" multiple>
+                            </div>
+                        </div>
+
+                        <div id="imagesContainer" class="upload-container">
+                            <!--<img class="upload-img" src="img/hhhh.jpg" alt="" width="31%" height="100px" />
+                            <img class="upload-img" src="img/005EgInIjw8fai0zeiuqej30hs0hudgh.jpg" alt="" width="31%" height="100px" />
+                            <img class="upload-img" src="img/hhhh.jpg" alt="" width="31%" height="100px" />
+                            <img class="upload-img" src="img/005EgInIjw8fai0zeiuqej30hs0hudgh.jpg" alt="" width="31%" height="100px" />
+                            <img class="upload-img" src="img/hhhh.jpg" alt="" width="31%" height="100px" />-->
+                        </div>
+
+                    </div>
+   
+  
+                    <div class="list-block cangyu_bbs_fabu_maimai">
+
+                        <ul>
+                            <li>
+                                <a href="#" class="item-link item-content" data-key="material" data-popup=".popup-material" class="open-popup">
+                                    <div class="item-inner">
+                                        <div class="item-title">材质</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" class="item-link item-content" data-key="white" data-popup=".popup-white" class="open-popup">
+                                    <div class="item-inner">
+                                        <div class="item-title">白度</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" class="item-link item-content" data-key="fineness" data-popup=".popup-fineness" class="open-popup">
+                                    <div class="item-inner">
+                                        <div class="item-title">细度</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" class="item-link item-content" data-key="run" data-popup=".popup-run" class="open-popup">
+                                    <div class="item-inner">
+                                        <div class="item-title">润度</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" class="item-link item-content" data-key="weight" data-popup=".popup-weight" class="open-popup">
+                                    <div class="item-inner">
+                                        <div class="item-title">重量</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" class="item-link item-content" data-key="price" data-popup=".popup-price" class="open-popup">
+                                    <div class="item-inner">
+                                        <div class="item-title">心理价位</div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+ 
+                    </div>
+
+                    <!-- material Popup -->
+                    <div class="popup popup-material">
+                        <div class="content-block">
+                            <p class="jianding-button"><a class="close-popup">确定</a></p>
+                            <div class="list-block jianding-popup">
+                                <ul>
+                                    <li>
+                                        <label class="label-radio item-content" onclick="setMaterial('籽料')">
+                                            <input type="radio" name="material-radio" value="籽料" checked="checked">
+                                            <div class="item-inner">
+                                            <div class="item-title">籽料</div>
+                                            </div>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="label-radio item-content" onclick="setMaterial('山流水')">
+                                            <input type="radio" name="material-radio" value="山流水">
+                                            <div class="item-inner">
+                                            <div class="item-title">山流水</div>
+                                            </div>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="label-radio item-content" onclick="setMaterial('山料')">
+                                            <input type="radio" name="material-radio" value="山料">
+                                            <div class="item-inner">
+                                            <div class="item-title">山料</div>
+                                            </div>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="label-radio item-content" onclick="setMaterial('戈壁料')">
+                                            <input type="radio" name="material-radio" value="戈壁料">
+                                            <div class="item-inner">
+                                            <div class="item-title">戈壁料</div>
+                                            </div>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="label-radio item-content" onclick="setMaterial('其它')">
+                                            <input type="radio" name="material-radio" value="其它">
+                                            <div class="item-inner">
+                                            <div class="item-title">其它</div>
+                                            </div>
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div> 
+                        </div>
+                    </div>
+
+                    <!-- white Popup -->
+                    <div class="popup popup-white">
+                        <div class="content-block">
+                            <p class="jianding-button"><a class="close-popup">确定</a></p>
+                            <div class="list-block jianding-popup">
+                                <ul>
+                                    <li>
+                                        <label class="label-radio item-content" onclick="setWhite('脂白')">
+                                            <input type="radio" name="white-radio" value="脂白" checked="checked">
+                                            <div class="item-inner">
+                                            <div class="item-title">脂白</div>
+                                            </div>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="label-radio item-content" onclick="setWhite('近脂白')">
+                                            <input type="radio" name="white-radio" value="近脂白">
+                                            <div class="item-inner">
+                                            <div class="item-title">近脂白</div>
+                                            </div>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="label-radio item-content" onclick="setWhite('高白')">
+                                            <input type="radio" name="white-radio" value="高白">
+                                            <div class="item-inner">
+                                            <div class="item-title">高白</div>
+                                            </div>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="label-radio item-content" onclick="setWhite('正一级')">
+                                            <input type="radio" name="white-radio" value="正一级">
+                                            <div class="item-inner">
+                                            <div class="item-title">正一级</div>
+                                            </div>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="label-radio item-content" onclick="setWhite('一级')">
+                                            <input type="radio" name="white-radio" value="一级">
+                                            <div class="item-inner">
+                                            <div class="item-title">一级</div>
+                                            </div>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="label-radio item-content" onclick="setWhite('近一级')">
+                                            <input type="radio" name="white-radio" value="近一级">
+                                            <div class="item-inner">
+                                            <div class="item-title">近一级</div>
+                                            </div>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="label-radio item-content" onclick="setWhite('一级半以上')">
+                                            <input type="radio" name="white-radio" value="一级半以上">
+                                            <div class="item-inner">
+                                            <div class="item-title">一级半以上</div>
+                                            </div>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="label-radio item-content" onclick="setWhite('一级半')">
+                                            <input type="radio" name="white-radio" value="一级半">
+                                            <div class="item-inner">
+                                            <div class="item-title">一级半</div>
+                                            </div>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="label-radio item-content" onclick="setWhite('二级')">
+                                            <input type="radio" name="white-radio" value="二级">
+                                            <div class="item-inner">
+                                            <div class="item-title">二级</div>
+                                            </div>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="label-radio item-content" onclick="setWhite('青白')">
+                                            <input type="radio" name="white-radio" value="青白">
+                                            <div class="item-inner">
+                                            <div class="item-title">青白</div>
+                                            </div>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="label-radio item-content" onclick="setWhite('其它')">
+                                            <input type="radio" name="white-radio" value="其它">
+                                            <div class="item-inner">
+                                            <div class="item-title">其它</div>
+                                            </div>
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div> 
+                        </div>
+                    </div>
+
+                    <!-- fineness Popup -->
+                    <div class="popup popup-fineness">
+                        <div class="content-block">
+                            <p class="jianding-button"><a class="close-popup">确定</a></p>
+                            <div class="list-block jianding-popup">
+                                <ul>
+                                    <li>
+                                        <label class="label-radio item-content" onclick="setFineness('极佳')">
+                                            <input type="radio" name="fineness-radio" value="极佳" checked="checked">
+                                            <div class="item-inner">
+                                            <div class="item-title">极佳</div>
+                                            </div>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="label-radio item-content" onclick="setFineness('优')">
+                                            <input type="radio" name="fineness-radio" value="优">
+                                            <div class="item-inner">
+                                            <div class="item-title">优</div>
+                                            </div>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="label-radio item-content" onclick="setFineness('良')">
+                                            <input type="radio" name="fineness-radio" value="良">
+                                            <div class="item-inner">
+                                            <div class="item-title">良</div>
+                                            </div>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="label-radio item-content" onclick="setFineness('中')">
+                                            <input type="radio" name="fineness-radio" value="中">
+                                            <div class="item-inner">
+                                            <div class="item-title">中</div>
+                                            </div>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="label-radio item-content" onclick="setFineness('差')">
+                                            <input type="radio" name="fineness-radio" value="差">
+                                            <div class="item-inner">
+                                            <div class="item-title">差</div>
+                                            </div>
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- run Popup -->
+                    <div class="popup popup-run">
+                        <div class="content-block">
+                            <p class="jianding-button"><a class="close-popup">确定</a></p>
+                            <div class="list-block jianding-popup">
+                                <ul>
+                                    <li>
+                                        <label class="label-radio item-content" onclick="setRun('极佳')">
+                                            <input type="radio" name="run-radio" value="极佳" checked="checked">
+                                            <div class="item-inner">
+                                            <div class="item-title">极佳</div>
+                                            </div>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="label-radio item-content" onclick="setRun('优')">
+                                            <input type="radio" name="run-radio" value="优">
+                                            <div class="item-inner">
+                                            <div class="item-title">优</div>
+                                            </div>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="label-radio item-content" onclick="setRun('良')">
+                                            <input type="radio" name="run-radio" value="良">
+                                            <div class="item-inner">
+                                            <div class="item-title">良</div>
+                                            </div>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="label-radio item-content" onclick="setRun('中')">
+                                            <input type="radio" name="run-radio" value="中">
+                                            <div class="item-inner">
+                                            <div class="item-title">中</div>
+                                            </div>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="label-radio item-content" onclick="setRun('差')">
+                                            <input type="radio" name="run-radio" value="差">
+                                            <div class="item-inner">
+                                            <div class="item-title">差</div>
+                                            </div>
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- weight Popup -->
+                    <div class="popup popup-weight">
+                        <div class="content-block">
+                            <p class="jianding-button"><a class="close-popup" onclick="setWeight()">确定</a></p>
+                            <div class="list-block jianding-popup">
+                                <ul>
+                                    <li>
+                                        <div class="item-content">
+                                            <div class="item-media"><i class="icon icon-form-name"></i></div>
+                                            <div class="item-inner">
+                                                <div class="item-title label">重量</div>
+                                                <div class="item-input">
+                                                    <input id="inpWeight" type="text" placeholder="请输入重量数字">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- price Popup -->
+                    <div class="popup popup-price">
+                        <div class="content-block">
+                            <p class="jianding-button"><a class="close-popup" onclick="setPrice()">确定</a></p>
+                            <div class="list-block jianding-popup">
+                                <ul>
+                                    <li>
+                                        <div class="item-content">
+                                            <div class="item-media"><i class="icon icon-form-name"></i></div>
+                                            <div class="item-inner">
+                                                <div class="item-title label">心理价位</div>
+                                                <div class="item-input">
+                                                    <input id="inpPrice" type="text" placeholder="请输入心理价位">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+      
+                </div>
+            </div>
+        </div>
+         
+    </div>
+
+    <!-- Path to Framework7 Library JS-->
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="dist/js/framework7.min.js"></script>
+    <script type="text/javascript" src="js/config.js"></script>
+    <script type="text/javascript">
+        function goBack(){
+            window.history.back();
+        }
+
+        $('.cangyu_bbs_fabu_maimai ul li a').on('click', function(){
+            console.log($(this).attr('data-popup'));
+            publishApp.popup($(this).attr('data-popup'));
+        });
+
+        let material = '籽料';
+        let white = '脂白';
+        let fineness = '极佳';
+        let run = '极佳';
+        let weight = '0';
+        let price = '0';
+
+        function setMaterial(val){
+            material = val;
+        }
+        function setWhite(val){
+            white = val;
+        }
+        function setFineness(val){
+            fineness = val;
+        }
+        function setRun(val){
+            run = val;
+        }
+        function setWeight(){
+            weight = document.querySelector('#inpWeight').value;
+        }
+        function setPrice(){
+            price = document.querySelector('#inpPrice').value;
+        }
+
+        let imageContainer = document.querySelector('#imagesContainer');
+        let formData = new FormData();
+        let imageIndex = 0;
+        function select(self){
+            let files = document.querySelector('#uploaderInput').files;
+            if(!files || files.length === 0) return;
+
+            for(let i = 0; i < files.length; i++){
+                let f = files[i];
+                let formKey = `photo${imageIndex}`;
+                formData.append(formKey, f);
+                imageIndex = imageIndex + 1;
+
+                let reader = new FileReader();
+                reader.onload = function(progressEvent){
+                    // console.log(progressEvent);
+                    let obj = progressEvent.target;
+                    if(obj.readyState === 2){
+                        let element = document.createElement('img');
+                        element.setAttribute('class', 'upload-img');
+                        element.setAttribute('src', obj.result);
+                        element.setAttribute('width', '31%');
+                        element.setAttribute('height', '100px');
+
+                        imageContainer.appendChild(element);
+                    }
+                };
+                reader.readAsDataURL(f);
+            }
+        }
+
+        function publish(){
+            let productName = document.querySelector('#productName').value;
+            let ideaMessage = document.querySelector('#ideaMessage').value;
+            if(!productName){
+                publishApp.alert('商品名称不能为空', '提示');
+                return;
+            }
+            if(!ideaMessage){
+                publishApp.alert('发布消息不能为空', '提示');
+                return;
+            }
+            if(imageIndex < 3){
+                publishApp.alert('最少选择 4 张图片', '提示');
+                return;
+            }
+
+            formData.append('token', token);
+            formData.append('title', productName);
+            formData.append('content', ideaMessage);
+            formData.append('type', 3);
+            formData.append('material', material);
+            formData.append('white', white);
+            formData.append('fineness', fineness);
+            formData.append('run', run);
+            formData.append('weight', weight);
+            formData.append('price', price);
+            jQuery.ajax({
+                url: `${CYHOST}/icy/square_add`,
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                type: 'POST',
+                success: function(data){
+                    var obj = JSON.parse(data);
+                    if(obj.result === 100){
+                        publishApp.alert('发布成功', '提示');
+                        
+                        //清空信息
+                        $('#imagesContainer').html('');
+                        $('#ideaMessage').val('');
+                        $('#productName').val('');
+                    } else {
+                        publishApp.alert(obj.info, '提示');
+                    }
+                    console.log(obj);
+                }
+            });
+        }
+
+        // Initialize your app
+        var publishApp = new Framework7({
+            router: false,
+            swipePanel: 'left'
+        });
+    </script>
+  </body>
+
+</html>

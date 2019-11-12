@@ -192,7 +192,7 @@ $signPackage = $jssdk->GetSignPackage();
                 button: document.querySelector('a#btnOpenApp'),
                 params: {
                     'shareID': square_id,
-                    'shareIOS': 'KCSecKillListVC',
+                    'shareIOS': 'KCRealSelectDetailVC',
                     'shareAndroid': 'icangyu.jade.activities.treasure.TreasureDetailsActivity'
                 }
             }];

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>藏玉</title>
+    <!-- Path to Framework7 Library CSS-->
+    <link rel="stylesheet" href="dist/css/framework7-icons.css">
+    <link rel="stylesheet" href="dist/css/framework7.ios.min.css">
+    <!--<link rel="stylesheet" href="dist/css/framework7.material.min.css">-->
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="css/my-app.css">
+
+    <!-- Path to jquary Library JS-->
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="js/template-native.js"></script>
+    <!-- Path to Framework7 Library JS-->
+    <script type="text/javascript" src="dist/js/framework7.min.js"></script>
+
+</head>
+
+<body>
+
+<!-- Status bar overlay for fullscreen mode-->
+<div class="statusbar-overlay"></div>
+<!-- Panels overlay-->
+<div class="panel-overlay"></div>
+<!--弹出发布页面-->
+<div class="popup popup-fabu">
+    <div class="fabu_btn_list">
+        <a class="qiujianding_btn"></a>
+        <a class="fatiezi_btn"></a>
+        <a class="woxiangmai_btn"></a>
+    </div>
+    <p class="popup_fabu_guanbi"><a href="#" class="close-popup"><i class="f7-icons">close</i></a></p>
+</div>
+
+<!-- Views, and they are tabs-->
+<!-- We need to set "toolbar-through" class on it to keep space for our tab bar-->
+<div class="views">
+    <div id="zhuanti_xiangqing" class="view">
+        <div class="pages navbar-through">
+            <div data-page="jianding_xiangqing" class="page">
+
+                <div class="navbar cangyu_bbs_top_tabber">
+                    <div class="navbar-inner">
+                        <div class="left sliding"><a href="index.html#tab-5" class="back link"> <i class="icon icon-back"></i></a></div>
+                        <div class="center ">拍品列表</div>
+                        <div class="right"><!--右侧按钮暂时隐藏--></div>
+                    </div>
+                </div>
+
+                <div class="page-content infinite-scroll" data-distance="100">
+
+                    <div class="cangyu_bbs_zhuanti">
+                        <div class="car_mess_div2"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+//列表模版
+
+
+<script type="text/html" id="car_mess_div_list2">
+
+    <%for(var i = 0; i < list.length; i ++){%>
+
+        <div class="card_zhuanti demo-card-header-pic">
+
+            <a href="auctionContent.html?item_id=<%=list[i].id%>" class="block-a">
+
+                <%if(list[i].album.length > 0){%>
+                  <div style="background-image:url(https://app.icangyu.com<%=list[i].album[0].file_path%>);height: 55vw;" valign="bottom" class="card-header color-white no-border"></div>
+                <%}%>
+
+                <%if(list[i].content.length > 18){%>
+                <div class="card_zhuanti_txt"><%=list[i].content.substring(0,18)%>...</div>
+                <%}%>
+
+            </a>
+
+        </div>
+
+    <%}%>
+
+</script>
+
+<script type="text/javascript" src="js/config.js"></script>
+<script>
+
+    var square_id = HttpHelper.getQuery('screenings');
+
+    console.log(square_id);
+
+    //拍品列表
+    $.getJSON(`https://app.icangyu.com/icy/sale_list?screenings=${square_id}`, function (data) {
+        console.log(data);
+        var Odata = data.data;
+        var html = template('car_mess_div_list2',Odata);
+        $('.car_mess_div2').html(html);
+    })
+
+</script>
+
+
+
+</body>
+</html>

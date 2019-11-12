@@ -117,7 +117,6 @@
 
         // 专题详情
         $.getJSON(`${CYHOST}/icy/fakeGoods_details?id=${square_id}`, function (data) {
-            console.log("11111111");
             console.log(data);
             var Odata = data.data.list;
             Odata.content = Odata.content.replace(/\<p\>/gi, '<p style="color:#666;">')
@@ -183,8 +182,8 @@
                     button: document.querySelector('a#btnOpenApp'),
                     params: {
                         'shareID': square_id,
-                        'shareIOS': 'KCSecKillListVC',
-                        'shareAndroid': 'icangyu.jade.activities.seckill.SecKillSessionActivity'
+                        'shareIOS': 'KCRealSelectDetailVC',
+                        'shareAndroid': 'icangyu.jade.activities.treasure.TreasureDetailsActivity'
                     }
                 }];
                 new JMLink(configs);

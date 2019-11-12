@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <title>藏玉</title>
+  <!-- Path to Framework7 Library CSS-->
+  <link rel="stylesheet" href="dist/css/framework7-icons.css">
+  <link rel="stylesheet" href="dist/css/framework7.ios.min.css">
+
+  <!--<link rel="stylesheet" href="dist/css/framework7.material.min.css">-->
+
+  <!-- Path to your custom app styles-->
+
+  <link rel="stylesheet" href="css/my-app.css">
+</head>
+
+<body>
+  <!-- Status bar overlay for fullscreen mode-->
+  <div class="statusbar-overlay"></div>
+  <!-- Panels overlay-->
+  <div class="panel-overlay"></div>
+  <!--弹出发布页面-->
+  <div class="popup popup-fabu">
+
+    <div class="fabu_btn_list">
+
+      <a class="qiujianding_btn"></a>
+      <a class="fatiezi_btn"></a>
+      <a class="woxiangmai_btn"></a>
+
+    </div>
+    <p class="popup_fabu_guanbi"><a href="#" class="close-popup"><i class="f7-icons">close</i></a></p>
+
+
+  </div>
+  <!-- Views, and they are tabs-->
+  <!-- We need to set "toolbar-through" class on it to keep space for our tab bar-->
+  <div class="views">
+
+    <div class="pages navbar-through ">
+      <div class="navbar cangyu_bbs_top_tabber">
+        <div class="navbar-inner">
+          <div class="left sliding">
+            <a href="wangjimima.html" class="back link"> <i class="icon icon-back"></i></a>
+          </div>
+          <div class="center color-baise">找回密码</div>
+          <div class="right cangyu_bbs_tanchu_pinglun_btn_fabu">
+            <!--<a href="zhuce_zhanghao_02.html" class="back link"> 下一步</a>--></div>
+        </div>
+      </div>
+      <div data-page="jianding_xiangqing" class="page no-navbar">
+
+
+        <div class="page-content">
+
+          <div class="denglu_nr" id="forgotPassword">
+
+            <div class="denglu_nr_input zhaohuimima_class" style="margin-top: 60px;">
+              <div class="list-block">
+                <ul>
+                  <li>
+                    <div class="item-content">
+
+                      <div class="item-inner">
+                        <div class="item-title label">密码</div>
+                        <div class="item-input">
+                          <input type="text" v-model="password" placeholder="请输入新密码">
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+
+                  <li>
+                    <div class="item-content">
+
+                      <div class="item-inner">
+                        <div class="item-title label">重复密码</div>
+                        <div class="item-input">
+                          <input type="text" v-model="rePassword" placeholder="请再次输入密码">
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+
+            </div>
+
+            <div class="denglu_nr_input_tj" v-on:click="reset"><a class="button  button-big zhaohuimia_lv_btn ">确认</a></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- Path to Framework7 Library JS-->
+  <script type="text/javascript" src="dist/js/framework7.min.js"></script>
+  <script type="text/javascript" src="js/vue/vue.min.js"></script>
+  <script type="text/javascript" src="js/vue-resource/vue-resource.js"></script>
+  <script type="text/javascript" src="js/config.js"></script>
+  <!-- Path to your app js-->
+  <script type="text/javascript">
+  let nickname = HttpHelper.getCookie('USER_NAME');
+  if(!nickname){
+    nickname = '天朝太子';
+  }
+  let forgotPasswordVue = new Vue({
+      data: {
+        password: '',
+        rePassword: ''
+      },
+      methods: {
+        reset: function(){
+          let self = this;
+
+          if(!self.$data.password){
+            app.alert('密码不能为空！', '提示');
+            return;
+          }
+          if(self.$data.password !== self.$data.rePassword){
+            app.alert('两次输入密码不一样！', '提示');
+            return;
+          }
+
+          self.$http.get(`${CYHOST}/icy/user_register_add?token=${token}&nickname=${nickname}&pwd=${self.$data.password}`)
+            .then(res => {
+              let data = {};
+
+              if(typeof(res.body) === 'object'){
+                data = res.body;
+              } else {
+                data = JSON.parse(res.body.substring(1));
+              }
+              console.log(res);
+              // console.log(data);
+              if(data.result === 100){
+                app.alert('重置密码成功！', '提示', function(){
+                  window.location.href = 'denglu.html';
+                });
+              }
+              else if(data.result === 207){
+                app.alert(data.info, '提示');
+              }
+              else{
+                app.alert('重置密码失败！', '提示');
+              }
+            }, res => {
+              console.log(res);
+              app.alert(res.body.info, '提示');
+            });
+        }
+      }
+    });
+
+    forgotPasswordVue.$mount('#forgotPassword');
+
+    let app = new Framework7({
+        router:false,
+        swipePanel: 'left'
+    });  
+  </script>
+
+</body>
+
+</html>

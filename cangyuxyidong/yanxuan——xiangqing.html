@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>藏玉</title>
+    <!-- Path to Framework7 Library CSS-->
+    <link rel="stylesheet" href="dist/css/framework7-icons.css">
+    <link rel="stylesheet" href="dist/css/framework7.ios.min.css">
+    <!--<link rel="stylesheet" href="dist/css/framework7.material.min.css">-->
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="css/my-app.css">
+    <!-- Path to jquary Library JS-->
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="js/template-native.js"></script>
+    <!-- Path to Framework7 Library JS-->
+    <script type="text/javascript" src="dist/js/framework7.min.js"></script>
+    <script type="text/javascript" src="js/store.everything.min.js"></script>
+  </head>
+
+  <body>
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar-overlay"></div>
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+    <!--弹出发布页面-->
+    <div class="popup popup-fabu">
+        <div class="fabu_btn_list">
+            <a class="qiujianding_btn"></a>
+      		<a class="fatiezi_btn"></a>
+      		<a class="woxiangmai_btn"></a>
+        </div>
+        <p class="popup_fabu_guanbi">
+            <a href="#" class="close-popup">
+                <i class="f7-icons">close</i>
+            </a>
+        </p>
+    </div>
+
+    <!-- Views, and they are tabs-->
+    <!-- We need to set "toolbar-through" class on it to keep space for our tab bar-->
+    <div class="views">
+        <div class="pages navbar-through ">
+            <div data-page="jianding_xiangqing" class="page no-navbar">
+                <div class="navbar cangyu_bbs_top_tabber_yx">
+                    <div class="navbar-inner">
+                        <div class="left sliding"><a href="javascript:;" onclick="goBack()" class="back link"> <i class="icon icon-back"></i></a></div>
+                        <div class="right"><!--右侧按钮暂时隐藏--></div>
+                    </div>
+                </div>
+                <div class="page-content ">
+                    <div class="strict_mess_div"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Tabbar-->
+        <div class="cangyu_bbs_tabber">
+            <a href="javascript:click()" class="close"></a>
+            <a href="http://a.app.qq.com/o/simple.jsp?pkgname=icangyu.jade" target="_self" class="download" rel="nofollow">
+                <div class="logo"></div>
+                <div class="banner-label">
+                    <p class="tb" data-node="appName">藏玉</p>
+                    <p class="title-sub">专注传统和田玉</p>
+                </div>
+                <div class="open">立即打开</div>
+            </a>
+        </div>
+
+
+    </div>
+
+    <script>
+
+        $(".close").click(function(){
+            $(".cangyu_bbs_tabber").hide();
+        });
+
+    </script>
+
+
+
+
+    <script type="text/html" id="strict_mess">
+        <div class="swiper-container swiper-5 yanxuan-lunbo" >
+            <div class="swiper-wrapper">
+                <%for(var k = 0; k < data.album.length; k ++){%>
+
+                    <div class="swiper-slide" >
+
+                        <a onclick="showPhoto('<%=convert_to_string(data.album)%>','<%=k%>')">
+                            <img src="https://app.icangyu.com<%=data.album[k].file_path%>" alt="" class="swiper-lazy" />
+                        </a>
+
+                        <div class="preloader"></div>
+                    </div>
+
+                <%}%>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+
+        <div class="cangyu_bbs_yanxuan_top">
+            <dl>
+                <dt><%=data.pro_name%><span class="cangyu_bbs_yanxuan_top_jiage"><%=data.pro_price%></span></dt>
+                <dd><%=data.pro_descript%></dd>
+            </dl>
+        </div>
+
+        <div class="list-block cangyu_bbs_maimai_td clear_top">
+            <ul>
+                <li class="item-content">
+                    <div class="item-inner">
+                        <div class="item-title">材质</div>
+                        <div class="item-after"><%=data.material%></div>
+                    </div>
+                </li>
+                <li class="item-content">
+                    <div class="item-inner">
+                        <div class="item-title">白度</div>
+                        <div class="item-after"><%=data.white%></div>
+                    </div>
+                </li>
+                <li class="item-content">
+                    <div class="item-inner">
+                        <div class="item-title">细度</div>
+                        <div class="item-after"><%=data.fineness%></div>
+                    </div>
+                </li>
+                <li class="item-content">
+                    <div class="item-inner">
+                        <div class="item-title">润度</div>
+                        <div class="item-after"><%=data.run%></div>
+                    </div>
+                </li>
+
+                <li class="item-content">
+                    <div class="item-inner">
+                        <div class="item-title">重量</div>
+                        <div class="item-after"><%=data.weight%>.3</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </script>
+
+    <script type="text/javascript" src="js/config.js"></script>
+    <script>
+        var square_id = HttpHelper.getQuery('item_id');
+        var type =  HttpHelper.getQuery('type');
+        var detailsData = {};
+
+        function goBack(){
+            window.history.back();
+        }
+
+        // //严选详情
+        $.getJSON(`${CYHOST}/icy/details_product?id=${square_id}}&token=${token}`, function (data) {
+            // console.log(data);
+            detailsData = data;
+            store.set('order_details', JSON.stringify(detailsData.data));
+            var html = template('strict_mess',data);
+            $('.strict_mess_div').html(html);
+
+            if(data.data.collect_yn === 'y'){
+                $('#isCollection').addClass('yanxuan_active');
+            }
+
+            setTimeout(function(){
+                myApp.swiper('.yanxuan-lunbo', {
+                pagination: '.yanxuan-lunbo .swiper-pagination',
+                preloadImages: false,
+                lazyLoading: true,
+                spaceBetween: 60,
+                observer: true,//修改swiper自己或子元素时，自动初始化swiper
+                observeParents: true,//修改swiper的父元素时，自动初始化swiper
+                autoplay: 1500,
+                autoplayDisableOnInteraction: false,
+                touchRatio: 1
+                });
+            }, 1500);
+        })
+        
+        var myApp = new Framework7({
+            router:false,
+            swipePanel: 'left'
+        });
+
+        //跳转到买卖详情面
+        function gotoMaiMaiXiangQing(){
+            window.location.href = `maimai——xiangqing.html?type=3&item_id=${detailsData.data.s_id}`;;
+        }
+
+        //收藏
+        function collection(){
+            $.getJSON(`${CYHOST}/icy/collect_add?type=5&id=${square_id}&token=${token}`, function (data) {
+                // console.log(data);
+                if(data.result === 100){
+                    myApp.alert('收藏成功。', '提示');
+                    $('#isCollection').addClass('yanxuan_active');
+                }else{
+                    myApp.alert('收藏失败。', '提示');
+                }
+            })
+        }
+
+        //确认订单
+        function ensureOrder(){
+
+//            window.location.href = `ensure_order.html?product_id=${detailsData.data.s_id}`;
+
+              window.location.href ='itms-apps://itunes.apple.com/app/id1112919065';
+
+        }
+
+    </script>
+
+    <!--滚动用-->
+    <script>
+        // var mySwiper5 = myApp.swiper('.swiper-5', {
+        //     pagination:'.swiper-5 .swiper-pagination',
+        //     paginationClickable: true,
+        //     longSwipesRatio: 0.3,
+        //     touchRatio:1,
+        //     observer:true,//修改swiper自己或子元素时，自动初始化swiper
+        //     observeParents:true,//修改swiper的父元素时，自动初始化swiper
+        // });
+	 </script>
+
+
+
+
+    <script>
+
+
+        template.helper('convert_to_string', function(album){
+            var arr = [];
+            for(var i = 0; i < album.length; i++){
+                arr.push('https://app.icangyu.com'+album[i].file_path);
+            }
+            return arr.join(';');
+        });
+
+        function showPhoto(images,k) {
+
+            var arr = images.split(';');
+            var myPhotoBrowserPopupDark = myApp.photoBrowser({
+                photos : arr,
+                theme: 'dark',
+                initialSlide:k,
+                type: 'standalone'
+            });
+            myPhotoBrowserPopupDark.open();
+
+        }
+
+    </script>
+
+
+  </body>
+</html>

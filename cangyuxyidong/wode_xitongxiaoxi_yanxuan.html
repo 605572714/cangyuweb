@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <title>藏玉</title>
+  <!-- Path to Framework7 Library CSS-->
+  <link rel="stylesheet" href="dist/css/framework7-icons.css">
+  <link rel="stylesheet" href="dist/css/framework7.ios.min.css">
+  <link rel="stylesheet" href="css/my-app.css">
+</head>
+
+<body>
+  <!-- Status bar overlay for fullscreen mode-->
+  <div class="statusbar-overlay"></div>
+  <!-- Panels overlay-->
+  <div class="panel-overlay"></div>
+  <!--弹出发布页面-->
+  <div class="popup popup-fabu">
+
+    <div class="fabu_btn_list">
+
+      <a class="qiujianding_btn"></a>
+      <a class="fatiezi_btn"></a>
+      <a class="woxiangmai_btn"></a>
+
+
+    </div>
+    <p class="popup_fabu_guanbi"><a href="#" class="close-popup"><i class="f7-icons">close</i></a></p>
+
+
+  </div>
+  <!-- Views, and they are tabs-->
+  <!-- We need to set "toolbar-through" class on it to keep space for our tab bar-->
+  <div class="views">
+
+    <div class="pages navbar-through ">
+      <div data-page="jianding_xiangqing" class="page" id="yanxuan_notify">
+
+        <div class="navbar cangyu_bbs_top_tabber">
+          <div class="navbar-inner">
+            <div class="left with-animation">
+              <a href="wode_xitongxiaoxi.html" class="back link"> <i class="icon icon-back"></i></a>
+            </div>
+            <div class="center ">“严选”入选通知</div>
+            <div class="right cangyu_bbs_tanchu_pinglun_btn_fabu"><a href="javascript:;" v-on:click="send">发送</a></div>
+          </div>
+        </div>
+
+        <div class="page-content">
+          <div class="list-block cangyu_bbs_index">
+            <div class="cangyu_bbs_yanxuan_txt">
+              <p>恭喜您的藏品入选本期“藏玉”严选</p>
+              <p>请提供如下信息:</p>
+            </div>
+
+            <div class="list-group ">
+              <ul>
+                <li>
+                  <div class="item-content">
+                    <div class="item-media"><i class="icon icon-form-name"></i></div>
+                    <div class="item-inner">
+                      <div class="item-title label">姓名</div>
+                      <div class="item-input">
+                        <input type="text" placeholder="输入您的姓名" v-model="info.name">
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="item-content">
+                    <div class="item-media"><i class="icon icon-form-name"></i></div>
+                    <div class="item-inner">
+                      <div class="item-title label">手机号</div>
+                      <div class="item-input">
+                        <input type="text" placeholder="输入您的手机号" v-model="info.mobile">
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="item-content">
+                    <div class="item-media"><i class="icon icon-form-name"></i></div>
+                    <div class="item-inner">
+                      <div class="item-title label">微信号</div>
+                      <div class="item-input">
+                        <input type="text" placeholder="输入您的微信号" v-model="info.weixinNumber">
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="item-content">
+                    <div class="item-media"><i class="icon icon-form-name"></i></div>
+                    <div class="item-inner">
+                      <div class="item-title label">收款方式</div>
+                      <div class="item-input">
+                        <input type="text" placeholder="输入您的收款方式" v-model="info.paymentMethod">
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="item-content">
+                    <div class="item-media"><i class="icon icon-form-name"></i></div>
+                    <div class="item-inner">
+                      <div class="item-title label">商品价格</div>
+                      <div class="item-input">
+                        <input type="text" placeholder="输入您的商品价格" v-model="info.productPrice">
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- Path to Framework7 Library JS-->
+  <script type="text/javascript" src="dist/js/framework7.min.js"></script>
+  <script type="text/javascript" src="js/vue/vue.min.js"></script>
+  <script type="text/javascript" src="js/vue-resource/vue-resource.js"></script>
+  <script type="text/javascript" src="js/vue-filter.js"></script>
+  <script type="text/javascript" src="js/config.js"></script>
+  <!-- Path to your app js-->
+  <script type="text/javascript">
+    let pro_id = HttpHelper.getQuery('pro_id');
+
+    let yanxuanNotifyVue = new Vue({
+      data: {
+        info: {
+          name: '',
+          mobile: '',
+          weixinNumber: '',
+          paymentMethod: '',
+          productPrice: '',
+          pro_id: pro_id
+        }
+      },
+      methods: {
+        send: function(){
+          console.log(this.$data.info);
+
+          let self = this;
+          self.$http.get(`${CYHOST}/icy/strict_select_add?token=${token}&wx=${self.$data.info.weixinNumber}&pro_id=${pro_id}&name=${self.$data.info.name}&phone=${self.$data.info.mobile}&price=${self.$data.info.productPrice}`)
+            .then(res => {
+              if(res.body.result === 100){
+                app.alert('提交成功！', '提示');
+              }else{
+                app.alert(res.body.result, '提示');
+              }
+            }, res => {
+              console.log(res);
+              app.alert(res.body.result, '提示');
+            });
+        }
+      }
+    });
+
+    yanxuanNotifyVue.$mount('#yanxuan_notify');
+
+    // Initialize your app
+    var app = new Framework7({
+        router: false,
+        swipePanel: 'left'
+    });
+  </script>
+</body>
+
+</html>

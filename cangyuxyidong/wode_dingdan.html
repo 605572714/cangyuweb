@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <title>藏玉</title>
+  <!-- Path to Framework7 Library CSS-->
+  <link rel="stylesheet" href="dist/css/framework7-icons.css">
+  <link rel="stylesheet" href="dist/css/framework7.ios.min.css">
+  <link rel="stylesheet" href="css/my-app.css">
+</head>
+
+<body>
+  <!-- Status bar overlay for fullscreen mode-->
+  <div class="statusbar-overlay"></div>
+  <!-- Panels overlay-->
+  <div class="panel-overlay"></div>
+  <!--弹出发布页面-->
+  <div class="popup popup-fabu">
+
+    <div class="fabu_btn_list">
+
+      <a class="qiujianding_btn"></a>
+      <a class="fatiezi_btn"></a>
+      <a class="woxiangmai_btn"></a>
+
+
+    </div>
+    <p class="popup_fabu_guanbi"><a href="#" class="close-popup"><i class="f7-icons">close</i></a></p>
+
+
+  </div>
+  <!-- Views, and they are tabs-->
+  <!-- We need to set "toolbar-through" class on it to keep space for our tab bar-->
+  <div class="views">
+    <div id="view-1" class="view view-main tab active">
+      <div class="pages navbar-through " id="my_order">
+        <div data-page="jianding_xiangqing" class="page">
+
+          <div class="navbar cangyu_bbs_top_tabber">
+            <div class="navbar-inner">
+              <div class="left with-animation">
+                <a href="index.html#view-4" class="back link"> <i class="icon icon-back"></i></a>
+              </div>
+              <div class="center ">我的订单</div>
+              <div class="right cangyu_bbs_tanchu_pinglun_btn_fabu">
+                <!--<a href="#">保存</a>--></div>
+            </div>
+          </div>
+
+          <div class="page-content">
+
+            <div class="toolbar tabbar tabbar-scrollable tabbar_cangyu_bbs_dingdan">
+              <div class="toolbar-inner">
+                <a href="#tab1-dingdan" class="tab-link active" v-on:click="allOrder()">全部</a>
+                <a href="#tab2-dingdan" class="tab-link" v-on:click="waitPaysOrder()">待付款</a>
+                <a href="#tab3-dingdan" class="tab-link" v-on:click="waitGetsOrder()">待收货</a>
+                <a href="#tab4-dingdan" class="tab-link" v-on:click="completedsOrder()">已完成</a>
+              </div>
+            </div>
+
+
+            <!-- Tabs wrapper, shoud have "tabs" class. Required element -->
+            <div class="tabs">
+              <!-- First tab, should have "tab" class and unique id attribute -->
+              <!-- First tab is active by default - additional "active" class -->
+              <div class="tab active" id="tab1-dingdan">
+
+                <div class="cangyu_bbs_dingdanlist" v-for="order in all">
+                  <div class="cangyu_bbs_dingdanlist_top">
+                    <span class="cangyu_bbs_dingdanlist_top_ddh">订单号<b>{{ order.order_id }}</b></span>
+                    <span class="cangyu_bbs_dingdanlist_top_zt color_daifu">{{ order.status | order-type }}</span>
+                  </div>
+                  <div class="cangyu_bbs_dingdanlist_cnter">
+                    <div class="cy-shop-changpin-liebiao">
+                      <div class="cy-shop-changpin-liebiao-img"><img v-bind:src="order.avatar | alb" style="height: 55px"></div>
+                      <div class="cy-shop-changpin-liebiao-txt">
+                        <h2>{{ order.pro_name }}</h2>
+                        <p>￥{{ order.price }}</p>
+                      </div>
+                    </div>
+                    <div class="cangyu_bbs_dingdanlist_jiage">共1件商品 合计：<b>￥{{ order.price }}</b></div>
+                  </div>
+                  <div class="cangyu_bbs_dingdanlist_foot">
+                    <a class="button button_fk" v-if="order.status == 1" v-on:click="payNow(order)">立即付款</a>
+                    <a class="button" v-if="order.status == 1" v-on:click="deleteOrder(order)">删除订单</a>
+                    <a class="button" v-if="order.status == 2">催单</a>
+                    <a class="button" v-if="order.status == 3">查看物流</a>
+                    <a class="button" v-if="order.status == 3">确认收货</a>
+                    <a class="button" v-if="order.status == 6">申请退货</a>
+                    <a class="button" v-if="order.status == 6" v-on:click="deleteOrder(order)">删除订单</a>
+                    <a class="button" v-if="order.status == 0 || order.status == 4 || order.status == 5" v-on:click="deleteOrder(order)">删除订单</a>
+                  </div>
+                </div>
+
+              </div>
+              <!-- Second tab, should have "tab" class and unique id attribute -->
+              <div class="tab" id="tab2-dingdan">
+                <div class="cangyu_bbs_dingdanlist" v-for="order in wait_pays">
+                  <div class="cangyu_bbs_dingdanlist_top">
+                    <span class="cangyu_bbs_dingdanlist_top_ddh">订单号<b>{{ order.order_id }}</b></span>
+                    <span class="cangyu_bbs_dingdanlist_top_zt color_daifu">待付款</span>
+                  </div>
+                  <div class="cangyu_bbs_dingdanlist_cnter">
+                    <div class="cy-shop-changpin-liebiao">
+                      <div class="cy-shop-changpin-liebiao-img"><img v-bind:src="order.avatar | alb" style="height: 55px"></div>
+                      <div class="cy-shop-changpin-liebiao-txt">
+                        <h2>{{ order.pro_name }}</h2>
+                        <p>￥{{ order.price }}</p>
+                      </div>
+                    </div>
+                    <div class="cangyu_bbs_dingdanlist_jiage">共1件商品 合计：<b>￥{{ order.price }}</b></div>
+                  </div>
+                  <div class="cangyu_bbs_dingdanlist_foot">
+
+                    <a class="button button_fk" v-on:click="payNow(order)">立即付款</a>
+                    <a class="button" v-on:click="deleteOrder(order)">删除订单</a>
+                  </div>
+                </div>
+              </div>
+              <!-- Third tab, should have "tab" class and unique id attribute -->
+              <div class="tab" id="tab3-dingdan">
+                <div class="cangyu_bbs_dingdanlist" v-for="order in wait_gets">
+                  <div class="cangyu_bbs_dingdanlist_top">
+                    <span class="cangyu_bbs_dingdanlist_top_ddh">订单号<b>{{ order.order_id }}</b></span>
+                    <span class="cangyu_bbs_dingdanlist_top_zt color_daishouhuo">待收货</span>
+                  </div>
+                  <div class="cangyu_bbs_dingdanlist_cnter">
+                    <div class="cy-shop-changpin-liebiao">
+                      <div class="cy-shop-changpin-liebiao-img"><img v-bind:src="order.avatar | alb" style="height: 55px"></div>
+                      <div class="cy-shop-changpin-liebiao-txt">
+                        <h2>{{ order.pro_name }}</h2>
+                        <p>￥{{ order.price }}</p>
+                      </div>
+                    </div>
+                    <div class="cangyu_bbs_dingdanlist_jiage">共1件商品 合计：<b>￥{{ order.price }}</b></div>
+                  </div>
+                  <div class="cangyu_bbs_dingdanlist_foot">
+                    <a class="button button_fk">查看物流</a>
+                    <a class="button" v-on:click="ensureGet(order)">确认收货</a>
+                  </div>
+                </div>
+              </div>
+              <!-- four tab, should have "tab" class and unique id attribute -->
+              <div class="tab" id="tab4-dingdan">
+                <div class="cangyu_bbs_dingdanlist" v-for="order in completeds">
+                  <div class="cangyu_bbs_dingdanlist_top">
+                    <span class="cangyu_bbs_dingdanlist_top_ddh">订单号<b>{{ order.order_id }}</b></span>
+                    <span class="cangyu_bbs_dingdanlist_top_zt color_yiwancheng">已完成</span>
+                  </div>
+                  <div class="cangyu_bbs_dingdanlist_cnter">
+                    <div class="cy-shop-changpin-liebiao">
+                      <div class="cy-shop-changpin-liebiao-img"><img v-bind:src="order.avatar | alb" style="height: 55px"></div>
+                      <div class="cy-shop-changpin-liebiao-txt">
+                        <h2>{{ order.pro_name }}</h2>
+                        <p>￥{{ order.price }}</p>
+                      </div>
+                    </div>
+                    <div class="cangyu_bbs_dingdanlist_jiage">共1件商品 合计：<b>￥{{ order.price }}</b></div>
+                  </div>
+                  <div class="cangyu_bbs_dingdanlist_foot">
+                    <a class="button" v-on:click="deleteOrder(order)">删除订单</a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+  <!-- Path to Framework7 Library JS-->
+  <script type="text/javascript" src="dist/js/framework7.min.js"></script>
+  <script type="text/javascript" src="js/store.everything.min.js"></script>
+  <script type="text/javascript" src="js/vue/vue.min.js"></script>
+  <script type="text/javascript" src="js/vue-resource/vue-resource.js"></script>
+  <script type="text/javascript" src="js/vue-filter.js"></script>
+  <script type="text/javascript" src="js/config.js"></script>
+  <!-- Path to your app js-->
+  <script type="text/javascript">
+    function goBack() {
+      window.history.back();
+    }
+
+    let myOrderVue = new Vue({
+      data: {
+        all: [],
+        wait_pays: [],
+        wait_gets: [],
+        completeds: []
+      },
+
+      methods: {
+        allOrder: function () {
+          this.load(1); //全部
+        },
+        waitPaysOrder: function () {
+          this.load(2); //待付款
+        },
+        waitGetsOrder: function () {
+          this.load(3); //待收货
+        },
+        completedsOrder: function () {
+          this.load(4); //已完成
+        },
+
+        load: function (type) {
+          let self = this;
+          self.$http.get(`${CYHOST}/icy/order_buy_list?token=${token}&type=${type}`)
+            .then(res => {
+              console.log(res);
+
+              let data = {};
+              if (typeof (res.body) === 'string') {
+                let lastIndexOf = res.body.lastIndexOf('>');
+                let jsonString = res.body.substring(lastIndexOf + 1);
+                data = JSON.parse(jsonString);
+              } else {
+                data = res.body.data;
+              }
+              console.log(data);
+
+              // if (!data || data.data.list.length === 0) return;
+              // if (data.result != 100) {
+              //   app.alert(data.info, '提示');
+              //   return;
+              // }
+
+              if (type === 1) {
+                self.$data.all = data.list === undefined ? data.data.list : data.list;
+              } else if (type === 2) {
+                self.$data.wait_pays = data.list === undefined ? data.data.list : data.list;
+              } else if (type === 3) {
+                self.$data.wait_gets = data.list === undefined ? data.data.list : data.list;
+              } else if (type === 4) {
+                self.$data.completeds = data.list === undefined ? data.data.list : data.list;
+              }
+            }, res => {
+              console.log(res);
+              app.alert('获取数据异常', '提示');
+            });
+        },
+
+        //删除订单
+        deleteOrder: function(order){
+          let self = this;
+          self.$http.get(`${CYHOST}/icy/order_buy_deal?token=${token}&id=${order.order_id}&status=7`)
+            .then(res => {
+              if(res.body.result === 100){
+                app.alert('删除订单成功！', '提示', function(){
+                  window.location.reload(true);
+                });
+              }else{
+                app.alert(res.body.result, '提示');
+              }
+            }, res => {
+              console.log(res);
+              app.alert(res.body.result, '提示');
+            });
+        },
+
+        //立即付款
+        payNow: function(order){
+          console.log(order);
+          store.set('order', {
+            result: 100,
+            info: '',
+            data: {
+              list: order.order_id,
+              total: ''
+            }
+          });
+          
+          setTimeout(function() {
+            window.location.href = 'pay_order.html';
+          }, 200);
+        },
+
+        //退货
+        returnGoods: function(order){
+          let self = this;
+          self.$http.get(`${CYHOST}/icy/order_buy_deal?token=${token}&id=${order.order_id}&status=4`)
+            .then(res => {
+              if(res.body.result === 100){
+                app.alert('确认收货成功！', '提示');
+              }else{
+                app.alert(res.body.result, '提示');
+              }
+            }, res => {
+              console.log(res);
+              app.alert(res.body.result, '提示');
+            });
+        },
+
+        //确认收货
+        ensureGet: function(){
+          let self = this;
+          self.$http.get(`${CYHOST}/icy/order_buy_deal?token=${token}&id=${order.order_id}&status=6`)
+            .then(res => {
+              if(res.body.result === 100){
+                app.alert('确认收货成功！', '提示');
+              }else{
+                app.alert(res.body.result, '提示');
+              }
+            }, res => {
+              console.log(res);
+              app.alert(res.body.result, '提示');
+            });
+        }
+      },
+
+      mounted: function () {
+        if(window.location.hash === '#tab1-dingdan'){
+          this.load(1);
+        }
+        else if(window.location.hash === '#tab2-dingdan'){
+          this.load(2);
+        }
+        else if(window.location.hash === '#tab3-dingdan'){
+          this.load(3);
+        }
+        else if(window.location.hash === '#tab4-dingdan'){
+          this.load(4);
+        }else{
+          //全部
+          this.load(1);
+        }
+        app.showTab(window.location.hash);
+      }
+    });
+
+    let app = new Framework7({
+      router: false,
+      swipePanel: 'left'
+    });
+    app.addView('#view-1');
+
+    myOrderVue.$mount('#my_order');
+  </script>
+</body>
+
+</html>

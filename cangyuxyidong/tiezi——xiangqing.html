@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>藏玉</title>
+    <!-- Path to Framework7 Library CSS-->
+    <link rel="stylesheet" href="dist/css/framework7-icons.css">
+    <link rel="stylesheet" href="dist/css/framework7.ios.min.css">
+    <!--<link rel="stylesheet" href="dist/css/framework7.material.min.css">-->
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="css/my-app.css">
+
+    <!-- Path to jquary Library JS-->
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="js/template-native.js"></script>
+    <!-- Path to Framework7 Library JS-->
+    <script type="text/javascript" src="dist/js/framework7.min.js"></script>
+  </head>
+
+  <body>
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar-overlay"></div>
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+    <!--弹出发布页面-->
+    <div class="popup popup-fabu">
+        <div class="fabu_btn_list">
+            <a class="qiujianding_btn"></a>
+      		<a class="fatiezi_btn"></a>
+      		<a class="woxiangmai_btn"></a>
+        </div>
+        <p class="popup_fabu_guanbi"><a href="#" class="close-popup"><i class="f7-icons">close</i></a></p>
+    </div>
+
+    <!-- Views, and they are tabs-->
+    <!-- We need to set "toolbar-through" class on it to keep space for our tab bar-->
+    <div class="views">
+        <div id="tiezi_xiangqing" class="view">
+        <div class="pages navbar-through">
+            <div data-page="jianding_xiangqing" class="page">
+
+                <div class="navbar cangyu_bbs_top_tabber">
+                    <div class="navbar-inner">
+                        <div class="left sliding"><a href="javascript:;" onclick="goBack()" class="back link"> <i class="icon icon-back"></i></a></div>
+                        <div class="center ">帖子详情</div>
+                        <div class="right"><!--右侧按钮暂时隐藏--></div>
+                    </div>
+                </div>
+
+                <div class="page-content infinite-scroll pull-to-refresh-content" data-distance="100">
+                    <div class="pull-to-refresh-layer">
+                        <div class="preloader"></div>
+                        <div class="pull-to-refresh-arrow"></div>
+                    </div>
+
+                    <div class="card facebook-card card9">
+                        <div class="wei_mess_div"></div>
+                    </div>
+
+                    <div class="cangyu_bbs_comment">
+                        <div class="comment-top"><h2>评论</h2></div>
+                        <div class="wei_mess_div_list"></div>
+                    </div>
+                    
+                    <div class="infinite-scroll-preloader">
+                        <div class="preloader"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        </div>
+
+
+        <!-- Bottom Tabbar-->
+        <div class="cangyu_bbs_tabber">
+            <a href="javascript:void(0)" class="close"></a>
+            <a href="http://a.app.qq.com/o/simple.jsp?pkgname=icangyu.jade" target="_self" class="download" rel="nofollow">
+                <div class="logo"></div>
+                <div class="banner-label">
+                    <p class="tb" data-node="appName">下载藏玉APP</p>
+                    <p class="title-sub">参与互动讨论，获取更多内容</p>
+                </div>
+                <div class="open">立即打开</div>
+            </a>
+        </div>
+
+    </div>
+
+    <script>
+
+        $(".close").click(function(){
+            $(".cangyu_bbs_tabber").hide();
+        });
+
+    </script>
+
+
+    <script type="text/html" id="wei_mess_list">
+
+          <%for(var i = 0; i < list.length; i ++){%>
+
+              <div  class="comment-item" onclick="replay('<%=list[i].nickname%>')">
+                  <div  class="m-box comment-con-top">
+                      <div  class="comment-user-img m-avatar-box">
+                          <a  href="#" class="m-img-box">
+                              <img  src="https://app.icangyu.com<%=list[i].comment_avatar%>" alt="">
+                          </a>
+                      </div>
+                      <div  class="m-box-col">
+                          <p  class="comment-user-name">
+                              <span ><%=list[i].nickname%></span>
+                          </p>
+                      </div>
+                      <!-- <span  class="comment-zan"><i  class="m-icon m-icon-like"></i></span>-->
+                  </div>
+                  <div  class="comment-con-bot">
+                      <div  class="comment-con">
+                          <div ><%=list[i].comment%></div>
+                      </div>
+                  </div>
+              </div>
+
+          <%}%>
+
+    </script>
+
+    <script type="text/html" id="wei_mess">
+
+        <div class="card facebook-card ">
+
+            <div class="card-header">
+                <div class="facebook-avatar">
+                    <!--<a href="wode_index.html?user_id=<%=data.user_id%>">-->
+                        <img src="https://app.icangyu.com<%=data.avatar%>" width="34" height="34">
+                    <!--</a>-->
+                </div>
+                <div class="facebook-name">
+                    <a href="wode_index.html?user_id=<%=data.user_id%>"><%=data.nickname%></a>
+                    <span class="cangyu_bbs_dengji">Lv<%=data.rating%></span>
+                </div>
+                <div class="facebook-date"><%=data.createdate%></div>
+            </div>
+
+
+            <div class="card-content">
+                <a class="block-a">
+                    <div class="card-content-inner">
+                        <h3 class="card-content-yylm-t"><%=data.content%></h3>
+                        <div class="weibo-detail">
+                            <div class="media-pic-list">
+                                <ul style="overflow:hidden">
+                                    <%for(var k = 0; k < data.album.length; k++){%>
+                                        <li>
+
+                                            <a onclick="showPhoto('<%=convert_to_string(data.album)%>','<%=k%>')">
+                                                <img data-node="pic" data-act-type="hover" src="<%=data.album[k].file_path%>" class="loaded">
+                                            </a>
+
+                                        </li>
+                                    <%}%>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="yylm-pinglun-con">
+
+                            <%if(data.praise_list.length > 0){%>
+
+                            <section class="detail-num clearfix">
+                                <div class="detail-header">
+
+                                    <%for(var n = 0; n < data.praise_list.length; n++){%>
+                                    <span><img src="https://app.icangyu.com<%=data.praise_list[n].avatar_want%>"></span>
+                                    <%}%>
+
+                                </div>
+                                <div class="yylm-dianzan-shu"><span><%=data.all_nums%>人点赞</div>
+                            </section>
+
+                            <%}%>
+
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+
+    </script>
+
+    <script type="text/javascript" src="js/config.js"></script>
+
+    <script type="text/javascript">
+        let replayNickname = '';
+
+        function goBack(){
+            window.history.back();
+        }
+
+        var square_id = HttpHelper.getQuery('item_id');
+        var type =  HttpHelper.getQuery('type');
+
+        //微博评论
+        $.getJSON(`${CYHOST}/icy/comment_lists?type=${type}&id=${square_id}`,function (data) {
+            console.log(data);
+            var Odata = data.data;
+            if(Odata.list.length < 10){
+                $('.infinite-scroll-preloader').hide();
+            }
+            var html = template('wei_mess_list',Odata);
+            $('.wei_mess_div_list').html(html);
+        })
+
+        //微博详情
+        $.getJSON(`https://app.icangyu.com/icy/share_wb?id=${square_id}`, function (data) {
+            console.log(data);
+            var html = template('wei_mess',data);
+            $('.wei_mess_div').html(html);
+        })
+
+        function replay(nickname){
+            replayNickname =`回复 ${nickname} :` ;
+            $('#inpComment').attr('placeholder', `回复：${nickname}`);
+        }
+
+
+        // Initialize your app
+        var tieziApp = new Framework7({
+            router: false,
+            swipePanel: 'left',
+            // ... other parameters
+        });
+        tieziApp.addView('#tiezi_xiangqing');
+
+        // Export selectors engine
+        var $$ = Dom7;
+
+        var ptrContent = $$('.pull-to-refresh-content');
+        // Add 'refresh' listener on it
+        ptrContent.on('refresh', function (e) {
+            tieziPageIndex = 0;
+
+            setTimeout(function(){
+                //微博评论
+                $.getJSON(`${CYHOST}/icy/comment_lists?type=${type}&id=${square_id}&page=0`,function (data) {
+                    console.log(data);
+                    var Odata = data.data;
+                    var html = template('wei_mess_list',Odata);
+                    $('.wei_mess_div_list').html(html);
+                    
+                    // When loading done, we need to reset it
+                    tieziApp.pullToRefreshDone();
+
+                    $('.infinite-scroll-preloader').show();
+                })
+            }, 1500);
+        });
+
+        var loading = false;    //是否正在加载中
+        var tieziPageIndex = 0;
+        var pageSize = 10;
+        var resetLoadingTime = 1500;
+        //下拉加载
+        $$('.infinite-scroll').on('infinite', function (ev) {
+            setTimeout(function() {
+                if (loading) return;
+                loading = true;
+
+                tieziPageIndex = tieziPageIndex + pageSize;
+                //微博评论
+                $.getJSON(`${CYHOST}/icy/comment_lists?type=${type}&id=${square_id}&page=${tieziPageIndex}`,function (data) {
+                    console.log(data);
+                    var Odata = data.data;
+
+                    if(Odata.list.length === 0){
+                        $('.infinite-scroll-preloader').hide();
+                        setTimeout(function(){
+                            loading = false;
+                        }, resetLoadingTime);
+                        return;
+                    }
+
+                    var html = template('wei_mess_list',Odata);
+                    $('.wei_mess_div_list').append(html);
+
+                    setTimeout(function(){
+                        loading = false;
+                    }, resetLoadingTime);  
+                })
+            }, resetLoadingTime);
+        });
+
+    </script>
+
+
+    <script>
+
+
+        template.helper('convert_to_string', function(album){
+            var arr = [];
+            for(var i = 0; i < album.length; i++){
+                arr.push(album[i].file_path);
+            }
+            return arr.join(';');
+        });
+
+        function showPhoto(images,k) {
+
+            var arr = images.split(';');
+            var myPhotoBrowserPopupDark = tieziApp.photoBrowser({
+                photos : arr,
+                theme: 'dark',
+                initialSlide:k,
+                type: 'standalone'
+            });
+            myPhotoBrowserPopupDark.open();
+
+        }
+
+    </script>
+
+  </body>
+</html>

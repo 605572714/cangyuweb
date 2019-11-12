@@ -180,6 +180,7 @@ padding: 10px;
 .facebook-card .facebook-avatar {
     float: left;
     position: relative;
+    border-radius: 50%;
 }
 
 .facebook-card .facebook-avatar a.group_icon_only {

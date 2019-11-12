@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>藏玉</title>
+    <!-- Path to Framework7 Library CSS-->
+    <link rel="stylesheet" href="dist/css/framework7-icons.css">
+    <link rel="stylesheet" href="dist/css/framework7.ios.min.css">
+    
+    <!--<link rel="stylesheet" href="dist/css/framework7.material.min.css">-->
+    
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="css/my-app.css">
+  </head>
+  <body>
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar-overlay"></div>
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+    <!--弹出发布页面-->
+<div class="popup popup-fabu">
+   
+      <div class="fabu_btn_list">
+      	
+      		<a class="qiujianding_btn"></a>
+      		<a class="fatiezi_btn"></a>
+      		<a class="woxiangmai_btn"></a>
+      	
+      	
+      </div>
+      <p class="popup_fabu_guanbi"><a href="#" class="close-popup"><i class="f7-icons">close</i></a></p>
+     
+   
+  </div>
+    <!-- Views, and they are tabs-->
+    <!-- We need to set "toolbar-through" class on it to keep space for our tab bar-->
+    <div class="views">
+
+<div class="pages navbar-through">
+  <div data-page="jianding_xiangqing" class="page">
+   
+     <div class="navbar cangyu_bbs_top_tabber">
+              <div class="navbar-inner">
+                <div class="left with-animation"><a onclick="goBack()" href="javascript:;" class="link"> <i class="icon icon-back"></i></a></div>
+                <div class="center ">填写评论</div>
+                  <div class="right cangyu_bbs_tanchu_pinglun_btn_fabu"><a href="javascript:;" onclick="sendComment()">发布</a></div>
+              </div>
+            </div>
+   
+    <div class="page-content">
+    
+   <div class="list-block cangyu_bbs_tanchu_pinglun">
+  <ul>
+    
+    <!-- Additional "align-top" class for correct textarea alignment -->
+    <li class="align-top">
+      <div class="item-content">
+        <div class="item-inner">
+         
+          <div class="item-input">
+              <textarea id="inpComment" placeholder="发表你的评论" ></textarea>
+          </div>
+        </div>
+      </div>
+    </li>
+  
+  </ul>
+</div>  
+    </div>
+  </div>
+</div>
+      
+</div>
+    <!-- Path to Framework7 Library JS-->
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="dist/js/framework7.min.js"></script>
+        <!-- other Library  -->
+    <script type="text/javascript" src="js/vue/vue.min.js"></script>
+    <script type="text/javascript" src="js/vue-resource/vue-resource.js"></script>
+    <script type="text/javascript" src="js/store.everything.min.js"></script>
+
+    <!-- Path to your app js-->
+    <script type="text/javascript" src="js/config.js"></script>
+    <script type="text/javascript" src="js/vue-filter.js"></script>
+    
+    <script type="text/javascript">
+      var square_id = HttpHelper.getQuery('item_id');
+      var type =  HttpHelper.getQuery('type');
+      var maimaiApp = new Framework7({
+        router: false,
+        swipePanel: 'left'
+      });
+
+      function goBack(){
+        window.history.back();
+      }
+
+      function sendComment(){
+        var comment = $('#inpComment').val();
+        if(!comment){
+            maimaiApp.alert('评论内容不能为空。', '提示');
+            return;
+        }
+
+        comment = encodeURIComponent(comment);
+        $.getJSON(`${CYHOST}/icy/square_comment_add?type=${type}&square_id=${square_id}&content=${comment}&token=${token}`, function (data) {
+            console.log(data);
+            if(data.result === 100){
+                maimaiApp.alert('发表评论成功。', '提示');
+                $('#inpComment').val('');
+            }else{
+                maimaiApp.alert('发表评论失败。', '提示');
+            }
+        })
+      }
+    </script>
+  </body>
+</html>

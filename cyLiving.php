@@ -1,0 +1,125 @@
+<?php
+include '../extended/php/jssdk.php';
+$jssdk = new JSSDK("wxd076774039b4132e", "3006fa830349f4301e39899e6fe6e230");
+$signPackage = $jssdk->GetSignPackage();
+?>
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Video.js | HTML5 Video Player</title>
+    <meta http-equiv=Content-Type content="text/html;charset=utf-8">
+    <script src="video-js-6.2.0/videojs-ie8.min.js"></script>
+    <link href="video-js-5.20.1/video-js.css" rel="stylesheet">
+    <script src="video-js-5.20.1/ie8/videojs-ie8.min.js"></script>
+</head>
+
+<body style="margin:0px;">
+
+    <video id="yxm_video" class="video-js vjs-default-skin vjs-big-play-centered">
+        <p class="vjs-no-js">您的浏览器不支持H5或FLASH</p>
+    </video>
+    <script src="video-js-5.20.1/video.vod.js"></script>
+
+    <script>
+        var player = videojs('yxm_video', {
+            //width: <?php if (is_array($_GET) && count($_GET) > 0 && isset($_GET['width'])) {
+                            echo $_GET['width'];
+                        } else {
+                            echo 1280;
+                        } ?>,
+            //height: <?php if (is_array($_GET) && count($_GET) > 0 && isset($_GET['height'])) {
+                            echo $_GET['height'];
+                        } else {
+                            echo 720;
+                        } ?>,
+            width: 980,
+            height: 550,
+            controls: true,
+            preload: "true", //预加载：string；'auto'|'true'|'metadata'|'none'
+            //poster:'source/suoluetu.jpg',//预览图：string
+            autoplay: < ? php
+            if (is_array($_GET) && count($_GET) > 0 && isset($_GET['auto'])) {
+                echo 'true';
+            } else {
+                echo 'false';
+            } ? > ,
+            loop : < ? php
+            if (is_array($_GET) && count($_GET) > 0 && isset($_GET['loop'])) {
+                echo 'true';
+            } else {
+                echo 'false';
+            } ? > ,
+            muted : false, //静音
+            sources: [{
+                    src: 'source/test.mp4',
+                    type: 'video/mp4'
+                    src: 'https://webim.tim.qq.com/v4/openim/login?websdkappid=537048168&v=1.7.0&identifier=21778&usersig=eJxNjdtOgzAAht*ltxhtC6Vo4sWCkKgsmztFFpOmQJG6jTZdgRHju8vIFr39vv-wDVbJ8pbnuWpqy2yvBXgAENyMWBaitrKUwgwQI0qDi*Bay4Jxy1xT-Msfix0b1cCQByFyfc*nFylOWhrBeGnHOUQIwRBeq60wR6nq8w9EBGEXwj9p5UGMFeoS7AcUX--k54Cn0Tp8jjLuRO8p3rbz*7TLX5Kk6qb1Yn*qXnN-gZ6aarb6uDvE4XwbT2Q0MajHoujKIPP2tMrenE2vVRq2X-kyFSqVyMZYzYjTrHeP4OcXftBXgw__&contenttype=json&sdkappid=1400136467&accounttype=37476&apn=1&reqtime=1573526850',
+                    <
+                    ?
+                    php
+                    if (is_array($_GET) && count($_GET) > 0 && isset($_GET["rtmp"])) {
+                        ?
+                        >
+                        src: '<?php echo urldecode($_GET["rtmp"]); ?>',
+
+                            <
+                            ?
+                            php
+                    } else {
+                        ?
+                        >
+                        // 默认地址
+                        src: '', <
+                            ?
+                            php
+                    } ?
+                    >
+                    // 默认视频类型
+                    type : 'rtmp/flv'
+                },
+                {
+                    <
+                    ?
+                    php
+                    if (is_array($_GET) && count($_GET) > 0 && isset($_GET["hls"])) {
+                        ?
+                        >
+                        src: '<?php echo urldecode($_GET["hls"]); ?>',
+
+                            <
+                            ?
+                            php
+                    } else {
+                        ?
+                        >
+                        // 默认地址
+                        src: '', <
+                            ?
+                            php
+                    } ?
+                    >
+                    // 默认视频类型
+                    type : 'application/x-mpegURL'
+                }
+            ],
+            controlBar: {
+                muteToggle: false, //静音按钮
+                volumeMenuButton: false, // 音量调节
+                <
+                ?
+                php
+                if (is_array($_GET) && count($_GET) > 0 && isset($_GET['live'])) {
+                    echo 'progressControl: false';
+                } ? >
+
+            }
+        }, function onPlayerReady() {
+
+        });
+    </script>
+</body>
+
+</html>

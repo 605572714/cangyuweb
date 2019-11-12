@@ -35,7 +35,7 @@ var HttpHelper = (function(){
             if (r != null) {
                 return unescape(r[2]); 
             }
-            
+        
             return null;
         }
     };
@@ -45,5 +45,6 @@ var HttpHelper = (function(){
 
 // var CYHOST = 'http://118.190.47.197';
 var CYHOST = 'https://app.icangyu.com';
+// var CYHOST = 'https://testicy.icangyu.com';
 var token = HttpHelper.getCookie("JADE_TOKEN");
 

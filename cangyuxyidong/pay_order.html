@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>藏玉</title>
+    <!-- Path to Framework7 Library CSS-->
+    <link rel="stylesheet" href="dist/css/framework7-icons.css">
+    <link rel="stylesheet" href="dist/css/framework7.ios.min.css">
+    
+    <!--<link rel="stylesheet" href="dist/css/framework7.material.min.css">-->
+    
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="css/my-app.css">
+  </head>
+  <body>
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar-overlay"></div>
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+    <!--弹出发布页面-->
+    <div class="popup popup-fabu">
+   
+        <div class="fabu_btn_list">
+            <a class="qiujianding_btn"></a>
+      		<a class="fatiezi_btn"></a>
+      		<a class="woxiangmai_btn"></a>
+        </div>
+        <p class="popup_fabu_guanbi"><a href="#" class="close-popup"><i class="f7-icons">close</i></a></p>
+    </div>
+
+    <!-- Views, and they are tabs-->
+    <!-- We need to set "toolbar-through" class on it to keep space for our tab bar-->
+    <div class="views" id="orderDetails">
+        <div class="pages navbar-through">
+            <div data-page="jianding_xiangqing" class="page">
+                <div class="navbar cangyu_bbs_top_tabber">
+                    <div class="navbar-inner">
+                        <div class="left sliding"><a href="javascript:;" onclick="goBack()" class="link"> <i class="icon icon-back"></i></a></div>
+                        <div class="center ">结算页面</div>
+                        <div class="right"><!--右侧按钮暂时隐藏--></div>
+                    </div>
+                </div>
+
+                <div class="page-content">
+
+                    <div class="card cangyu_bbs_dizhi payment-item">
+                        <div class="card-content">
+                            <div class="list-block media-list">
+                                <ul>
+
+                                    <li class="item-content" v-on:click="weiXinPayment">
+                                    <!--<li class="item-content">-->
+
+                                    <div class="item-media">
+                                            <img src="img/weixin_ico.jpg" width="30" height="30">
+                                        </div>
+                                        <div class="item-inner">
+                                            <div class="item-title-row" id="cocoakc">
+
+
+                                                <!--<a href="https://app.icangyu.com/php_extend/h5_wx/demo/js_api_call.php?id="+self.$data.order.order_id>-->
+                                                     <!--<div class="item-title payment-title">微信支付</div>-->
+                                                <!--</a>-->
+
+                                                <!--<a v_bind:href="link">-->
+                                                    <!--<div class="item-title payment-title">微信支付</div>-->
+                                                <!--</a>-->
+
+                                                <a>
+                                                    <div class="item-title payment-title">微信支付</div>
+                                                </a>
+
+
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li class="item-content" v-on:click="zhifubaoPayment">
+                                        <div class="item-media">
+                                            <img src="img/zhifubao_ico.jpg" width="30" height="30">
+                                        </div>
+                                        <div class="item-inner">
+                                            <div class="item-title-row">
+
+                                                <a>
+                                                    <div class="item-title payment-title">支付宝支付</div>
+                                                </a>
+
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+
+        let self = this;
+
+        var kcVue = new Vue({
+
+            data: {
+
+                link: `https://app.icangyu.com/php_extend/h5_wx/demo/js_api_call.php?token=${token}&id=${self.$data.order.order_id}`
+
+            },
+
+            methods: {
+
+                update: function(){
+
+                }
+
+            },
+
+            mounted:function () {
+                this.update();
+            }
+
+        });
+
+        kcVue.$mount('#cocoakc');
+
+    </script>
+
+
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <!-- Path to Framework7 Library JS-->
+    <script type="text/javascript" src="dist/js/framework7.min.js"></script>
+    <script type="text/javascript" src="js/store.everything.min.js"></script>
+    <script type="text/javascript" src="js/vue/vue.min.js"></script>
+    <script type="text/javascript" src="js/vue-resource/vue-resource.js"></script>
+    <script type="text/javascript" src="js/vue-filter.js"></script>
+    <!-- Path to your app js-->
+    <script type="text/javascript" src="js/config.js"></script>
+    <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script type="text/javascript">
+        // var product_id = HttpHelper.getQuery('product_id');
+        var orderData = store.get('order');
+
+        function goBack(){
+            window.history.back();
+        }
+
+        var paymentVue = new Vue({
+            data: {
+                order: {
+                    order_id: orderData.data.list
+                },
+                pay: {
+                    appid: '',
+                    timestamp: '',
+                    noncestr: '',
+                    package: '',
+                    paySign: ''
+                }
+            },
+
+            methods: {
+                weiXinPayment: function(){
+
+                    let self = this;
+
+                    window.location.href=`https://app.icangyu.com/php_extend/h5_wx/demo/js_api_call.php?token=${token}&id=${self.$data.order.order_id}`;
+
+
+//                    self.$http.get(`https://app.icangyu.com/php_extend/h5_wx/demo/js_api_call.php?token=${token}&id=${self.$data.order.order_id}`)
+//                        .then(response => {
+//                        console.log(response);
+//                    self.$data.pay.appid = response.body.data.list.appid;
+//                    self.$data.pay.timestamp = response.body.data.list.timestamp;
+//                    self.$data.pay.noncestr = response.body.data.list.noncestr;
+//                    self.$data.pay.package = `prepay_id=${response.body.data.list.prepayid}`;
+//                    self.$data.pay.paySign = response.body.data.list.sign;
+//
+//                    if (typeof WeixinJSBridge == "undefined"){
+//                        if( document.addEventListener ){
+//                            document.addEventListener('WeixinJSBridgeReady', this.onBridgeReady, false);
+//                        }else if (document.attachEvent){
+//                            document.attachEvent('WeixinJSBridgeReady', this.onBridgeReady);
+//                            document.attachEvent('onWeixinJSBridgeReady', this.onBridgeReady);
+//                        }
+//                    }else{
+//                        this.onBridgeReady();
+//                    }
+//                }, response => {
+//
+//                        myApp.alert('提交订单失败！', '提示');
+//
+//                        window.location.href=`https://app.icangyu.com/php_extend/h5_wx/demo/js_api_call.php?token=${token}&id=${self.$data.order.order_id}`;
+//
+//                    });
+
+                },
+                zhifubaoPayment: function(){
+                    myApp.alert('暂不支持！', '提示');
+                },
+                onBridgeReady: function (){
+                    let self = this;
+                    // alert(JSON.stringify(self.$data.pay));
+                    WeixinJSBridge.invoke(
+                       'getBrandWCPayRequest', {
+                           "appId": self.$data.pay.appid,     //公众号名称，由商户传入     
+                           "timeStamp": self.$data.pay.timestamp,         //时间戳，自1970年以来的秒数     
+                           "nonceStr": self.$data.pay.noncestr, //随机串     
+                           "package": self.$data.pay.package,     
+                           "signType":"MD5",         //微信签名方式：     
+                           "paySign": self.$data.pay.paySign //微信签名 
+                        },
+                        function(res){
+                            alert(JSON.stringify(res));
+                            //
+                            //TODO: 支付成功的处理
+                            //
+                            // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
+                            if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+
+                            }else{
+                                myApp.alert(res.err_desc, '提示');
+                            }
+                        }
+                    ); 
+                }
+            },
+
+            mounted: function(){
+
+            }
+        });
+
+        paymentVue.$mount('#orderDetails');
+
+        var myApp = new Framework7({
+            router:false,
+            swipePanel: 'left'
+        });
+    </script>
+  </body>
+</html>

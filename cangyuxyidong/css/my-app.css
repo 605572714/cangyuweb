@@ -252,12 +252,22 @@ i.icon.icon-back {
 }
 
 
-.facebook-card .card-header {
+.total_support {
     display: block;
-    padding: 10px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 16px;
+    padding-left: 15px;
+    color: #333;
 }
 
-.facebook-card .facebook-avatar {
+.facebook-card .card-header {
+    display: block;
+    padding: 15px;
+    padding-left: 0px
+}
+
+.facebook-card .facebook-avatar img {
     float: left;
     position: relative;
     border-radius: 50%;
@@ -273,6 +283,9 @@ i.icon.icon-back {
 
     display: block;
 
+}
+.facebook-card{
+    padding: 15px;
 }
 
 .facebook-card a.group_icon_only img {
@@ -338,7 +351,8 @@ i.icon.icon-back {
 }
 
 .facebook-card .card-content-inner {
-    padding: 0px 0px;
+    padding:0px;
+    text-align: center;
 }
 
 .facebook-card .card-content-inner>p:first-child {
@@ -351,7 +365,7 @@ i.icon.icon-back {
 }
 
 .weibo-detail {
-    padding: .25rem .5rem .625rem;
+    padding: .25rem 0rem .625rem;
 }
 
 .media-pic-list {
@@ -374,7 +388,7 @@ i.icon.icon-back {
 }
 
 .card-content-yylm-t {
-    padding: 0 0.5rem;
+    padding: 0 ;
     font-size: 1rem;
     font-weight: normal;
 }
@@ -401,7 +415,7 @@ i.icon.icon-back {
     background: #fff;
     border-top: 0px solid #e6e6e6;
     border-bottom: 0px solid #e6e6e6;
-    padding: 0px 0.5rem;
+    padding: 0px 0rem;
     padding-bottom: 0.5rem;
 }
 
@@ -470,7 +484,7 @@ i.icon.icon-back {
 }
 
 .yylm-pinglun-con .detail-pinglun {
-    padding: 0 .5rem;
+    padding: 0 0rem;
 }
 
 .yylm-pinglun-con .detail-pinglun .detail-pinglun-tb {
@@ -674,24 +688,25 @@ i.icon.icon-back {
 .card_yanxuan {
     background: #fff;
     margin-bottom: 10px;
-}
-
-.card_yanxuan_txt {
     padding: 15px;
 }
 
+.card_yanxuan_txt {
+    text-align: left;
+
+}
+
 .card_yanxuan_txt h2 {
-    text-align: center;
     font-size: 16px;
-    color: black;
-    font-weight: 100;
+    color: #333;
+    margin-top: 15px;
 }
 
 .card_yanxuan_txt p {
-    color: #636363;
-    font-size: 14px;
-    margin-bottom: 0px;
-    text-align: center;
+    color: #888;
+    font-size: 16px;
+    margin-top: 4px;
+    margin-bottom: 15px;
 }
 
 
@@ -888,7 +903,7 @@ i.icon.icon-back {
 .cangyu_bbs_comment .comment-user-img {
     width: 2.4375rem;
     height: 2.4375rem;
-    margin: 0 .75rem;
+    /* margin: 0 .75rem; */
 }
 
 .cangyu_bbs_comment .comment-user-img a {
@@ -1062,39 +1077,21 @@ i.icon.icon-back {
     background-color: #fff;
     border-top-width: 0;
     border-right-width: 0;
-    border-bottom-width: 1px;
+    /* border-bottom-width: 1px; */
     border-left-width: 0;
-    border-color: #e0e0e0;
-
+    border-color: #d9d9d9;
     overflow: hidden;
-    height: 2.75rem;
 }
 
 .cangyu_bbs_comment .comment-top h2 {
     font-size: 16px;
-    font-weight: 100;
+    color: #333;
     display: inline-block;
-    line-height: 2.75rem;
     position: relative;
-    margin-left: 0.75rem;
-}
-
-.cangyu_bbs_comment .comment-top h2:after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: .125rem;
-    background-color: #3e3633;
-    bottom: 0;
-    left: 0;
-    -webkit-transform: scaleY(1);
-    transform: scaleY(1);
-    z-index: 2;
 }
 
 .maimai_xq_img {
-    padding-bottom: 10px;
-
+    padding:15px;
 }
 
 .maimai_xq_img img {

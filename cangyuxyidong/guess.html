@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>藏玉</title>
+    <!-- Path to Framework7 Library CSS-->
+    <link rel="stylesheet" href="dist/css/framework7-icons.css">
+    <link rel="stylesheet" href="dist/css/framework7.ios.min.css">
+    <!--<link rel="stylesheet" href="dist/css/framework7.material.min.css">-->
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="css/my-app.css">
+    <!-- Path to jquary Library JS-->
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="js/template-native.js"></script>
+    <!-- Path to Framework7 Library JS-->
+    <script type="text/javascript" src="dist/js/framework7.min.js"></script>
+</head>
+
+<body>
+
+<!-- Status bar overlay for fullscreen mode-->
+<div class="statusbar-overlay"></div>
+<!-- Panels overlay-->
+<div class="panel-overlay"></div>
+
+<!-- Views, and they are tabs-->
+<!-- We need to set "toolbar-through" class on it to keep space for our tab bar-->
+<div class="views">
+    <div id="maimai_xiangqing" class="view">
+        <div class="pages">
+            <div data-page="jianding_xiangqing" class="page">
+
+                <div class="page-content infinite-scroll" data-distance="100">
+
+                    <div class="card facebook-card">
+                        <div class="buy_mess_div"></div>
+                    </div>
+
+
+                    <div class="cangyu_bbs_comment">
+                        <div class="buy_comm_div_list"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Bottom Tabbar-->
+    <div class="cangyu_bbs_tabber">
+        <a href="javascript:void(0)" class="close"></a>
+        <a href="http://a.app.qq.com/o/simple.jsp?pkgname=icangyu.jade" target="_self" class="download" rel="nofollow">
+            <div class="logo"></div>
+            <div class="banner-label">
+                <p class="tb" data-node="appName">下载APP</p>
+                <p class="title-sub">参与藏玉猜价格</p>
+            </div>
+            <div class="open">立即打开</div>
+        </a>
+    </div>
+
+
+</div>
+
+
+<script type="text/javascript" src="js/config.js"></script>
+
+<script>
+
+    $(".close").click(function(){
+        $(".cangyu_bbs_tabber").hide();
+    });
+
+</script>
+
+
+
+<script type="text/html" id="buy_comm_list">
+
+    <%for(var i = 0; i < list.length; i ++){%>
+
+    <div  class="comment-item">
+        <div  class="m-box comment-con-top">
+
+            <div  class="comment-user-img m-avatar-box">
+                <a  href="#" class="m-img-box">
+                    <img  src="https://app.icangyu.com<%=list[i].avatar%>" alt="">
+                </a>
+            </div>
+
+            <div  class="m-box-col"><p  class="comment-user-name"><span><%=list[i].nickname%></span></p></div>
+
+            <div  class="comment-con-bot"><div  class="comment-con"><div><%=list[i].type_status%></div> </div></div>
+
+
+        </div>
+
+        <div  class="comment-con-bot"><div  class="comment-user-name comment-user-price"><%=list[i].price%></div></div>
+
+        <!--<div  class="comment-con-bot"><p  class="comment-con"><span><%=list[i].createdate%></span></p></div>-->
+
+    </div>
+
+    <%}%>
+
+</script>
+
+
+
+<script type="text/html" id="buy_mess">
+
+    <div class="paipin_shuju">
+
+        <%for(var i = 0; i < list.attributes.length; i ++){%>
+
+            <div class="paimai_shuju_xhx">
+                <span><%=list.attributes[i].title%>:</span>
+            </div>
+
+            <div class="paimai_shuju_xhx">
+                <%=list.attributes[i].value%>
+            </div>
+
+        <%}%>
+
+
+    </div>
+
+    <div class="card-content">
+
+        <div class="card-content-inner">
+
+            <h2 class="card-content-yylm-t">拍品描述</h2>
+            <h3 class="card-content-yylm-t"><%=list.content%></h3>
+            <div class="maimai_xq_img">
+
+                <%for(var k = 0; k < list.album.length; k ++){%>
+
+                    <a onclick="showPhoto('<%=convert_to_string(list.album)%>','<%=k%>')">
+                        <img src="https://app.icangyu.com<%=list.album[k].file_path%>"alt=""/>
+                    </a>
+
+                <%}%>
+
+            </div>
+        </div>
+
+    </div>
+
+
+</script>
+
+
+<script>
+
+    var square_id = HttpHelper.getQuery('item_id');
+
+    //拍卖详情
+    $.getJSON(`https://app.icangyu.com/icyApi/guess_details?id=${square_id}`, function (data) {
+
+        console.log(data);
+        var Odata = data.data;
+        var html = template('buy_mess',Odata);
+        $('.buy_mess_div').html(html);
+
+    })
+
+    //出价列表
+    $.getJSON(`https://app.icangyu.com/icyApi/guess_price_list?id=${square_id}`, function (data) {
+
+        console.log(data);
+        var Odata = data.data;
+        var html = template('buy_comm_list',Odata);
+        $('.buy_comm_div_list').html(html);
+
+    })
+
+    // Initialize your app
+    var maimaiApp = new Framework7({
+        router: false,
+        swipePanel: 'left',
+        // ... other parameters
+    });
+
+</script>
+
+
+<script>
+
+
+    template.helper('convert_to_string', function(album){
+        var arr = [];
+        for(var i = 0; i < album.length; i++){
+            arr.push('https://app.icangyu.com'+album[i].file_path);
+        }
+        return arr.join(';');
+    });
+
+    function showPhoto(images,k) {
+
+        var arr = images.split(';');
+        var myPhotoBrowserPopupDark = maimaiApp.photoBrowser({
+            photos : arr,
+            theme: 'dark',
+            initialSlide:k,
+            type: 'standalone'
+        });
+        myPhotoBrowserPopupDark.open();
+
+    }
+
+</script>
+
+
+</body>
+</html>

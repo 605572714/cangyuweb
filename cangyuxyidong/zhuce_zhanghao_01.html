@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <title>藏玉</title>
+  <!-- Path to Framework7 Library CSS-->
+  <link rel="stylesheet" href="dist/css/framework7-icons.css">
+  <link rel="stylesheet" href="dist/css/framework7.ios.min.css">
+
+  <!--<link rel="stylesheet" href="dist/css/framework7.material.min.css">-->
+
+  <!-- Path to your custom app styles-->
+
+  <link rel="stylesheet" href="css/my-app.css">
+</head>
+
+<body>
+  <!-- Status bar overlay for fullscreen mode-->
+  <div class="statusbar-overlay"></div>
+  <!-- Panels overlay-->
+  <div class="panel-overlay"></div>
+
+  <!--弹出发布页面-->
+  <div class="popup popup-fabu">
+    <div class="fabu_btn_list">
+      <a class="qiujianding_btn"></a>
+      <a class="fatiezi_btn"></a>
+      <a class="woxiangmai_btn"></a>
+    </div>
+    <p class="popup_fabu_guanbi"><a href="#" class="close-popup"><i class="f7-icons">close</i></a></p>
+  </div>
+
+
+
+  <!-- Views, and they are tabs-->
+  <!-- We need to set "toolbar-through" class on it to keep space for our tab bar-->
+  <div class="views">
+
+    <div class="pages navbar-through" id="register">
+      <div class="navbar cangyu_bbs_top_tabber_yx">
+        <div class="navbar-inner">
+          <div class="left sliding">
+            <a href="login_index.html" class="back link"> <i class="icon icon-back"></i></a>
+          </div>
+          <div class="center color-baise">注册账号</div>
+          <div class="right cangyu_bbs_tanchu_pinglun_btn_fabu"><a v-on:click="next" class="back link"> 下一步</a></div>
+        </div>
+      </div>
+
+      <div data-page="jianding_xiangqing" class="page no-navbar">
+
+
+        <div class="page-content">
+          <div class="zhuce_index">
+            <div class="denglu_nr">
+              <div class="denglu_nr_input">
+                <div class="list-block">
+                  <ul>
+                    <li>
+                      <div class="item-content">
+
+                        <div class="item-inner">
+                          <div class="item-title label">手机号</div>
+                          <div class="item-input">
+                            <input type="text" v-model="mobile" placeholder="请输入手机号">
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+
+                    <li>
+                      <div class="item-content">
+
+                        <div class="item-inner">
+                          <div class="item-title label">验证码</div>
+                          <div class="item-input">
+                            <input type="text" v-model="validateCode" placeholder="请输入验证码">
+                          </div>
+                          <div class="item-title label huoquyanzhengma"><a v-on:click="getValidateCode">获取验证码</a></div>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+
+
+              </div>
+              <!--<div class="denglu_nr_zh"><a href="#">忘记密码</a></div>
+    		<div class="denglu_nr_input_tj"><a href="#" class="button button-round button-big active ">登录</a></div>-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- Path to Framework7 Library JS-->
+  <script type="text/javascript" src="dist/js/framework7.min.js"></script>
+  <script type="text/javascript" src="js/vue/vue.min.js"></script>
+  <script type="text/javascript" src="js/vue-resource/vue-resource.js"></script>
+  <script type="text/javascript" src="js/config.js"></script>
+  <!-- Path to your app js-->
+  <script type="text/javascript">
+    let registerVue = new Vue({
+      data: {
+        mobile: '',
+        validateCode: ''
+      },
+
+      methods: {
+        getValidateCode: function () {
+          let self = this;
+
+          if(!self.$data.mobile || self.$data.mobile.length !== 11){
+            app.alert('请输入正确的手机号！', '提示');
+            return;
+          }
+
+          self.$http.get(`${CYHOST}/icy/get_password?mobile=${self.$data.mobile}`)
+            .then(res => {
+              let data = {};
+
+              if(typeof(res.body) === 'object'){
+                data = res.body;
+              } else {
+                data = JSON.parse(res.body.substring(1));
+              }
+              console.log(res);
+              // console.log(data);
+              if(data.result === 100){
+                app.alert('验证码已经发送到您的手机！', '提示');
+              }
+              else if(data.result === 209){
+                app.alert(data.info, '提示');
+              }
+              else{
+                app.alert('获取验证码失败！', '提示');
+              }
+            }, res => {
+              console.log(res);
+              app.alert(res.body.info, '提示');
+            });
+        },
+        next: function () {
+          let self = this;
+          if(!self.$data.mobile || self.$data.mobile.length !== 11){
+            app.alert('请输入正确的手机号！', '提示');
+            return;
+          }
+          if(!self.$data.validateCode || self.$data.validateCode.length !== 6){
+            app.alert('请输入正确的验证码！', '提示');
+            return;
+          }
+
+          self.$http.get(`${CYHOST}/icy/register?mobile=${self.$data.mobile}&code=${self.$data.validateCode}`)
+            .then(res => {
+              console.log(res);
+              if(res.body.result === 100){
+                document.cookie = `JADE_TOKEN=${res.body.data.token}`;
+              }else{
+                app.alert(res.body.info, '提示');
+                return;
+              }
+
+              setTimeout(function() {
+                window.location.href = 'zhuce_zhanghao_02.html';
+              }, 300);
+            }, res => {
+              console.log(res);
+              app.alert(res.body.info, '提示');
+            });
+        }
+      }
+    });
+
+    registerVue.$mount('#register');
+
+    let app = new Framework7({
+        router:false,
+        swipePanel: 'left'
+    });
+  </script>
+
+</body>
+
+</html>

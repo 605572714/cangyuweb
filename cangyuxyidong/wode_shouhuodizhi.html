@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>藏玉</title>
+    <!-- Path to Framework7 Library CSS-->
+    <link rel="stylesheet" href="dist/css/framework7-icons.css">
+    <link rel="stylesheet" href="dist/css/framework7.ios.min.css">
+    
+    <!--<link rel="stylesheet" href="dist/css/framework7.material.min.css">-->
+    
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="css/my-app.css">
+  </head>
+  <body>
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar-overlay"></div>
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+    <!--弹出发布页面-->
+    <div class="popup popup-fabu">
+   
+        <div class="fabu_btn_list">
+            <a class="qiujianding_btn"></a>
+      		<a class="fatiezi_btn"></a>
+      		<a class="woxiangmai_btn"></a>
+        </div>
+        <p class="popup_fabu_guanbi"><a href="#" class="close-popup"><i class="f7-icons">close</i></a></p>
+    </div>
+
+    <!-- Views, and they are tabs-->
+    <!-- We need to set "toolbar-through" class on it to keep space for our tab bar-->
+    <div class="views" id="address_list">
+        <div class="pages navbar-through">
+            <div data-page="jianding_xiangqing" class="page">
+                <div class="navbar cangyu_bbs_top_tabber">
+                    <div class="navbar-inner">
+                        <div class="left sliding"><a href="index.html#view-4" class="back link"> <i class="icon icon-back"></i></a></div>
+                        <div class="center ">收货地址</div>
+                        <div class="right"><!--右侧按钮暂时隐藏--></div>
+                    </div>
+                </div>
+
+                <div class="page-content">
+
+                    <div class="card cangyu_bbs_dizhi" v-for="addr in addresses">
+                        <div class="card-content">
+                            <div class="card-content-inner cy-shop-contact">
+                                <h1>{{ addr.nickname }}<span>{{ addr.mobile }}</span></h1>
+                                <p>{{ addr.location + addr.address }}</p>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="row cy-shop-dizhiguanli">
+                                <div class="col-40">
+                                    <div class="yonghuxieyi clear-h">
+                                        <label class="label-checkbox item-content" v-on:click="checked(addr)">
+                                            <input type="checkbox" name="my-checkbox" value="0"  v-model="addr.checked">
+                                            <div class="item-media"><i class="icon icon-form-checkbox"></i></div>
+                                            <div class="item-inner">设为默认地址 </div>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-50">
+                                    <div class="col-50 cy-shop-dizhiguanli-btn"><a v-on:click="edit(addr)">编辑</a></div>
+                                    <div class="col-50 cy-shop-dizhiguanli-btn"><a v-on:click="addressDel(addr)">删除</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+      <!-- Bottom Tabbar-->
+        <div class="toolbar tabbar tabbar-labels cangyu_bbs_tabber_shouhuodizhi">
+            <div class="toolbar-inner"><a href="wode_shouhuodizhi_xinjia.html" class="link">新增收货地址</a></div>
+        </div>
+    </div>
+
+    <!-- Path to Framework7 Library JS-->
+    <script type="text/javascript" src="dist/js/framework7.min.js"></script>
+    <script type="text/javascript" src="js/store.everything.min.js"></script>
+    <script type="text/javascript" src="js/vue/vue.min.js"></script>
+    <script type="text/javascript" src="js/vue-resource/vue-resource.js"></script>
+    <script type="text/javascript" src="js/vue-filter.js"></script>
+    <script type="text/javascript" src="js/config.js"></script>
+    <!-- Path to your app js-->
+    <script type="text/javascript">
+        let addressVue = new Vue({
+            data: {
+                addresses: []
+            },
+            methods: {
+                checked: function(address){
+                    console.log(address);
+                    for(let addr of this.$data.addresses){
+                        addr.type = 0;
+                    }
+                    address.type = 1;
+                    
+                    let self = this;
+                    let formData = new FormData();
+                    formData.append('token', token);
+                    formData.append('id', address.id);
+                    formData.append('type', 1);
+                    self.$http.post(`${CYHOST}/icy/address_edit`, formData)
+                        .then(res => {
+                            if(res.body.result === 100){
+                                app.alert('设置默认地址成功', '提示', function(){
+                                    window.location.href = 'wode_shouhuodizhi.html';
+                                });
+                            }else{
+                                app.alert(res.body.info, '提示');
+                            }
+                        }, res => {
+                            console.log(res);
+                            app.alert('设置默认地址失败', '提示');
+                        });
+                },
+                edit: function(address){
+                    store.set('edit-address', address);
+                    setTimeout(function() {
+                        window.location.href = 'wode_shouhuodizhi_xinjia.html?edit=1';
+                    }, 300);
+                },
+                addressDel: function(address){
+                    console.log(address);
+                    let self = this;
+                    app.confirm('确定删除？', '提示', function(){
+                        let formData = new FormData();
+                        formData.append('token', token);
+                        formData.append('id', address.id);
+                        self.$http.post(`${CYHOST}/icy/address_del`, formData)
+                            .then(res => {
+                                if(res.body.result === 100){
+                                    app.alert('删除成功', '提示');
+                                }else{
+                                    app.alert(res.body.info, '提示');
+                                }
+                            }, res => {
+                                console.log(res);
+                                app.alert('删除失败', '提示');
+                            });
+                    });
+                }
+            },
+
+            mounted: function(){
+                let self = this;
+                //收货地址列表
+                self.$http.get(`${CYHOST}/icy/address_list?token=${token}`)
+                    .then(response => {
+                        console.log(response.body);
+                        if(response.body.result === 100){
+                            for(let addr of response.body.data.list){
+                                if(addr.type === '0'){
+                                    addr.checked = false;
+                                }else{
+                                    addr.checked = true;
+                                }
+                            }
+
+                            self.$data.addresses = response.body.data.list;
+                        }
+                    }, response => {
+                        console.log(response);
+                        app.alert('获取收货地址列表失败', '提示');
+                    });
+            }
+        });
+
+        addressVue.$mount('#address_list');
+
+        var app = new Framework7({
+            router: false,
+            swipePanel: 'left'
+        });
+    </script>
+  </body>
+</html>

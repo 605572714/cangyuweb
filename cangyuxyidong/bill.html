@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>我的账单</title>
+    <link rel="stylesheet" href="dist/css/framework7-icons.css">
+    <link rel="stylesheet" href="dist/css/framework7.ios.min.css">
+    <link rel="stylesheet" href="css/my-app.css">
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="js/template-native.js"></script>
+    <script type="text/javascript" src="dist/js/framework7.min.js"></script>
+
+
+    <style>
+
+     /*   .page {
+            width: 345px;
+            height: 1190px;
+            background-image: url('images/background1.png');
+            background-size: 100%;
+            padding: 15px;
+        }*/
+
+        .top {
+            height: 52px;
+            line-height: 52px;
+            padding-left: 20px;
+        }
+
+        .top_time {
+            float: right;
+            padding-right: 20px;
+            color: #888888;
+        }
+
+        .content {
+            height: 430px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .title {
+            font-size: 26px;
+            color: #333333;
+            padding-top: 20px;
+        }
+
+        .content_time {
+            width: 97px;
+            height: 39px;
+            border-radius: 2px;
+            text-align: center;
+            line-height: 39px;
+            font-size: 26px;
+            color: #8b764e;
+            border: 1px solid rgba(139, 118, 78, 1);
+            margin: 15px auto;
+
+        }
+
+        .content_price {
+            font-size: 14px;
+            color: rgba(51, 51, 51, 1);
+        }
+
+        #num {
+            color: #8B764E
+        }
+
+        .product {
+            height: 442px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+        }
+
+        .product_time {
+            margin-top: 30px;
+            font-size: 26px;
+            color: #8B764E;
+        }
+
+        .product_text {
+            font-size: 14px;
+            color: #333333;
+            margin-top: 10px;
+            margin-bottom: 30px;
+        }
+
+        .detail {
+            width: 295px;
+            height: 279px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid rgba(217, 217, 217, 1);
+        }
+
+        .detail_img {
+            width: 295px;
+            height: 206px;
+        }
+
+        .detail_title {
+            margin-top: 18px;
+            margin-bottom: 6px;
+            font-size: 14px;
+            color: #333333;
+        }
+
+        .detail_price {
+            font-size: 14px;
+            color: #bc2e2e;
+        }
+
+        .bottom {
+            height: 210px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .bottom_button {
+            width: 295px;
+            height: 49px;
+            background: rgba(188, 46, 46, 1);
+            border-radius: 2px;
+            font-size: 14px;
+            border: none;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .bottom_share {
+            font-size: 12px;
+            color: #333333;
+        }
+    </style>
+
+    <script>
+        window.onload = function () {
+            var canvas = document.getElementById("pie_canvas");
+            var seriesData = [
+                { name: "apples", value: 0.15, color: "#F1B34E", label1: "秒杀", label2: "30%" },
+                { name: "orange", value: 0.15, color: "#ED7347", label1: "众筹", label2: "30%" },
+                { name: "banana", value: 0.3, color: "#43BBD2", label1: "众筹", label2: "30%" },
+                { name: "peaches", value: 0.2, color: "#BDD25A", label1: "直播", label2: "30%" },
+                { name: "strawberries", value: 0.2, color: "#F5EA69", label1: "直播", label2: "30%" }
+            ]
+            var config = {
+                width: 300,
+                height: 260,
+                series: seriesData,
+                canvas: canvas,
+                title: "Fruit Sales",
+                callback: function (obj) {
+                    console.log(obj.label1);
+                }
+            };
+            pieChart.initSettings(config);
+            pieChart.render();
+
+        }  
+    </script>
+
+
+
+</head>
+
+<body>
+
+
+<div class="statusbar-overlay"></div>
+<div class="panel-overlay"></div>
+<div class="views">
+
+    <div id="maimai_xiangqing" class="view">
+        <div class="pages">
+            <div data-page="jianding_xiangqing" class="page">
+                <div class="page-content infinite-scroll" data-distance="100">
+
+                    <div class="card facebook-card">
+                        <div class="buy_mess_div"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bottom Tabbar-->
+    <div class="cangyu_bbs_tabber">
+        <a href="javascript:void(0)" class="close"></a>
+        <a href="http://a.app.qq.com/o/simple.jsp?pkgname=icangyu.jade" target="_self" class="download" rel="nofollow">
+            <div class="logo"></div>
+            <div class="banner-label">
+                <p class="tb" data-node="appName">下载APP</p>
+                <p class="title-sub">参与藏玉拍卖</p>
+            </div>
+            <div class="open">立即打开</div>
+        </a>
+    </div>
+
+</div>
+
+<script type="text/javascript" src="js/config.js"></script>
+
+<script>
+    $(".close").click(function(){
+        $(".cangyu_bbs_tabber").hide();
+    });
+</script>
+
+
+<script type="text/html" id="buy_mess">
+
+    <div class="paipin_shuju">
+
+        <%for(var i = 0; i < list.attributes.length; i ++){%>
+
+            <div class="paimai_shuju_xhx">
+                <span><%=list.attributes[i].title%>:</span>
+            </div>
+
+            <div class="paimai_shuju_xhx">
+                <%=list.attributes[i].value%>
+            </div>
+
+        <%}%>
+
+
+        <%for(var i = 0; i < list.price.length; i ++){%>
+
+            <div class="paimai_shuju_xhx"><span><%=list.price[i].title%>:</span></div>
+            <div class="paimai_shuju_xhx"><%=list.price[i].value%></div>
+
+        <%}%>
+
+    </div>
+
+    <div class="card-content">
+
+            <div class="card-content-inner">
+
+                <h2 class="card-content-yylm-t">拍品描述</h2>
+                <h3 class="card-content-yylm-t"><%=list.content%></h3>
+                <div class="maimai_xq_img">
+
+                    <%for(var k = 0; k < list.album.length; k ++){%>
+
+                        <a onclick="showPhoto('<%=convert_to_string(list.album)%>','<%=k%>')">
+                            <img src="https://app.icangyu.com<%=list.album[k].file_path%>"alt=""/>
+                        </a>
+
+                    <%}%>
+
+                </div>
+            </div>
+
+    </div>
+
+
+</script>
+
+
+<script>
+
+    var square_id = HttpHelper.getQuery('item_id');
+
+    //拍卖详情
+    $.getJSON(`${CYHOST}/icy/share_sale?id=${square_id}`, function (data) {
+
+        console.log(data);
+        var Odata = data.data;
+        var html = template('buy_mess',Odata);
+        $('.buy_mess_div').html(html);
+
+    })
+
+    var maimaiApp = new Framework7({
+        router: false,
+        swipePanel: 'left',
+    });
+
+</script>
+
+
+
+<script>
+
+    template.helper('convert_to_string', function(album){
+        var arr = [];
+        for(var i = 0; i < album.length; i++){
+            arr.push('https://app.icangyu.com'+album[i].file_path);
+        }
+        return arr.join(';');
+    });
+
+    function showPhoto(images,k) {
+        var arr = images.split(';');
+        var myPhotoBrowserPopupDark = maimaiApp.photoBrowser({
+            photos : arr,
+            theme: 'dark',
+            initialSlide:k,
+            type: 'standalone'
+        });
+        myPhotoBrowserPopupDark.open();
+    }
+
+</script>
+
+
+</body>
+</html>

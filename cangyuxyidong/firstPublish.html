@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/firstPublish.css">
+    <script src="js/vue/vue.min.js"></script>
+    <script type="text/javascript" src="js/config.js"></script>
+    <script src="js/vue-resource/vue-resource.min.js"></script>
+    <title>藏于首发</title>
+</head>
+
+<body>
+    <div id="app">
+        <img src="" alt="" class="top_img">
+        <div class="tab">
+            <div class="tabbar1" @click='changeType' :style="type==1?'color:#bc2e2e;':'color:#333;'">图集</div>
+            <div class="tabbar2" @click='changeType' :style="type==2?'color:#bc2e2e;':'color:#333;'">商品</div>
+        </div>
+        <div class="imgList" v-if='type==1'>
+            <div class="item" v-for="item,index in imgList">
+                <img :src="imghost+item.file_path" alt="">
+            </div>
+        </div>
+        <div class="products" v-if='type==2'>
+            <div class="product" v-for='item,index in proList'>
+                <img :src="item.img" alt="">
+                <div class="right" :style="'width:'+wWidth+'px'">
+                    <div class="name">{{item.title}}</div>
+                    <div class="mate">产地：{{item.material}}</div>
+                    <div class="price">￥{{item.price}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var square_id = HttpHelper.getQuery('id');
+        var wWidth = document.body.scrollWidth
+        var app = new Vue({
+            el: '#app',
+            data: {
+                imgList: null,
+                proList: null,
+                imghost: CYHOST,
+                type: 1,
+                wWidth: document.body.scrollWidth - 175
+            },
+            mounted() {
+                var that = this;
+                that.getDetail()
+            },
+            methods: {
+                getDetail() {
+                    var that = this;
+                    that.$http.get(`${CYHOST}/icyApi/starting_room_details?room_id=${square_id}`).then(
+                        res => {
+                            console.log(res.body.data, '1')
+                        })
+                    that.$http.get(`${CYHOST}/icyApi/live_starting_details?room_id=${square_id}`).then(
+                        res => {
+                            console.log(res.body.data, '2')
+                            that.imgList = res.body.data.list
+                        })
+                    that.$http.get(
+                        `${CYHOST}/icyApi/live_starting_product_list?room_id=${square_id}`).then(
+                        res => {
+                            console.log(res.body.data, '3')
+                            that.proList = res.body.data.list
+
+                        })
+                },
+                changeType(type) {
+                    var that = this;
+                    console.log(that.type)
+                    if (that.type == 1) {
+                        that.type = 2
+                    } else {
+                        that.type = 1
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

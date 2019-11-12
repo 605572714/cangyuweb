@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>藏玉</title>
+    <!-- Path to Framework7 Library CSS-->
+    <link rel="stylesheet" href="dist/css/framework7-icons.css">
+    <link rel="stylesheet" href="dist/css/framework7.ios.min.css">
+    
+    <!--<link rel="stylesheet" href="dist/css/framework7.material.min.css">-->
+    
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="css/my-app.css">
+  </head>
+  <body>
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar-overlay"></div>
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+    <!--弹出发布页面-->
+    <div class="popup popup-fabu">
+   
+        <div class="fabu_btn_list">
+            <a class="qiujianding_btn"></a>
+      		<a class="fatiezi_btn"></a>
+      		<a class="woxiangmai_btn"></a>
+        </div>
+        <p class="popup_fabu_guanbi"><a href="#" class="close-popup"><i class="f7-icons">close</i></a></p>
+    </div>
+
+    <!-- Views, and they are tabs-->
+    <!-- We need to set "toolbar-through" class on it to keep space for our tab bar-->
+    <div class="views" id="orderDetails">
+        <div class="pages navbar-through">
+            <div data-page="jianding_xiangqing" class="page">
+                <div class="navbar cangyu_bbs_top_tabber">
+                    <div class="navbar-inner">
+                        <div class="left sliding"><a href="javascript:;" onclick="goBack()" class="link"> <i class="icon icon-back"></i></a></div>
+                        <div class="center ">收货地址</div>
+                        <div class="right"><!--右侧按钮暂时隐藏--></div>
+                    </div>
+                </div>
+
+                <div class="page-content">
+                    <div class="card cangyu_bbs_dizhi" v-show="!showAddAddress">
+                        <div class="card-content">
+                            <div class="card-content-inner cy-shop-contact default-address">
+                                <div>
+                                    <span class="default-left">{{ address.nickname }}</span>
+                                    <span class="default-right">{{ address.mobile }}</span>
+                                </div>
+                                <p class="default-address-clear default-address-detail">{{ address.location }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card cangyu_bbs_dizhi" v-show="showAddAddress">
+                        <div class="card-content">
+                            <div class="card-content-inner cy-shop-contact" v-on:click="addAddress">
+                                <div class="add-address">请添加收货地址</div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="card cangyu_bbs_dizhi">
+                        <div class="card-content">
+                            <div class="list-block media-list">
+                                <ul>
+                                    <li class="item-content">
+                                        <div class="item-media">
+                                            <img v-bind:src="order.productImageUri | alb" width="50" height="50">
+                                        </div>
+                                    <div class="item-inner">
+                                        <div class="item-title-row">
+                                            <div class="item-title order-title">{{ order.productName }}</div>
+                                        </div>
+                                        <div class="item-subtitle order-price">￥{{ order.productPrice }}</div>
+                                    </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+      <!-- Bottom Tabbar-->
+        <div class="toolbar tabbar tabbar-labels cangyu_bbs_tabber_shouhuodizhi">
+            <div class="toolbar-inner"><a href="javascript:;" v-on:click="submitOrder" class="link">确认订单</a></div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <!-- Path to Framework7 Library JS-->
+    <script type="text/javascript" src="dist/js/framework7.min.js"></script>
+    <script type="text/javascript" src="js/store.everything.min.js"></script>
+    <script type="text/javascript" src="js/vue/vue.min.js"></script>
+    <script type="text/javascript" src="js/vue-resource/vue-resource.js"></script>
+    <script type="text/javascript" src="js/vue-filter.js"></script>
+    <!-- Path to your app js-->
+    <script type="text/javascript" src="js/config.js"></script>
+    <script type="text/javascript">
+        var product_id = HttpHelper.getQuery('product_id');
+        var orderData = JSON.parse(store.get('order_details'));
+
+        console.log(orderData);
+        function goBack(){
+            window.history.back();
+        }
+
+        var orderVue = new Vue({
+            data: {
+                order: {
+                    productName: orderData.pro_name,
+                    productPrice: orderData.pro_price,
+                    productImageUri: orderData.album[0].file_path
+                },
+                address: {
+                    id: 0,
+                    nickname: '',
+                    mobile: '',
+                    location: ''
+                },
+                showAddAddress: false
+            },
+
+            methods: {
+                submitOrder: function(){
+                    this.$http.get(`${CYHOST}/icy/user_order_submit?token=${token}&type=1&pro_id=${product_id}&address=${this.$data.address.id}`)
+                        .then(response => {
+                            console.log(response);
+                            if(response.body.result === 100){
+                                store.set('order', response.body);
+                                window.location.href = 'pay_order.html';
+                            }else{
+                                alert('提交订单失败。');
+                            }
+                        }, response => {
+                            console.log(response);
+                        });
+                },
+                addAddress: function(){
+                    window.location.href = 'wode_shouhuodizhi_xinjia.html';
+                }
+            },
+
+            mounted: function(){
+                //收货地址列表
+                this.$http.get(`${CYHOST}/icy/address_list?token=${token}`)
+                    .then(response => {
+                        // console.log(response.body);
+                        let self = this;
+                        if(response.body.result === 100){
+                            if(response.body.data.list.length === 0){
+                                self.$data.showAddAddress = true;
+                                return;
+                            }
+
+                            for(let addr of response.body.data.list){
+                                if(addr.type === '1'){
+                                    self.$data.address.id = addr.id;
+                                    self.$data.address.nickname = addr.nickname;
+                                    self.$data.address.mobile = addr.mobile;
+                                    self.$data.address.location = addr.location + addr.address;
+                                    break;
+                                }
+                            }
+                        }
+                    }, response => {
+                        console.log(response);
+                    });
+            }
+        });
+
+        orderVue.$mount('#orderDetails');
+    </script>
+  </body>
+</html>

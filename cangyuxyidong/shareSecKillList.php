@@ -29,7 +29,6 @@ $signPackage = $jssdk->GetSignPackage();
     <script type="text/javascript" src="js/template-native.js"></script>
     <!-- Path to Framework7 Library JS-->
     <script type="text/javascript" src="dist/js/framework7.min.js"></script>
-    <script src="https://static.jmlk.co/scripts/dist/jmlink.min.js"></script>
 
 </head>
 
@@ -101,15 +100,17 @@ $signPackage = $jssdk->GetSignPackage();
         <%for(var i = 0; i < list.length; i ++){%>
         <div class="list">
             <a href="secKill.php?item_id=<%=list[i].id%>" class="block-a">
-                <!-- <div style="background-image:url(https://app.icangyu.com<%=list[i].pic_url%>);height: 55vw;"
-                    valign="bottom" class="card-header color-white no-border"></div> -->
-                <img src="https://app.icangyu.com<%=list[i].pic_url%>" alt="">
+                <%if(list[i].pic_url.indexOf('http')==-1){%>
+                <img src="https://app.icangyu.com<%=list[i].pic_url%>">
+                <%}else{%>
+                <img src="<%=list[i].pic_url%>">
+                <%}%>
                 <div class="bottom">
                     <div class="list_title"><%=list[i].content%></div>
-                    <div class='list_price'>&nbsp;￥<%=list[i].price%></div>
-                </div>
+        <div class='list_price'>&nbsp;￥<%=list[i].price%></div>
+        </div>
 
-            </a>
+        </a>
         </div>
         <%}%>
     </script>
@@ -187,7 +188,6 @@ $signPackage = $jssdk->GetSignPackage();
             new JMLink(configs);
         });
     </script>
-
 
 </body>
 

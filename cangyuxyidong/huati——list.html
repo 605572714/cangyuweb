@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>藏玉</title>
+    <!-- Path to Framework7 Library CSS-->
+    <link rel="stylesheet" href="dist/css/framework7-icons.css">
+    <link rel="stylesheet" href="dist/css/framework7.ios.min.css">
+    <!--<link rel="stylesheet" href="dist/css/framework7.material.min.css">-->
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="css/my-app.css">
+
+      <!-- Path to jquary Library JS-->
+      <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+      <script type="text/javascript" src="js/template-native.js"></script>
+      <!-- Path to Framework7 Library JS-->
+      <script type="text/javascript" src="dist/js/framework7.min.js"></script>
+
+  </head>
+
+
+  <body>
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar-overlay"></div>
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+    <!--弹出发布页面-->
+    <div class="popup popup-fabu">
+        <div class="fabu_btn_list">
+            <a class="qiujianding_btn"></a>
+      		<a class="fatiezi_btn"></a>
+      		<a class="woxiangmai_btn"></a>
+        </div>
+        <p class="popup_fabu_guanbi"><a href="#" class="close-popup"><i class="f7-icons">close</i></a></p>
+    </div>
+
+    <!-- Views, and they are tabs-->
+    <!-- We need to set "toolbar-through" class on it to keep space for our tab bar-->
+    <div class="views">
+        <div class="view" id="huati_list">
+            <div class="pages navbar-through">
+                <div data-page="jianding_xiangqing" class="page">
+
+                    <div class="navbar cangyu_bbs_top_tabber">
+                        <div class="navbar-inner">
+                            <div class="left sliding"><a onclick="goBack()" class="back link"> <i class="icon icon-back"></i></a></div>
+                            <div class="center ">话题列表</div>
+                            <div class="right"><!--右侧按钮暂时隐藏--></div>
+                        </div>
+                    </div>
+
+
+                    <div class="page-content infinite-scroll pull-to-refresh-content" data-distance="100">
+                        <div class="pull-to-refresh-layer">
+                            <div class="preloader"></div>
+                            <div class="pull-to-refresh-arrow"></div>
+                        </div>
+
+                        <div class="cangyu_bbs_huati_list">
+                            <div class="talk_div_list"></div>
+                        </div>
+
+                        <div class="infinite-scroll-preloader">
+                            <div class="preloader"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--更多话题列表模版-->
+    <script type="text/html" id="talk_list">
+
+        <%for(var i = 0; i < list.length; i++){%>
+            <div class="col-100">
+                <div class="vux-masker-box" style="margin-bottom: 60px;" >
+                    <a onclick="goToDetails(<%=itemFormat(list[i])%>)" class="block-a">
+                        <div class="m-img" style="background-image: url(https://app.icangyu.com<%=list[i].background_list_image%>);"></div>
+                        <div class="vux-masker" style="background-color: rgba(0, 0, 0, 0.498039); position: relative; top: 30px;">
+                            <div class="goumailianjie-xianshi"></div>
+                            <div slot="content" class="m-title" style="color: #333;"><%=list[i].content%></div>
+                        </div>
+
+                    </a>
+                </div>
+            </div>
+        <%}%>
+
+    </script>
+
+
+    <script type="text/javascript" src="js/store.everything.min.js"></script>
+    <script type="text/javascript" src="js/config.js"></script>
+  <script>
+
+        template.helper('itemFormat', function(item){
+            return JSON.stringify(item);
+        });
+
+        function goBack(){
+            window.history.go(-1);
+        }
+
+        function goToDetails(item){
+            let arr = [];
+            var obj = {
+                content : item.content,
+                title : item.title,
+                bgurl : item.background_image_big,
+                id : item.id
+            };
+
+            arr.push(obj);
+            store.set('topic_array', arr);
+
+            setTimeout(function(){
+                window.location.href = 'huati——xiangqing.html?aa=0&topicId=' + item.id;
+            }, 200);
+        };
+
+        $.getJSON('https://app.icangyu.com/icy/topic_list',function (data) {
+            // console.log(data);
+            var Odata = data.data;
+            var html = template('talk_list',Odata);
+            $('.talk_div_list').html(html);
+        });
+
+        // Initialize your app
+        var huatiApp = new Framework7({
+            router: false,
+            swipePanel: 'left'
+        });
+
+        huatiApp.addView('#huati_list');
+
+
+        // Export selectors engine
+        var $$ = Dom7;
+
+        var ptrContent = $$('.pull-to-refresh-content');
+        // Add 'refresh' listener on it
+        ptrContent.on('refresh', function (e) {
+            tieziPageIndex = 0;
+
+            setTimeout(function(){
+                //获取话题列表接口
+                $.getJSON(`${CYHOST}/icy/topic_list?page=0`,function (data) {
+                    // console.log(data);
+                    var Odata = data.data;
+                    var html = template('talk_list',Odata);
+                    $('.talk_div_list').html(html);
+
+                    $('.infinite-scroll-preloader').show();
+
+                    // When loading done, we need to reset it
+                    huatiApp.pullToRefreshDone();
+                });
+            }, 1500);
+        });
+
+        var loading = false;    //是否正在加载中
+        var tieziPageIndex = 0;
+        var pageSize = 10;
+        var resetLoadingTime = 1500;
+        //下拉加载
+        $$('.infinite-scroll').on('infinite', function (ev) {
+            setTimeout(function() {
+                if (loading) return;
+                loading = true;
+
+                tieziPageIndex = tieziPageIndex + pageSize;
+
+                //获取话题列表接口
+                $.getJSON(`${CYHOST}/icy/topic_list?page=${tieziPageIndex}`,function (data) {
+                    // console.log(data);
+                    var Odata = data.data;
+
+                    if(Odata.list.length === 0){
+                        $('.infinite-scroll-preloader').hide();
+                    }else{
+                       var html = template('talk_list',Odata);
+                        $('.talk_div_list').append(html); 
+                    }
+
+                    setTimeout(function(){
+                        loading = false;
+                    }, resetLoadingTime); 
+                });
+            }, resetLoadingTime);
+        });
+
+  </script>
+
+
+  </body>
+
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <title>藏玉</title>
+  <!-- Path to Framework7 Library CSS-->
+  <link rel="stylesheet" href="dist/css/framework7-icons.css">
+  <link rel="stylesheet" href="dist/css/framework7.ios.min.css">
+  <link rel="stylesheet" href="css/my-app.css">
+</head>
+
+<body>
+  <!-- Status bar overlay for fullscreen mode-->
+  <div class="statusbar-overlay"></div>
+  <!-- Panels overlay-->
+  <div class="panel-overlay"></div>
+  <!--弹出发布页面-->
+  <div class="popup popup-fabu">
+    <div class="fabu_btn_list">
+      <a class="qiujianding_btn"></a>
+      <a class="fatiezi_btn"></a>
+      <a class="woxiangmai_btn"></a>
+    </div>
+    <p class="popup_fabu_guanbi"><a href="#" class="close-popup"><i class="f7-icons">close</i></a></p>
+  </div>
+  <!-- Views, and they are tabs-->
+  <!-- We need to set "toolbar-through" class on it to keep space for our tab bar-->
+  <div class="views">
+
+    <div class="pages navbar-through ">
+      <div data-page="jianding_xiangqing" class="page">
+
+        <div class="navbar cangyu_bbs_top_tabber">
+          <div class="navbar-inner">
+            <div class="left with-animation">
+              <a href="javascript:;" onclick="goBack()" class="back link"> <i class="icon icon-back"></i></a>
+            </div>
+            <div class="center ">系统消息</div>
+            <div class="right cangyu_bbs_tanchu_pinglun_btn_fabu"></div>
+          </div>
+        </div>
+
+        <div class="page-content">
+          <div class="list-block cangyu_bbs_index">
+            <div class="list-group ">
+              <ul id="system_notify">
+                <li v-for="item in list">
+                  <a class="item-link item-content" v-on:click="gotoTarget(item)">
+                    <div class="item-inner item-inner-hide">
+                      <div class="item-title">{{ item.content }}</div>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+    <!-- Path to Framework7 Library JS-->
+    <script type="text/javascript" src="dist/js/framework7.min.js"></script>
+    <script type="text/javascript" src="js/vue/vue.min.js"></script>
+    <script type="text/javascript" src="js/vue-resource/vue-resource.js"></script>
+    <script type="text/javascript" src="js/vue-filter.js"></script>
+    <script type="text/javascript" src="js/config.js"></script>
+  <!-- Path to your app js-->
+  <script type="text/javascript">
+    let id = HttpHelper.getQuery('id');
+    function goBack(){
+        window.history.back();
+    }
+
+    let notifyVue = new Vue({
+        data: {
+            list: []
+        },
+
+        methods: {
+          gotoTarget: function(item){
+            console.log(item);
+            if(item.type === '1'){
+              window.location.href = `wode_xitongxiaoxi_yanxuan.html?pro_id=${item.square_id}`;
+            }else if(item.type === '2'){
+              window.location.href = `wode_fukuantongzhi.html?order_id=${item.square_id}`;
+            }
+          }
+        },
+
+        mounted: function(){
+            let self = this;
+            self.$http.get(`${CYHOST}/icy/system_news_list?token=${token}&type=${id}`)
+                .then(res => {
+                    if(res.body.result === 100){
+                        self.$data.list = res.body.data.list;
+                    }else{
+                        myApp.alert(res.body.info, '提示');
+                    }
+                    // console.log(res);
+                }, res => {
+                    console.log(res);
+                    myApp.alert('获取系统消息列表失败', '提示');
+                });
+        }
+    });
+    notifyVue.$mount('#system_notify');
+
+    var myApp = new Framework7({
+        router: false,
+        swipePanel: 'left'
+    });
+  </script>
+
+</body>
+
+</html>

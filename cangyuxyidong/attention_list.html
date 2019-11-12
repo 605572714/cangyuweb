@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <title>藏玉</title>
+  <!-- Path to Framework7 Library CSS-->
+  <link rel="stylesheet" href="dist/css/framework7-icons.css">
+  <link rel="stylesheet" href="dist/css/framework7.ios.min.css">
+  <link rel="stylesheet" href="css/my-app.css">
+  <style type="text/css">
+    .cy-level{
+        background-color: #333;
+        color: white;
+        border-radius: 5px;
+        padding: 2px 8px;
+        font-size: 12px;
+        margin-left: 15px;
+        margin-bottom: 10px;
+    }
+    .item-inner{
+        background-image: none !important;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Status bar overlay for fullscreen mode-->
+  <div class="statusbar-overlay"></div>
+  <!-- Panels overlay-->
+  <div class="panel-overlay"></div>
+
+  <!-- We need to set "toolbar-through" class on it to keep space for our tab bar-->
+  <div class="views">
+
+    <div class="pages navbar-through ">
+      <div data-page="jianding_xiangqing" class="page" id="system_notify">
+
+        <div class="navbar cangyu_bbs_top_tabber">
+          <div class="navbar-inner">
+            <div class="left with-animation">
+              <a href="javascript:;" onclick="goBack()" class="back link"> <i class="icon icon-back"></i></a>
+            </div>
+            <div class="center">{{title}}</div>
+            <div class="right cangyu_bbs_tanchu_pinglun_btn_fabu"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- Path to Framework7 Library JS-->
+    <script type="text/javascript" src="dist/js/framework7.min.js"></script>
+    <script type="text/javascript" src="js/vue/vue.min.js"></script>
+    <script type="text/javascript" src="js/vue-resource/vue-resource.js"></script>
+    <script type="text/javascript" src="js/vue-filter.js"></script>
+    <script type="text/javascript" src="js/config.js"></script>
+
+
+  <script>
+
+      //拍品列表
+      $.getJSON(`${CYHOST}/icy/sale_list`, function (data) {
+          var html = template('auct_list',data);
+          $('.auct_list_div').html(html);
+      })
+
+  </script>
+
+</body>
+
+</html>

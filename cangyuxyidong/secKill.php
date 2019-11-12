@@ -12,8 +12,8 @@ $signPackage = $jssdk->GetSignPackage();
 
 <head>
     <meta charset="utf-8">
-    <META http-equiv="Pragma" content="no-cache">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
@@ -83,7 +83,7 @@ $signPackage = $jssdk->GetSignPackage();
     <script type="text/javascript" src="js/config.js"></script>
 
     <script>
-        $(".close").click(function() {
+        $(".close").click(function () {
             $(".cangyu_bbs_tabber").hide();
         });
     </script>
@@ -91,7 +91,8 @@ $signPackage = $jssdk->GetSignPackage();
 
     <script type="text/html" id="buy_mess">
         <div class="header">
-            <video class='header_video' src="<%=list.video_url%>" poster="https://app.icangyu.com<%=list.video_cover%>" controls='controls'></video>
+            <video class='header_video' src="<%=list.video_url%>" poster="https://app.icangyu.com<%=list.video_cover%>"
+                controls='controls'></video>
             <div class="header_title"><%=list.title%></div>
             <div class="header_price">￥<%=list.now_price%></div>
         </div>
@@ -104,7 +105,6 @@ $signPackage = $jssdk->GetSignPackage();
                 <%=list.attributes[i].value%>
             </div>
             <%}%>
-
     </div>
     <div class='black'></div>
     <div class="card-content content">
@@ -118,15 +118,19 @@ $signPackage = $jssdk->GetSignPackage();
                 <%for(var k = 0; k < list.album.length; k ++){%>
 
                 <a onclick="showPhoto('<%=convert_to_string(list.album)%>','<%=k%>')">
+                    <%if(list.album[k].file_path.indexOf('http')==-1){%>
                     <img src="https://app.icangyu.com<%=list.album[k].file_path%>" alt="" />
+                    <%}else{%>
+                    <img src="<%=list.album[k].file_path%>" alt="" />
+                    <%}%>
                 </a>
 
                 <%}%>
 
-                </div>
             </div>
+        </div>
 
-    </div>
+        </div>
     </script>
 
 
@@ -135,7 +139,7 @@ $signPackage = $jssdk->GetSignPackage();
         var square_id = HttpHelper.getQuery('item_id');
 
         //产品详情
-        $.getJSON(`${CYHOST}/icy/spike_details?id=${square_id}`, function(data) {
+        $.getJSON(`${CYHOST}/icy/spike_details?id=${square_id}`, function (data) {
 
             console.log(data);
             var Odata = data.data;
@@ -152,14 +156,14 @@ $signPackage = $jssdk->GetSignPackage();
                     "desc": shareContent, //摘要,如果分享到朋友圈的话，不显示摘要。
                     "title": shareTitle, //分享卡片标题
                     "link": window.location.href, //分享出去后的链接，这里可以将链接设置为另一个页面。
-                    "success": function() { //分享成功后的回调函数
+                    "success": function () { //分享成功后的回调函数
                     },
-                    'cancel': function() {
+                    'cancel': function () {
                         // 用户取消分享后执行的回调函数
                     }
                 }
             };
-            wx.ready(function() {
+            wx.ready(function () {
                 wx.onMenuShareAppMessage(share_config.share); //分享给好友
                 wx.onMenuShareTimeline(share_config.share); //分享到朋友圈
                 wx.onMenuShareQQ(share_config.share); //分享给手机QQ
@@ -202,7 +206,7 @@ $signPackage = $jssdk->GetSignPackage();
 
 
     <script>
-        template.helper('convert_to_string', function(album) {
+        template.helper('convert_to_string', function (album) {
             var arr = [];
             for (var i = 0; i < album.length; i++) {
                 arr.push('https://app.icangyu.com' + album[i].file_path);
@@ -225,7 +229,7 @@ $signPackage = $jssdk->GetSignPackage();
     </script>
 
     <script>
-        $("#btnOpenApp").click(function() {
+        $("#btnOpenApp").click(function () {
             var configs = [{
                 jmlink: 'https://a0ipue.jmlk.co/AA09',
                 button: document.querySelector('a#btnOpenApp'),

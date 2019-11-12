@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+
+    <title>藏玉APP双11来了，领券优惠1111元</title>
+
+
+    <!-- Path to Framework7 Library CSS-->
+    <link rel="stylesheet" href="dist/css/framework7-icons.css">
+    <link rel="stylesheet" href="dist/css/framework7.ios.min.css">
+    <!--<link rel="stylesheet" href="dist/css/framework7.material.min.css">-->
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="css/my-app.css">
+
+    <!-- Path to jquary Library JS-->
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="js/template-native.js"></script>
+    <!-- Path to Framework7 Library JS-->
+    <script type="text/javascript" src="dist/js/framework7.min.js"></script>
+
+</head>
+
+<body>
+
+<div style='margin:0 auto;width:0px;height:0px;overflow:hidden;'>
+    <!--图片宽高大于400px，最好是一个正方形的图片-->
+    <img src="img/1024 2.png" width='700'>
+</div>
+
+<!-- Status bar overlay for fullscreen mode-->
+<div class="statusbar-overlay"></div>
+<!-- Panels overlay-->
+<div class="panel-overlay"></div>
+
+<div class="views">
+    <div id="zhuanti_xiangqing" class="view">
+        <div class="pages navbar-through">
+            <div data-page="jianding_xiangqing" class="page">
+
+                <div class="navbar cangyu_bbs_top_tabber">
+                    <div class="navbar-inner">
+                        <div class="left sliding"></div>
+                        <div class="center ">优惠券</div>
+                        <div class="right"></div>
+                    </div>
+                </div>
+
+                <div class="page-content infinite-scroll">
+
+                    <div class="cangyu_bbs_zhuanti">
+                        <div class="car_mess_div_list"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<script type="text/javascript" src="js/config.js"></script>
+
+
+
+<script type="text/html" id="car_mess_list">
+
+
+    <img  src="https://app.icangyu.com<%=list[0].top_pic%>" alt="">
+    <a href="http://a.app.qq.com/o/simple.jsp?pkgname=icangyu.jade">
+        <img  src="https://app.icangyu.com<%=list[0].middle_pic%>" alt="">
+    </a>
+    <img  src="https://app.icangyu.com<%=list[0].bottom_pic%>" alt="">
+
+
+</script>
+
+
+
+<script>
+
+    // 优惠券详情
+    $.getJSON(`${CYHOST}/icy/entrance_list`,function (data) {
+
+         var Odata = data.data;
+         var html = template('car_mess_list',Odata);
+         $('.car_mess_div_list').html(html);
+
+    });
+
+
+    // access_token
+    $.getJSON(`https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx07c71d8cd694f842&secret=2634d8bb9096b346cf027e20962f722d`, function (data) {
+
+        console.log(data);
+        var Odata = data.data;
+        var html = template('car_mess_list',Odata);
+
+    });
+
+
+
+
+    function weixinShareTimeline(title,desc,link,imgUrl){
+        WeixinJSBridge.invoke('shareTimeline',{
+            "img_url":imgUrl,
+            //"img_width":"640",
+            //"img_height":"640",
+            "link":link,
+            "desc": desc,
+            "title":title
+        });
+    }
+
+
+
+    function weixinSendAppMessage(title,desc,link,imgUrl){
+        WeixinJSBridge.invoke('sendAppMessage',{
+            //"appid":appId,
+            "img_url":imgUrl,
+            //"img_width":"640",
+            //"img_height":"640",
+            "link":link,
+            "desc":desc,
+            "title":title
+        });
+    }
+
+</script>
+
+
+
+
+
+
+<script>
+
+
+</script>
+
+</body>
+</html>

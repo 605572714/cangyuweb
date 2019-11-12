@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>藏玉</title>
+    <!-- Path to Framework7 Library CSS-->
+    <link rel="stylesheet" href="dist/css/framework7-icons.css">
+    <link rel="stylesheet" href="dist/css/framework7.ios.min.css">
+    <!--<link rel="stylesheet" href="dist/css/framework7.material.min.css">-->
+    
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="css/my-app.css">
+
+      <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+      <script type="text/javascript" src="js/template-native.js"></script>
+
+      <!-- Path to Framework7 Library JS-->
+      <script type="text/javascript" src="dist/js/framework7.min.js"></script>
+      <!-- Path to your app js-->
+      <!--<script type="text/javascript" src="js/my-app.js"></script>-->
+  </head>
+
+
+  <body>
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar-overlay"></div>
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+    <!--弹出发布页面-->
+    <div class="popup popup-fabu">
+        <div class="fabu_btn_list">
+            <a class="qiujianding_btn"></a>
+      		<a class="fatiezi_btn"></a>
+      		<a class="woxiangmai_btn"></a>
+        </div>
+        <p class="popup_fabu_guanbi"><a href="#" class="close-popup"><i class="f7-icons">close</i></a></p>
+    </div>
+
+    <!-- Views, and they are tabs-->
+    <!-- We need to set "toolbar-through" class on it to keep space for our tab bar-->
+    <div class="views">
+        <div id="huati_xiangqing" class="view">
+        <div class="pages navbar-through ">
+            <div data-page="jianding_xiangqing" class="page no-navbar">
+                <div class="navbar  cangyu_bbs_top_tabber">
+                    <div class="navbar-inner">
+                        <div class="left sliding"><a href="index.html#tab-1" class="back link"> <i class="icon icon-back"></i></a></div>
+                        <div class="center ">话题详情</div>
+                        <div class="right"><!--右侧按钮暂时隐藏--></div>
+                    </div>
+                </div>
+   
+                <div class="page-content cangyu_bbs_padding_bottom40 infinite-scroll pull-to-refresh-content" style="margin-top:0;" data-distance="100">
+                    <div class="pull-to-refresh-layer">
+                        <div class="preloader"></div>
+                        <div class="pull-to-refresh-arrow"></div>
+                    </div>
+
+                    <div class="vux-masker-box cangyu_bbs_huati_top">
+                        <div class="m-img" style="background-image: url(https://cdn.xiaotaojiang.com/uploads/82/1572ec37969ee263735262dc017975/_.jpg);"></div>
+                        <div class="vux-masker" style="background-color: rgba(0, 0, 0, 0.498039);">
+                            <!--201608002这个下面是新加的销售展示样式-->
+                            <div class="goumailianjie-xianshi"></div>
+                            <div slot="content" class="m-title"> 洗颜新潮流！人气洁面皂排行榜 <br>
+    
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cangyu_bbs_huati_txt">
+                        <p style="text-align: center">
+                            当籽料的红皮遇上白肉，就成了一个难以割舍的经典。
+                        </p>
+                    </div>
+
+                    <div id="topic_list"></div>
+
+                    <div class="infinite-scroll-preloader">
+                        <div class="preloader"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- Bottom Tabbar-->
+        <div class="toolbar tabbar tabbar-labels cangyu_bbs_tabber_maimai cangyu_bbs_tabber_bg_shense">
+            <div class="toolbar-inner">
+
+                    <a href="huati——list.html" class="link">
+                        <div><i class="cangyu_bbs_tabber_maimai_ht"></i>点击查看更多话题</div>
+                    </a>
+
+            </div>
+        </div>
+    </div>
+
+    <script type="text/html" id="topic_detail_list">
+        <%for(var i = 0;i < list.length; i++){%>
+          <div class="card facebook-card ">
+            <div class="card-header">
+              <div class="facebook-avatar">
+                <a href="wode_index.html?user_id=<%=list[i].user_id%>">
+                  <img src="https://app.icangyu.com<%=list[i].avatar%>" width="34" height="34">
+                </a>
+              </div>
+              <div class="facebook-name">
+                <a href="wode_index.html?user_id=<%=list[i].user_id%>"><%=list[i].nickname%></a>
+                <span class="cangyu_bbs_dengji">Lv<%=list[i].rating%></span>
+              </div>
+              <div class="facebook-date"><%=list[i].createdate%></div>
+
+            </div>
+
+            <div class="card-content">
+                <a href="tiezi——xiangqing.html?type=1&item_id=<%=list[i].id%>" class="block-a">
+
+                <div class="card-content-inner">
+                  <h3 class="card-content-yylm-t"><%=list[i].content%></h3>
+                  <div class="weibo-detail">
+                    <div class="media-pic-list">
+                      <ul style="overflow:hidden">
+                        <%for(var k = 0; k < list[i].album.length; k++){%>
+                          <li>
+                            <img data-node="pic" data-act-type="hover" src="https://app.icangyu.com<%=list[i].album[k].file_path%>" class="loaded">
+                          </li>
+                        <%}%>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="yylm-pinglun-con">
+                     <section class="detail-num clearfix">      
+                      <div class="detail-header">
+                        <%if(list[i].type == 1){%>
+                          <%for(var n = 0; n < list[i].praise_list.length; n++){%>
+                            <span><img src="https://app.icangyu.com<%=list[i].praise_list[n].avatar_want%>"></span>
+                          <%}%>
+                        <%}else if(list[i].type == 2){%>
+                          <%for(var n = 0; n < list[i].palm.length; n++){%>
+                            <span><img src="https://app.icangyu.com<%=list[i].palm[n].avatar_want%>"></span>
+                          <%}%>
+                        <%}else if(list[i].type == 3){%>
+                          <%for(var n = 0; n < list[i].type_list.length; n++){%>
+                            <span><img src="https://app.icangyu.com<%=list[i].type_list[n].avatar_want%>"></span>
+                          <%}%>
+                        <%}else if(list[i].type == 4){%>
+                          <%for(var n = 0; n < list[i].praise_list.length; n++){%>
+                            <span><img src="https://app.icangyu.com<%=list[i].praise_list[n].avatar_want%>"></span>
+                          <%}%>
+                        <%}%>
+                      </div>
+                      <div class="yylm-dianzan-shu"><span><%=list[i].all_nums%></span>人点赞</div>          
+                    </section>
+                     <section class="detail-pinglun clearfix">
+                      <div class="detail-pinlun-list">
+                        <ul>
+                          <%for(var m = 0 ; m < list[i].comment_list.length; m++){%>
+                            <li>
+                            <%if(list[i].comment_list[m].reply_type == 1){%>
+                              <b><%=list[i].comment_list[m].nickname_comment%></b>&nbsp;<span><%=list[i].comment_list[m].tonickname%>:</span><%=list[i].comment_list[m].comment%>
+                            <%}else{%>
+                                <b><%=list[i].comment_list[m].nickname_comment%></b>&nbsp;<%=list[i].comment_list[m].comment%>
+                            <%}%>
+                            </li>
+                          <%}%>
+                        </ul>
+                        <p>查看全部<span><%=list[i].comment_all%></span>条评论</p>
+                      </div>
+                    </section>
+                  </div>
+                </div>
+              </a>
+            </div>
+            <div class="card-footer ">
+              <a href="javascript:;" onclick="praise(<%=list[i].id%>)" class="link"><i class="f7-icons size-22"><%=list[i].praise_status === 1 ? 'heart_fill' : 'heart'%></i></a>
+              <a href="javascript:;" class="link"><i class="f7-icons size-22">chat</i></a>
+            </div>
+          </div>
+        <%}%>
+
+    </script>
+
+    <script type="text/javascript" src="js/store.everything.min.js"></script>
+    <script type="text/javascript" src="js/config.js"></script>
+    <script>
+        var urlObj ={};
+        var urlArray;
+        var listObj = {};
+        GetRequest(urlObj);
+        urlArray = store.get('topic_array');
+        var bgurl = urlObj.aa;
+        // for(var i = 0; i < urlArray.length;i++){
+            $('.m-img').css('background','url(https://app.icangyu.com'+urlArray[bgurl].bgurl+')no-repeat').css('background-size',"cover");
+            $('.m-title').html(urlArray[bgurl].title)
+            $(".cangyu_bbs_huati_txt").find('p').html(urlArray[bgurl].content);
+            listObj.tid = urlArray[bgurl].id;
+        // }
+        listObj.page = 0;
+        listObj.token = token;
+        listObj.type = 4;
+
+        // &tid=3&token=43lef6ag4b2k&type=4
+        //获取列表接口
+        var listData;
+        $.post('https://app.icangyu.com/icy/square_list', listObj, function(data){
+            Data = JSON.parse(data);
+            listData = Data.data;
+            console.log(listData);
+            if(listData.list.length == 0){
+                $('.infinite-scroll-preloader').hide();
+                return;
+            }
+            var html = template('topic_detail_list',listData);
+            $("#topic_list").html(html);
+        });
+
+        //获取url并把字符串转化成对象
+        function GetRequest(theRequest) {
+            var url = location.search; 		//获取url中"?"符后的字串
+            if(url.indexOf("?") != -1){		//如果url中有？
+                var str = url.substr(1);
+                strs = str.split("&");
+                for(var i = 0; i < strs.length; i ++) {
+                    theRequest[strs[i].split("=")[0]]=(strs[i].split("=")[1]);
+                }
+            }
+            else{
+                str = url.split("&");
+                for(var i = 0; i < str.length; i++){
+                    theRequest[strs[i].split("=")[0]]=(strs[i].split("=")[1]);
+                }
+            }
+            return theRequest;
+        }
+
+        function praise(square_id){
+            //点赞
+            $.getJSON(`${CYHOST}/icy/square_praise_add?square_id=${square_id}&token=${token}`, function (data) {
+                if(data.result === 100){
+                    huatiApp.alert('点赞成功。', '提示');
+                }else{
+                    huatiApp.alert(data.info, '提示');
+                }
+            });
+        }
+
+        // Initialize your app
+        var huatiApp = new Framework7({
+            router: false,
+            swipePanel: 'left'
+        });
+
+        huatiApp.addView('#huati_xiangqing');
+
+
+        // Export selectors engine
+        var $$ = Dom7;
+
+        var ptrContent = $$('.pull-to-refresh-content');
+        // Add 'refresh' listener on it
+        ptrContent.on('refresh', function (e) {
+            tieziPageIndex = 0;
+
+            setTimeout(function(){
+                //获取话题列表接口
+                listObj.page = tieziPageIndex;
+                listObj.token = token;
+                listObj.type = 4;
+                var listData;
+                $.post('https://app.icangyu.com/icy/square_list',listObj,function(data){
+                    Data = JSON.parse(data);
+                    listData = Data.data;
+                    // console.log(listData);
+                    var html = template('topic_detail_list',listData);
+                    $("#topic_list").html(html);
+                    $('.infinite-scroll-preloader').show();
+
+                    // When loading done, we need to reset it
+                    huatiApp.pullToRefreshDone();
+                });
+            }, 1500);
+        });
+
+        var loading = false;    //是否正在加载中
+        var tieziPageIndex = 0;
+        var pageSize = 10;
+        var resetLoadingTime = 1500;
+        //下拉加载
+        $$('.infinite-scroll').on('infinite', function (ev) {
+            setTimeout(function() {
+                if (loading) return;
+                loading = true;
+
+                tieziPageIndex = tieziPageIndex + pageSize;
+
+                //获取话题列表接口
+                listObj.page = tieziPageIndex;
+                listObj.token = token;
+                listObj.type = 4;
+                var listData;
+                $.post('https://app.icangyu.com/icy/square_list',listObj,function(data){
+                    Data = JSON.parse(data);
+                    listData = Data.data;
+                    // console.log(listData);
+
+                    if(listData.list.length === 0){
+                        $('.infinite-scroll-preloader').hide();
+                    }else{
+                        var html = template('topic_detail_list',listData);
+                        $(".cangyu_bbs_padding_bottom40").append(html);
+                    }
+
+                    setTimeout(function(){
+                        loading = false;
+                    }, resetLoadingTime); 
+                });
+            }, resetLoadingTime);
+        });
+
+    </script>
+
+
+
+
+
+  </body>
+
+</html>

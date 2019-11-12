@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>藏玉</title>
+    <!-- Path to Framework7 Library CSS-->
+    <link rel="stylesheet" href="dist/css/framework7-icons.css">
+    <link rel="stylesheet" href="dist/css/framework7.ios.min.css">
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="css/my-app.css">
+  </head>
+
+  <body>
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar-overlay"></div>
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+    <!--弹出发布页面-->
+    <div class="popup popup-fabu">
+   
+      <div class="fabu_btn_list">
+      	
+      		<a class="qiujianding_btn"></a>
+      		<a class="fatiezi_btn"></a>
+      		<a class="woxiangmai_btn"></a>
+      	
+      </div>
+
+      <p class="popup_fabu_guanbi"><a href="#" class="close-popup"><i class="f7-icons">close</i></a></p>
+   
+    </div>
+
+
+    <!-- Views, and they are tabs-->
+    <!-- We need to set "toolbar-through" class on it to keep space for our tab bar-->
+    <div class="views">
+
+        <div class="pages navbar-through ">
+            <div data-page="jianding_xiangqing" class="page no-navbar">
+                <div class="page-content">
+                    <div class="zhuce_index">
+                        <div class="cangyu_logo"></div>
+                        <div class="cangyu_denglu_btn">
+                            <a href="denglu.html" class="button button-round button-big">登录</a>
+                            <a href="zhuce_zhanghao_01.html" class="button button-round button-big">注册账号</a>
+                            <a href="#" class="button button-round button-big active "><i class="weixindenglu"></i>微信登陆</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+         
+    </div>
+
+
+
+    <!-- Path to Framework7 Library JS-->
+    <script type="text/javascript" src="dist/js/framework7.min.js"></script>
+    <!-- Path to your app js-->
+    <!--<script type="text/javascript" src="js/my-app.js"></script>-->
+    
+  </body>
+
+</html>

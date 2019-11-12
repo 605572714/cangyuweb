@@ -1,0 +1,148 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+a{
+    text-decoration: none;
+    color: #333;
+}
+
+.swiper-container {
+    overflow: hidden;
+}
+
+.top {
+    padding: 15px;
+}
+
+.top .title {
+    color: #56462b;
+    font-size: 18px;
+}
+
+.top .price {
+    font-size: 24px;
+    color: #e24248;
+    margin-top: 6px;
+}
+
+.content {
+    width: 100%;
+}
+
+.content .title {
+    text-align: center;
+    color: #3a2e1b;
+    font-size: 16px;
+}
+
+.content .title:after {
+    content: '';
+    display: flex;
+    width: 2em;
+    margin: auto;
+    margin-top: 7px;
+    margin-bottom: 13px;
+    border-bottom: 0.5px solid #e24248;
+}
+
+.content .rich {
+    color: #56462b;
+    font-size: 14px;
+}
+
+.bottom{
+    background: #fafafa;
+
+}
+
+.bottom .moreList {
+    font-size: 32rpx;
+    color: #333;
+    padding-top: 60rpx;
+    padding-bottom: 20rpx;
+    width: 100%;
+    text-align: center;
+    background: #fff;
+}
+
+
+.bottom .contain {
+    padding: 15px;
+    background: #fff;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+}
+
+
+.bottom  .contain .endIcon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    position: absolute;
+    font-size: 12px;
+    line-height: 60px;
+    text-align: center;
+    margin: 35px;
+}
+
+.bottom  .contain  .img {
+    width: 130px;
+    height: 130px;
+    border-radius: 2px;
+}
+
+.bottom  .contain .detail {
+    /* width: 200px; */
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+    padding-top: 15px;
+}
+
+.bottom  .contain .detail .title {
+    font-size: 16px;
+    color: #333;
+}
+
+.bottom  .contain .detail .status1 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.bottom  .contain .detail .status1 .price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #d8a362;
+    margin-right: 15px;
+}
+
+
+.bottom  .contain .detail .status2 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.bottom  .contain .detail .status2 .endTime {
+    font-size: 12px;
+    color: #e24248;
+}
+
+.bottom  .contain .detail .status2 .partake {
+    width: 70px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 2px;
+    text-align: center;
+    font-size: 13px;
+    color: #fff;
+    background: #d0b483;
+}

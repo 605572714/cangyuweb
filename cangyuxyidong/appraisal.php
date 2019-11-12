@@ -1,0 +1,168 @@
+<?php
+include '../extended/php/jssdk.php';
+$jssdk = new JSSDK("wxd076774039b4132e", "3006fa830349f4301e39899e6fe6e230");
+$signPackage = $jssdk->GetSignPackage();
+//print_r($signPackage);
+//echo "xx";
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/appraisal.css">
+    <script src="js/config.js"></script>
+    <script src="js/vue/vue.min.js"></script>
+    <link rel="stylesheet" href="css/my-app.css">
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script src="https://static.jmlk.co/scripts/dist/jmlink.min.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script src="js/vue-resource/vue-resource.min.js"></script>
+    <title>藏玉鉴定</title>
+</head>
+
+<body>
+    <div id="app">
+        <div class="top">
+            <img :src="avatar" alt="" class="avatar">
+            <div class="nick">
+                <div class="name">{{nickname}}<span class="level" :style="rating<8?'background:#F6F7F9;':''">LV.{{rating}}</span></div>
+                <div class="time">{{createdate}}</div>
+            </div>
+        </div>
+        <div class="content">
+            {{content}}
+        </div>
+        <div class="img">
+            <div v-for="item,index in album">
+                <img class="img_item" :src="item.file_path" alt="">
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="inner" v-if="detail.palm.length>0">
+            邀请掌眼：<span v-for='item,index in detail.palm'>{{item.nickname}}&nbsp;</span>
+        </div>
+        <div class="black"></div>
+        <div class="discuss">
+            <div class="title">评论</div>
+            <div class="discuss_detail" v-for="item,index in comment">
+                <div class="detail">
+                    <img class="discuss_avatar" :src="item.comment_avatar" alt="">
+                    <div class="name"> {{item.nickname}}</div>
+                </div>
+                <div class="comment"> <span v-if="item.tonickname">回复<span style="color:#666;">{{item.tonickname}}</span>:</span>{{item.comment}}</div>
+            </div>
+        </div>
+        <!-- Bottom Tabbar-->
+        <div class="cangyu_bbs_tabber" v-if='!closeBottom'>
+            <a href="javascript:void(0)" class="close" @click='close'></a>
+            <a>
+                <div class="logo"></div>
+                <div class="banner-label">
+                    <p class="tb" data-node="appName">下载APP</p>
+                    <p class="title-sub">了解最新业内资讯</p>
+                </div>
+                <div class="open" id="btnOpenApp" hover-class="none" @click='btnOpenApp' hover-class="none">立即打开</div>
+            </a>
+        </div>
+    </div>
+    <script>
+        var square_id = HttpHelper.getQuery('item_id');
+        var app = new Vue({
+            el: '#app',
+            data: {
+                detail: null,
+                avatar: null,
+                nickname: null,
+                createdate: null,
+                rating: null,
+                content: null,
+                album: null,
+                comment: null,
+                closeBottom: false
+            },
+            mounted() {
+                this.getDetail()
+            },
+            methods: {
+                getDetail() {
+                    this.$http.get(`${CYHOST}/icy/details_identify?id=${square_id}`)
+                        .then(res => {
+                            console.log(res.body.data)
+                            this.detail = res.body.data;
+                            this.nickname = this.detail.nickname;
+                            this.createdate = this.detail.createdate;
+                            this.rating = this.detail.rating;
+                            this.content = this.detail.content;
+                            this.album = this.detail.album;
+                            this.avatar = this.detail.avatar;
+                            for (var i = 0; i < this.album.length; i++) {
+                                var item = this.album[i].file_path
+                                if (item.indexOf("http") == -1) {
+                                    this.album[i].file_path = CYHOST + this.album[i].file_path
+                                }
+                            }
+                            if (this.avatar.indexOf("http") == -1) {
+                                this.avatar = CYHOST + this.detail.avatar
+                            }
+                        }).catch(res => {
+                            console.log(res)
+                        })
+                    this.$http.get(`${CYHOST}/icy/comment_lists?id=${square_id}&type=2&allLists=1`)
+                        .then(res => {
+                            console.log(res.body.data)
+                            this.comment = res.body.data.list
+                            for (var i = 0; i < res.body.data.total; i++) {
+                                var item = this.comment[i].comment_avatar
+                                if (item.indexOf("http") == -1) {
+                                    this.comment[i].comment_avatar = CYHOST + this.comment[i].comment_avatar
+                                }
+                            }
+
+                        }).catch(res => {
+                            console.log(res)
+                        })
+                    window.share_config = {
+                        "share": {
+                            "imgUrl": "http://www.icangyu.com/cangyuxyidong/img/icon.png", //分享图，默认当相对路径处理，所以使用绝对路径的的话，“http://”协议前缀必须在。
+                            "desc": this.content, //摘要,如果分享到朋友圈的话，不显示摘要。
+                            "title": '鉴定', //分享卡片标题
+                            "link": window.location.href, //分享出去后的链接，这里可以将链接设置为另一个页面。
+                            "success": function() {
+                                //分享成功后的回调函数
+                            },
+                            'cancel': function() {
+                                // 用户取消分享后执行的回调函数
+                            }
+                        }
+                    };
+                    wx.ready(function() {
+                        wx.onMenuShareAppMessage(share_config.share); //分享给好友
+                        wx.onMenuShareTimeline(share_config.share); //分享到朋友圈
+                        wx.onMenuShareQQ(share_config.share); //分享给手机QQ
+                    });
+                },
+                btnOpenApp() {
+                    var configs = [{
+                        jmlink: 'https://a0ipue.jmlk.co/AA09',
+                        button: document.querySelector('#btnOpenApp'),
+                        params: {
+                            'shareID': square_id,
+                            'shareIOS': 'KCAppraiseMessVC',
+                            'shareAndroid': 'icangyu.jade.activities.community.IdentifyDetailsActivity'
+                        }
+                    }];
+                    new JMLink(configs);
+                },
+                close() {
+                    this.closeBottom = true
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

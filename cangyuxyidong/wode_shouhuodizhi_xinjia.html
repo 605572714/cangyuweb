@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <title>藏玉</title>
+  <!-- Path to Framework7 Library CSS-->
+  <link rel="stylesheet" href="dist/css/framework7-icons.css">
+  <link rel="stylesheet" href="dist/css/framework7.ios.min.css">
+
+  <!--<link rel="stylesheet" href="dist/css/framework7.material.min.css">-->
+
+  <!-- Path to your custom app styles-->
+  <link rel="stylesheet" href="css/my-app.css">
+</head>
+
+<body>
+  <!-- Status bar overlay for fullscreen mode-->
+  <div class="statusbar-overlay"></div>
+  <!-- Panels overlay-->
+  <div class="panel-overlay"></div>
+  <!--弹出发布页面-->
+  <div class="popup popup-fabu">
+
+    <div class="fabu_btn_list">
+      <a class="qiujianding_btn"></a>
+      <a class="fatiezi_btn"></a>
+      <a class="woxiangmai_btn"></a>
+    </div>
+    <p class="popup_fabu_guanbi"><a href="#" class="close-popup"><i class="f7-icons">close</i></a></p>
+
+  </div>
+  <!-- Views, and they are tabs-->
+  <!-- We need to set "toolbar-through" class on it to keep space for our tab bar-->
+  <div class="views">
+
+    <div class="pages navbar-through">
+      <div data-page="jianding_xiangqing" class="page">
+
+        <div class="navbar cangyu_bbs_top_tabber">
+          <div class="navbar-inner">
+            <div class="left sliding">
+              <a href="wode_shouhuodizhi.html" class="back link"> <i class="icon icon-back"></i></a>
+            </div>
+            <div class="center ">新加收货地址</div>
+            <div class="right">
+              <!--右侧按钮暂时隐藏-->
+            </div>
+          </div>
+        </div>
+
+        <div class="page-content" id="address_info">
+          <div class="list-block cangyu_bss_xinjia_shouhuodizhi">
+            <ul>
+              <li>
+                <div class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title label">收货人</div>
+                    <div class="item-input">
+                      <input type="text" placeholder="姓名" v-model="address.nickname" class="">
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title label">联系方式</div>
+                    <div class="item-input">
+                      <input type="email" placeholder="手机" v-model="address.mobile" class="">
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title label">所在地区</div>
+                    <div class="item-input">
+                      <input type="text" placeholder="地区" v-model="address.location" class="">
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <li class="align-top">
+                  <div class="item-content">
+                    <div class="item-media"><i class="icon icon-form-comment"></i></div>
+                    <div class="item-inner">
+                      <div class="item-title label">详细地址</div>
+                      <div class="item-input">
+                        <textarea v-model="address.address"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </li>
+
+            </ul>
+          </div>
+          <div class="cy-shop-baocun-btn"><a v-on:click="save()" class="button button-fill button-big color-red">确定</a></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- Path to Framework7 Library JS-->
+  <script type="text/javascript" src="dist/js/framework7.min.js"></script>
+  <script type="text/javascript" src="js/store.everything.min.js"></script>
+  <script type="text/javascript" src="js/vue/vue.min.js"></script>
+  <script type="text/javascript" src="js/vue-resource/vue-resource.js"></script>
+  <script type="text/javascript" src="js/vue-filter.js"></script>
+  <script type="text/javascript" src="js/config.js"></script>
+  <!-- Path to your app js-->
+  <script type="text/javascript">
+    //TODO: 
+    let address = null;
+    let isEdit = HttpHelper.getQuery('edit');
+    if(isEdit){
+      address = store.get('edit-address');
+    }
+
+    let addressVue = new Vue({
+      data: {
+        address: address ? address : {
+          id: 0,
+          nickname: '',
+          mobile: '',
+          location: '',
+          address: '',
+          type: 0
+        },
+        isNew: address ? false : true
+      },
+
+      methods: {
+        save: function(){
+          let self = this;
+          let formData = new FormData();
+          formData.append('token', token);
+          formData.append('nickname', self.$data.address.nickname);
+          formData.append('mobile', self.$data.address.mobile);
+          formData.append('location', self.$data.address.location);
+          formData.append('address', self.$data.address.address);
+
+          if(this.$data.isNew){
+            formData.append('type', 0);
+            self.$http.post(`${CYHOST}/icy/address_add`, formData)
+              .then(res => {
+                console.log(res);
+                if(res.body.result === 100){
+                  app.alert('添加成功', '提示');
+                }else{
+                  app.alert(res.body.info, '提示');
+                }
+              }, res => {
+                app.alert('添加失败', '提示');
+              });
+          }else{
+            formData.append('id', self.$data.address.id);
+            formData.append('type', self.$data.address.type);
+            self.$http.post(`${CYHOST}/icy/address_edit`, formData)
+              .then(res => {
+                if(res.body.result === 100){
+                  app.alert('保存成功', '提示');
+                }else{
+                  app.alert(res.body.info, '提示');
+                }
+              }, res => {
+                app.alert('保存失败', '提示');
+              });
+          }
+        }
+      },
+
+      mounted: function(){
+        
+      }
+    });
+
+    addressVue.$mount('#address_info');
+
+    var app = new Framework7({
+        router: false,
+        swipePanel: 'left'
+    });
+  </script>
+</body>
+
+</html>

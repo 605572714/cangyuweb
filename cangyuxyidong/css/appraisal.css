@@ -1,0 +1,233 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.top {
+    display: flex;
+    flex-direction: row;
+    padding: 15px;
+}
+
+.top .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+}
+
+.top .nick {
+    display: flex;
+    flex-direction: column;
+    padding-left: 15px;
+}
+
+.top .nick .name {
+    font-size: 14px;
+    color: #333;
+}
+
+.top .nick .name .level {
+    padding: 2px 4px;
+    background: #FBDD6C;
+    font-size: 10px;
+    color: #333;
+    margin-left: 4px;
+    border-radius: 2px;
+}
+
+.top .nick .time {
+    font-size: 13px;
+    color: #888;
+}
+
+.content {
+    padding: 15px;
+    padding-top: 0px;
+}
+
+.img {
+    display: block;
+    padding: 0 10px 0 10px;
+}
+
+.img_item {
+    float: left;
+    width: 100px;
+    height: 100px;
+    margin-left: 5px;
+    margin-bottom: 5px;
+
+}
+
+.clear {
+    clear: both;
+    padding-bottom: 15px;
+
+}
+
+.inner {
+    display: flex;
+    flex-direction: row;
+    background: #fff;
+    padding: 15px;
+    padding-top: 0px;
+    color: #A28555;
+    font-size: 14px;
+}
+
+.black {
+    width: 100%;
+    height: 10px;
+    background: #F7F7F7;
+}
+
+.title {
+    padding: 15px;
+    border-bottom: 0.5px solid #d9d9d9;
+}
+
+.discuss {
+    margin-bottom: 100px;
+}
+
+.discuss_avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 28px;
+}
+
+.discuss_detail {
+    padding: 15px;
+    padding-left: 0px;
+    margin-left: 15px;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 0.5px solid #d9d9d9;
+}
+
+.detail {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 80%;
+    font-size: 14px;
+}
+
+.detail .name {
+    color: #333;
+    margin-left: 15px;
+}
+
+.discuss_detail .comment {
+    margin-top: 10px;
+    color: #333;
+}
+
+
+.support {
+    display: flex;
+    flex-direction: row;
+    padding: 15px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.support .left .left_img {
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    margin-left: -10px
+}
+
+.support .right a {
+    color: #81848b;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.icon_support img {
+    width: 22px;
+    height: 22px;
+}
+
+.price_top{
+    padding: 15px;
+    border-bottom: 0.5px solid #d9d9d9;  
+    font-size: 16px; 
+}
+
+.price_content {
+    padding: 15px;
+    border-bottom: 0.5px solid #d9d9d9;
+
+}
+
+.price_content,
+.price_content .price_left,
+.price_content .price_right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.price_content .price_left img {
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+}
+
+.price_content .price_left .price_nick {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.price_content .price_left .price_nick .nickname {
+    font-size: 14px;
+    width: 100%;
+    height: 50%;
+    text-align: left;
+    line-height: 25px;
+}
+
+.price_content .price_left .price_nick .createdate {
+    color: #c2c2c2;
+    font-size: 12px;
+    line-height: 25px;
+}
+
+.price_content .price_right{
+    font-size: 15px;
+}
+
+.price_content .price_right .price_win{
+    color: #f89649;
+    margin-right: 10px;
+}
+
+.price_content .price_right .price_lose{
+    margin-right: 10px;
+    color: #d3d3d3;
+
+}
+
+.price_content .price_right .type_win{
+    color: #f89649;
+    width: 65px;
+    height: 3rpx;
+    border: 0.5px #f89649 solid;
+    border-radius: 1px;
+    text-align: center;
+    line-height: 30px;
+}
+
+.price_content .price_right .type_lose{
+    width: 65px;
+    height: 3rpx;
+    border: 0.5px #d3d3d3 solid;
+    color: #d3d3d3;
+    border-radius: 1px;
+    text-align: center;
+    line-height: 30px;
+}

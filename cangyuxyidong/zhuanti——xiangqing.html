@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>藏玉</title>
+    <!-- Path to Framework7 Library CSS-->
+    <link rel="stylesheet" href="dist/css/framework7-icons.css">
+    <link rel="stylesheet" href="dist/css/framework7.ios.min.css">
+    <!--<link rel="stylesheet" href="dist/css/framework7.material.min.css">-->
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="css/my-app.css">
+
+      <!-- Path to jquary Library JS-->
+      <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+      <script type="text/javascript" src="js/template-native.js"></script>
+      <!-- Path to Framework7 Library JS-->
+      <script type="text/javascript" src="dist/js/framework7.min.js"></script>
+
+  </head>
+
+  <body>
+
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar-overlay"></div>
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+    <!--弹出发布页面-->
+    <div class="popup popup-fabu">
+        <div class="fabu_btn_list">
+            <a class="qiujianding_btn"></a>
+      		<a class="fatiezi_btn"></a>
+      		<a class="woxiangmai_btn"></a>
+        </div>
+        <p class="popup_fabu_guanbi"><a href="#" class="close-popup"><i class="f7-icons">close</i></a></p>
+    </div>
+
+    <!-- Views, and they are tabs-->
+    <!-- We need to set "toolbar-through" class on it to keep space for our tab bar-->
+    <div class="views">
+        <div id="zhuanti_xiangqing" class="view">
+        <div class="pages navbar-through">
+            <div data-page="jianding_xiangqing" class="page">
+
+                <div class="navbar cangyu_bbs_top_tabber">
+                    <div class="navbar-inner">
+                        <div class="left sliding"><a href="index.html" class="back link"> <i class="icon icon-back"></i></a></div>
+                        <div class="center ">专题详情</div>
+                        <div class="right"><!--右侧按钮暂时隐藏--></div>
+                    </div>
+                </div>
+
+                <div class="page-content infinite-scroll pull-to-refresh-content" data-distance="100">
+                    <div class="pull-to-refresh-layer">
+                        <div class="preloader"></div>
+                        <div class="pull-to-refresh-arrow"></div>
+                    </div>
+
+                    <div class="cangyu_bbs_zhuanti">
+                        <div class="car_mess_div_list"></div>
+                    </div>
+
+                    <div class="cangyu_bbs_comment">
+                        <div class="comment-top">
+                            <h2>精选评论</h2>
+                        </div>
+                        <div class="topic_comm_div_list"></div>
+                    </div>
+                    
+                    <div class="infinite-scroll-preloader">
+                        <div class="preloader"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+
+
+      <!-- Bottom Tabbar-->
+
+        <div class="toolbar tabbar tabbar-labels cangyu_bbs_tabber_maimai cangyu_bbs_zhuanti_bg">
+
+            <div class="toolbar-inner"><!--<div class="item-input">
+    <input type="text" placeholder="请输入你的评论">
+  </div><a>发送</a>-->
+
+                <a class="link with-animation" href="javascript:;" onclick="gotoComment()"><div><i class="cangyu_bbs_tabber_maimai_pl"></i>评论</div></a>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script type="text/html" id="car_mess_list">
+
+         <img src="img/495734957518872705.jpg"alt=""/>
+
+     </script>
+
+
+    <script type="text/html" id="topic_comm_list">
+
+        <%for(var i = 0; i < list.length; i ++){%>
+
+            <div  class="comment-item">
+                <div  class="m-box comment-con-top">
+
+                    <div  class="comment-user-img m-avatar-box">
+                        <a  href="#" class="m-img-box">
+                            <img  src="https://app.icangyu.com<%=list[i].comment_avatar%>" alt="">
+                        </a>
+                    </div>
+                    <div  class="m-box-col"><p  class="comment-user-name"><span><%=list[i].nickname%></span></p></div>
+
+                </div>
+                <div  class="comment-con-bot"><div  class="comment-con"><div><%=list[i].comment%></div> </div></div>
+            </div>
+
+        <%}%>
+
+    </script>
+
+    <script type="text/javascript" src="js/config.js"></script>
+    <script>
+        var square_id = HttpHelper.getQuery('item_id');
+        var type =  HttpHelper.getQuery('type');
+
+      //专题评论列表
+      $.getJSON(`https://app.icangyu.com/icy/comment_lists?type=${type}&id=${square_id}&token=${token}`, function (data) {
+          console.log(data);
+          var Odata = data.data;
+          var html = template('topic_comm_list',Odata);
+          $('.topic_comm_div_list').html(html);
+      })
+
+
+        // 专题详情
+        $.getJSON(`${CYHOST}/icy/details_topic?id=${square_id}`,function (data) {
+            // console.log(data);
+            var Odata = data.data;
+            // var html = template('car_mess_list',Odata);
+            // $('.car_mess_div_list').html(html);
+            $('.car_mess_div_list').html(Odata[0].custom_page);
+        });
+
+        function gotoComment(){
+            window.location.href = `zhuanti——xiangqing——tanchupinglun.html?type=${type}&item_id=${square_id}`;
+        }
+
+        // Initialize your app
+        var zhuantiApp = new Framework7({
+            router: false,
+            swipePanel: 'left',
+            // ... other parameters
+        });
+        zhuantiApp.addView('#zhuanti_xiangqing');
+
+        // Export selectors engine
+        var $$ = Dom7;
+
+        var ptrContent = $$('.pull-to-refresh-content');
+        // Add 'refresh' listener on it
+        ptrContent.on('refresh', function (e) {
+            tieziPageIndex = 0;
+
+            setTimeout(function(){
+                //专题评论
+                $.getJSON(`${CYHOST}/icy/comment_lists?type=${type}&id=${square_id}&page=0`,function (data) {
+                    var Odata = data.data;
+                    var html = template('topic_comm_list',Odata);
+                    $('.topic_comm_div_list').html(html);
+
+                    
+                    // When loading done, we need to reset it
+                    zhuantiApp.pullToRefreshDone();
+                })
+            }, 1500);
+        });
+
+        var loading = false;    //是否正在加载中
+        var tieziPageIndex = 0;
+        var pageSize = 10;
+        var resetLoadingTime = 1500;
+        //下拉加载
+        $$('.infinite-scroll').on('infinite', function (ev) {
+            setTimeout(function() {
+                if (loading) return;
+                loading = true;
+
+                tieziPageIndex = tieziPageIndex + pageSize;
+                //专题评论
+                $.getJSON(`${CYHOST}/icy/comment_lists?type=${type}&id=${square_id}&page=${tieziPageIndex}`,function (data) {
+                    var Odata = data.data;
+                    var html = template('topic_comm_list',Odata);
+                    $('.topic_comm_div_list').append(html);
+
+                    setTimeout(function(){
+                        loading = false;
+                    }, resetLoadingTime);  
+                })
+            }, resetLoadingTime);
+        });
+
+
+    </script>
+
+
+
+  </body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <title>藏玉</title>
+  <!-- Path to Framework7 Library CSS-->
+  <link rel="stylesheet" href="dist/css/framework7-icons.css">
+  <link rel="stylesheet" href="dist/css/framework7.ios.min.css">
+  <!--<link rel="stylesheet" href="dist/css/framework7.material.min.css">-->
+  <link rel="stylesheet" href="css/my-app.css">
+</head>
+
+<body>
+  <!-- Status bar overlay for fullscreen mode-->
+  <div class="statusbar-overlay"></div>
+  <!-- Panels overlay-->
+  <div class="panel-overlay"></div>
+  <!--弹出发布页面-->
+  <div class="popup popup-fabu">
+    <div class="fabu_btn_list">
+      <a class="qiujianding_btn"></a>
+      <a class="fatiezi_btn"></a>
+      <a class="woxiangmai_btn"></a>
+    </div>
+    <p class="popup_fabu_guanbi"><a href="#" class="close-popup"><i class="f7-icons">close</i></a></p>
+  </div>
+  <!-- Views, and they are tabs-->
+  <!-- We need to set "toolbar-through" class on it to keep space for our tab bar-->
+  <div class="views">
+
+    <div class="pages navbar-through ">
+      <div data-page="jianding_xiangqing" class="page">
+
+        <div class="navbar cangyu_bbs_top_tabber">
+          <div class="navbar-inner">
+            <div class="left with-animation">
+              <a href="index.html#view-4" class="back link"> <i class="icon icon-back"></i></a>
+            </div>
+            <div class="center ">设置</div>
+            <div class="right cangyu_bbs_tanchu_pinglun_btn_fabu">
+              <!--<a href="#">保存</a>--></div>
+          </div>
+        </div>
+
+        <div class="page-content">
+          <div class="list-block cangyu_bbs_wode_gerenzil">
+            <ul>
+              <!--<li>
+      <a href="#" class="item-link item-content">
+
+        <div class="item-inner">
+          <div class="item-title">给藏玉评论</div>
+
+        </div>
+      </a>
+    </li>-->
+              <li>
+                <a href="about.html" class="item-link item-content">
+
+                  <div class="item-inner">
+                    <div class="item-title">关于藏玉</div>
+
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="aback.html" class="item-link item-content">
+
+                  <div class="item-inner">
+                    <div class="item-title">意见反馈</div>
+
+                  </div>
+                </a>
+              </li>
+            </ul>
+
+          </div>
+          <div class="list-block cangyu_bbs_wode_gerenzil">
+            <ul>
+              <li>
+                <a href="adelegate.html" class="item-link item-content">
+
+                  <div class="item-inner">
+                    <div class="item-title">用户协议</div>
+
+                  </div>
+                </a>
+              </li>
+              <!--<li>
+      <a href="#" class="item-link item-content">
+
+        <div class="item-inner">
+          <div class="item-title">清除缓存</div>
+
+        </div>
+      </a>
+    </li>
+    <li>
+      <a href="#" class="item-link item-content">
+
+        <div class="item-inner">
+          <div class="item-title">字体大小</div>
+
+        </div>
+      </a>
+    </li>-->
+
+            </ul>
+          </div>
+
+          <div class="list-block cangyu_bbs_wode_gerenzil">
+            <ul>
+              <li>
+                <a class="item-link item-content">
+                  <div class="item-inner" onclick="signOut()">
+                    <div class="item-title">退出登录</div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- Path to Framework7 Library JS-->
+  <script type="text/javascript" src="dist/js/framework7.min.js"></script>
+  <!-- Path to your app js-->
+  <script type="text/javascript">
+    function signOut() {
+      clearCookie();
+      window.location.href = 'denglu.html';
+    }
+
+    function clearCookie() {
+      var keys = document.cookie.match(/[^ =;]+(?=\=)/g);
+      if (keys) {
+        for (var i = keys.length; i--;)
+          document.cookie = keys[i] + '=0;expires=' + new Date(0).toUTCString()
+      }
+    }
+  </script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
