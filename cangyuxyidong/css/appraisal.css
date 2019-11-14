@@ -13,6 +13,11 @@
     width: 40px;
     height: 40px;
     border-radius: 40px;
+    background: #d9d9d9;
+}
+
+.total_support {
+    padding: 15px;
 }
 
 .top .nick {
@@ -145,15 +150,10 @@
     margin-right: 5px;
 }
 
-.icon_support img {
-    width: 22px;
-    height: 22px;
-}
-
-.price_top{
+.price_top {
     padding: 15px;
-    border-bottom: 0.5px solid #d9d9d9;  
-    font-size: 16px; 
+    border-bottom: 0.5px solid #d9d9d9;
+    font-size: 16px;
 }
 
 .price_content {
@@ -175,6 +175,7 @@
     width: 40px;
     height: 40px;
     border-radius: 40px;
+    background: #d9d9d9;
 }
 
 .price_content .price_left .price_nick {
@@ -197,22 +198,22 @@
     line-height: 25px;
 }
 
-.price_content .price_right{
+.price_content .price_right {
     font-size: 15px;
 }
 
-.price_content .price_right .price_win{
+.price_content .price_right .price_win {
     color: #f89649;
     margin-right: 10px;
 }
 
-.price_content .price_right .price_lose{
+.price_content .price_right .price_lose {
     margin-right: 10px;
     color: #d3d3d3;
 
 }
 
-.price_content .price_right .type_win{
+.price_content .price_right .type_win {
     color: #f89649;
     width: 65px;
     height: 3rpx;
@@ -222,7 +223,7 @@
     line-height: 30px;
 }
 
-.price_content .price_right .type_lose{
+.price_content .price_right .type_lose {
     width: 65px;
     height: 3rpx;
     border: 0.5px #d3d3d3 solid;

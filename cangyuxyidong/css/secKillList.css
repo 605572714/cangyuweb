@@ -7,7 +7,7 @@
     margin: 0;
 }
 
-.car_mess_div2 {
+.car_mess_div2{
     display: block;
     background: #fff;
     padding: 20px auto;
@@ -33,19 +33,12 @@
     padding: 15px 0px;
 }
 
-.bottom_col {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 15px 0px;
-}
-
 .list_title {
     font-size: 18px;
     color: #333;
 }
 
 .list_price {
-    font-size: 16px;
-    color: #666;
+    font-size: 20px;
+    color: #bc2e2e;
 }

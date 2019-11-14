@@ -178,7 +178,7 @@ $signPackage = $jssdk->GetSignPackage();
     <script>
         const _from = HttpHelper.getQuery('from'); //获取user_id
         const url = 'http://app.icangyu.com/icyApi/'; //线上接口
-        $.get(url + 'novice_mall_list', function(res) {
+        $.get(url + 'novice_mall_list', function (res) {
             var Winwidth = document.body.clientWidth,
                 Winheight = document.body.clientHeight;
             if (res.result == 100) {
@@ -210,15 +210,15 @@ $signPackage = $jssdk->GetSignPackage();
                         "desc": '新手商城，特价好物', //摘要,如果分享到朋友圈的话，不显示摘要。
                         "title": '藏玉新手商城', //分享卡片标题
                         "link": window.location.href, //分享出去后的链接，这里可以将链接设置为另一个页面。
-                        "success": function() {
+                        "success": function () {
                             //分享成功后的回调函数
                         },
-                        'cancel': function() {
+                        'cancel': function () {
                             // 用户取消分享后执行的回调函数
                         }
                     }
                 };
-                wx.ready(function() {
+                wx.ready(function () {
                     wx.onMenuShareAppMessage(share_config.share); //分享给好友
                     wx.onMenuShareTimeline(share_config.share); //分享到朋友圈
                     wx.onMenuShareQQ(share_config.share); //分享给手机QQ
@@ -248,6 +248,33 @@ $signPackage = $jssdk->GetSignPackage();
                 new JMLink(configs);
             }
         }
+    </script>
+    <!-- Bottom Tabbar-->
+    <div class="cangyu_bbs_tabber">
+        <a href="javascript:void(0)" class="close"></a>
+        <a id="btnOpenApp">
+            <div class="logo"></div>
+            <div class="banner-label">
+                <p class="tb" data-node="appName">下载APP</p>
+                <p class="title-sub">了解最新业内资讯</p>
+            </div>
+            <div class="open">立即打开</div>
+        </a>
+    </div>
+    <script>
+        $("#btnOpenApp").click(function () {
+            var square_id = '';
+            var configs = [{
+                jmlink: 'https://a0ipue.jmlk.co/AA09',
+                button: document.querySelector('a#btnOpenApp'),
+                params: {
+                    'shareID': square_id,
+                    'shareIOS': 'KCNoviceShopVC',
+                    'shareAndroid': 'icangyu.jade.activities.seckill.NoviceDetailsActivity'
+                }
+            }];
+            new JMLink(configs);
+        });
     </script>
 </body>
 

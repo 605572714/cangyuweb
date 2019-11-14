@@ -35,7 +35,7 @@ var HttpHelper = (function(){
             if (r != null) {
                 return unescape(r[2]); 
             }
-        
+            
             return null;
         }
     };

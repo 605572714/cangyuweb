@@ -242,6 +242,33 @@
             }
         }
     </script>
+    <!-- Bottom Tabbar-->
+    <div class="cangyu_bbs_tabber">
+        <a href="javascript:void(0)" class="close"></a>
+        <a id="btnOpenApp">
+            <div class="logo"></div>
+            <div class="banner-label">
+                <p class="tb" data-node="appName">下载APP</p>
+                <p class="title-sub">了解最新业内资讯</p>
+            </div>
+            <div class="open">立即打开</div>
+        </a>
+    </div>
+    <script>
+        $("#btnOpenApp").click(function () {
+            var square_id = '';
+            var configs = [{
+                jmlink: 'https://a0ipue.jmlk.co/AA09',
+                button: document.querySelector('a#btnOpenApp'),
+                params: {
+                    'shareID': square_id,
+                    'shareIOS': 'KCNoviceShopVC',
+                    'shareAndroid': 'icangyu.jade.activities.seckill.NoviceDetailsActivity'
+                }
+            }];
+            new JMLink(configs);
+        });
+    </script>
 </body>
 
 </html>

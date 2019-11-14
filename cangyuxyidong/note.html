@@ -85,9 +85,6 @@
                 <div class="open" onclick="openApp">立即打开</div>
             </a>
         </div>
-
-
-
     </div>
 
 
@@ -195,10 +192,10 @@
                                 <%}%>
                             </div>
                             <div class='right'>
-                                    <a href="javascript:;" onclick="praise(<%=list[i].id%>)" class="icon_support">
+                                    <a href="javascript:;" onclick="praise(<%=data.id%>)" class="icon_support">
                                 <img src="img/support.png" alt="">
                 </a>
-                <a href="javascript:;" onclick="praise(<%=list[i].id%>)" class="icon_support">
+                <a href="javascript:;" onclick="praise(<%=data.id%>)" class="icon_support">
                     <img src="img/discuss.png" alt=""></a>
                 </a>
             </div>
@@ -259,7 +256,7 @@
             window.share_config = {
                 "share": {
                     "imgUrl": "http://www.icangyu.com/cangyuxyidong/img/icon.png", //分享图，默认当相对路径处理，所以使用绝对路径的的话，“http://”协议前缀必须在。
-                    "desc": html.content, //摘要,如果分享到朋友圈的话，不显示摘要。
+                    "desc": data.data.content, //摘要,如果分享到朋友圈的话，不显示摘要。
                     "title": '藏于帖子', //分享卡片标题
                     "link": window.location.href, //分享出去后的链接，这里可以将链接设置为另一个页面。
                     "success": function () {

@@ -9,7 +9,8 @@ $signPackage = $jssdk->GetSignPackage();
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <title>藏玉</title>
@@ -65,7 +66,8 @@ $signPackage = $jssdk->GetSignPackage();
                 <div class="page-content infinite-scroll pull-to-refresh-content" data-distance="100">
 
                     <div class="cangyu_bbs_zhuanti">
-                        <div class="car_mess_div_list"></div>
+                        <div class="car_mess_div_top"></div>
+                        <div class="car_mess_div_list" style='padding: 15px;'></div>
                     </div>
 
                 </div>
@@ -90,17 +92,15 @@ $signPackage = $jssdk->GetSignPackage();
     </div>
 
     <script>
-        $(".close").click(function() {
+        $(".close").click(function () {
             $(".cangyu_bbs_tabber").hide();
         });
     </script>
 
     <script type="text/html" id="topic_comm_list">
         <%for(var i = 0; i < list.length; i ++){%>
-
         <div class="comment-item">
             <div class="m-box comment-con-top">
-
                 <div class="comment-user-img m-avatar-box">
                     <a href="#" class="m-img-box">
                         <%if(list[i].comment_avatar.indexOf('http')==-1){%>
@@ -123,6 +123,11 @@ $signPackage = $jssdk->GetSignPackage();
         </div>
 
         <%}%>
+    </script>
+    <script type="text/html" id="topic_top">
+        <div class="title" style='padding:20px 0px 0px 15px;font-size:20px;'>
+            <%=title%>
+        </div>
     </script>
 
     <script type="text/javascript" src="js/config.js"></script>
@@ -151,10 +156,12 @@ $signPackage = $jssdk->GetSignPackage();
         var type = HttpHelper.getQuery('type');
 
         // 专题详情
-        $.getJSON(`${CYHOST}/icy/details_topic?id=${square_id}`, function(data) {
+        $.getJSON(`${CYHOST}/icy/details_topic?id=${square_id}`, function (data) {
             console.log(data);
             var Odata = data.data;
             $('.car_mess_div_list').html(Odata[0].custom_page);
+            var html = template('topic_top', Odata[0]);
+            $('.car_mess_div_top').html(html);
             document.title = Odata[0].title;
 
             var tit = Odata[0].title;
@@ -165,22 +172,22 @@ $signPackage = $jssdk->GetSignPackage();
                     "desc": des, //摘要,如果分享到朋友圈的话，不显示摘要。
                     "title": tit, //分享卡片标题
                     "link": window.location.href, //分享出去后的链接，这里可以将链接设置为另一个页面。
-                    "success": function() {
+                    "success": function () {
                         //分享成功后的回调函数
                     },
-                    'cancel': function() {
+                    'cancel': function () {
                         // 用户取消分享后执行的回调函数
                     }
                 }
             };
-            wx.ready(function() {
+            wx.ready(function () {
                 wx.onMenuShareAppMessage(share_config.share); //分享给好友
                 wx.onMenuShareTimeline(share_config.share); //分享到朋友圈
                 wx.onMenuShareQQ(share_config.share); //分享给手机QQ
             });
         });
 
-        $("#btnOpenApp").click(function() {
+        $("#btnOpenApp").click(function () {
             var configs = [{
                 jmlink: 'https://a0ipue.jmlk.co/AA09',
                 button: document.querySelector('a#btnOpenApp'),

@@ -1,24 +1,86 @@
-秒杀列表    完成 icangyu.jade.activities.seckill.SecKillSessionActivity     KCSecKillListVC
-秒杀详情    完成 icangyu.jade.activities.seckill.SecKillDetailsActivity     KCSecKillDetailVC
-臻品详情    完成 icangyu.jade.activities.treasure.TreasureDetailsActivity   KCRealSelectDetailVC
-课程详情    完成 icangyu.jade.activities.course.CourseDetailsActivity       KCLessonDetailVC
-帖子分享    完成 icangyu.jade.activities.community.PostDetailsActivity      KCWeiBoMessVC
-视频分享    完成 icangyu.jade.activities.community.PostDetailsActivity      KCWeiBoMessVC
-话题分享    完成 icangyu.jade.activities.contents.TopicDetailsActivity      KCTalkMessVC
-拼手气分享(无)
-众筹分享    完成 icangyu.jade.activities.contents.CrowdDetailsActivity      KCCorwdDetailVC
-砍价分享(无)完成 icangyu.jade.activities.crowd.CutDetailsActivity           KCCutDetailVC
-新手商城    完成 icangyu.jade.activities.seckill.NoviceDetailsActivity      KCNoviceShopVC
-拉新活动    完成 不跳转
-文章详情    完成 icangyu.jade.activities.articles.ArticleActivity           KCTopicMessVC
-鉴定详情    完成 icangyu.jade.activities.community.IdentifyDetailsActivity  KCAppraiseMessVC
-严选列表    完成 icangyu.jade.activities.select.SelectSessionActivity       KCStrictListVC
-严选详情    完成 icangyu.jade.activities.select.SelectDetailsActiity        KCStrictMessVC
-直播分享
-买卖分享    完成 icangyu.jade.activities.community.SellDetailsActivity      KCWorksMessageVC
-捡漏列表    完成 icangyu.jade.activities.pick.PickSessionActivity           KCPickupListVC         
-捡漏详情    完成 icangyu.jade.activities.pick.PickDetailActivity            KCPickupMessVC
-拍卖列表    完成 icangyu.jade.activities.auction.AuctionSessionActivity     KCAuctionListVC
-拍卖详情    完成 icangyu.jade.activities.auction.AuctionDetailsActivity     KCAuctionMessVC
+秒杀列表    
+       canguyxyidong/shareSecKill.php?item_id // 路径
+       icangyu.jade.activities.seckill.SecKillSessionActivity  // 安卓 
+       KCSecKillListVC  // IOS
+秒杀详情
+       canguyxyidong/secKill.php?item_id           
+       icangyu.jade.activities.seckill.SecKillDetailsActivity     
+       KCSecKillDetailVC
+臻品详情
+       canguyxyidong/shareTreasure?item_id
+       icangyu.jade.activities.treasure.TreasureDetailsActivity   
+       KCRealSelectDetailVC
+课程详情
+       canguyxyidong/aLeson?item_id
+       icangyu.jade.activities.course.CourseDetailsActivity
+       KCLessonDetailVC
+帖子分享
+       canguyxyidong/note.php?type=1&item_id
+       icangyu.jade.activities.community.PostDetailsActivity
+       KCWeiBoMessVC
+视频分享
+       canguyxyidong/note.php?type=1&item_id
+       icangyu.jade.activities.community.PostDetailsActivity
+       KCWeiBoMessVC
+话题分享
+       canguyxyidong/shareTopic.html?topicid
+       icangyu.jade.activities.contents.TopicDetailsActivity
+       KCTalkMessVC
+众筹分享
+       canguyxyidong/crowd.php?item_id
+       icangyu.jade.activities.contents.CrowdDetailsActivity
+       KCCorwdDetailVC
+新手商城
+       app/newcomerMall.php?from
+       icangyu.jade.activities.seckill.NoviceDetailsActivity
+       KCNoviceShopVC
+文章详情
+       canguyxyidong/shareZhuaiTi.php?item_id
+       icangyu.jade.activities.articles.ArticleActivity
+       KCTopicMessVC
+鉴定详情
+       canguyxyidong/appraisal.php?item_id
+       icangyu.jade.activities.community.IdentifyDetailsActivity
+       KCAppraiseMessVC
+严选列表
+       canguyxyidong/selectList.php?id
+       icangyu.jade.activities.select.SelectSessionActivity
+       KCStrictListVC
+严选详情
+       canguyxyidong/select.php?item_id
+       icangyu.jade.activities.select.SelectDetailsActiity
+       KCStrictMessVC
+买卖分享
+       canguyxyidong/business.php?type&item_id
+       icangyu.jade.activities.community.SellDetailsActivity
+       KCWorksMessageVC
+捡漏列表
+       canguyxyidong/pickupList.php?screenings
+       icangyu.jade.activities.pick.PickSessionActivity
+       KCPickupListVC         
+捡漏详情
+       canguyxyidong/pickupContent.php?item_id
+       icangyu.jade.activities.pick.PickDetailActivity
+       KCPickupMessVC
+拍卖列表
+       canguyxyidong/shareAuction.php?screenings
+       icangyu.jade.activities.auction.AuctionSessionActivity
+       KCAuctionListVC
+拍卖详情
+       canguyxyidong/auction.php?item_id
+       icangyu.jade.activities.auction.AuctionDetailsActivity
+       KCAuctionMessVC
 首发分享
-众团分享(无)
+       canguyxyidong/firstPublish.php?id
+       icangyu.jade.activities.live.LiveSellActivity
+       KCFirstDetailVC
+砍价分享
+       canguyxyidong/cutDetail?item_id
+       icangyu.jade.activities.crowd.CutDetailsActivity
+       KCCutDetailVC
+拼手气
+       luckList.php?item_id
+       icangyu.jade.activities.crowd.LuckSessionActivity
+       KCSpellDetailVC
+直播分享
+拉新活动 不跳转

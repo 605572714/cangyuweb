@@ -93,25 +93,30 @@
             <%for(var i = 0; i < list.length; i ++){%>
             <div class="price_content">
                 <div class="price_left">
+                    <%if(list[i].avatar.indexOf('http')==-1){%>
                     <img src="https://app.icangyu.com<%=list[i].avatar%>" alt="">
+                    <%}else{%>
+                    <img src="<%=list[i].avatar%>" alt="">
+                    <%}%>
+    
                     <div class="price_nick">
                         <div class='nickname'><%=list[i].nickname%></div>
-                        <div class='createdate'><%=list[i].createdate%></div>
-                    </div>
-                </div>
+                <div class='createdate'><%=list[i].createdate%></div>
+            </div>
+        </div>
 
-                <div class="price_right">
-                    <%if(list[i].status==2){%>
-                    <span class='price_win'>￥<%=list[i].price%></span>
-                    <span class='type_win'><%=list[i].type_status%></span>
-                    <%}else{%>
-                    <span class='price_lose'>￥<%=list[i].price%></span>
-                    <span class='type_lose'><%=list[i].type_status%></span>
-                    <%}%>
+        <div class="price_right">
+            <%if(list[i].status==2){%>
+            <span class='price_win'>￥<%=list[i].price%></span>
+            <span class='type_win'><%=list[i].type_status%></span>
+            <%}else{%>
+            <span class='price_lose'>￥<%=list[i].price%></span>
+            <span class='type_lose'><%=list[i].type_status%></span>
+            <%}%>
                     </div>
                 </div>
                 <%}%>
-                </div>
+        </div>
     </script>
 
 
@@ -152,7 +157,7 @@
             <div class="card-content-inner">
                 <h2 class="card-content-yylm-t content_title">拍品描述</h2>
                 <h3 class="card-content-yylm-t content_detail"><%=list.content%></h3>
-            <div class="maimai_xq_img" style='padding:0px;'>
+            <div class="maimai_xq_img" style='padding:0px 15px;'>
 
                 <%for(var k = 0; k < list.album.length; k ++){%>
 

@@ -163,7 +163,7 @@ $signPackage = $jssdk->GetSignPackage();
             <div class="card-content-inner">
                 <h2 class="card-content-yylm-t content_title">拍品描述</h2>
                 <h3 class="card-content-yylm-t content_detail"><%=list.content%></h3>
-            <div class="maimai_xq_img" style='padding:0px;'>
+            <div class="maimai_xq_img" style='padding:0px 15px;'>
 
                 <%for(var k = 0; k < list.album.length; k ++){%>
 

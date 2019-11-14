@@ -10,12 +10,10 @@ $signPackage = $jssdk->GetSignPackage();
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" />
     <title>藏玉</title>
     <!-- Path to Framework7 Library CSS-->
     <link rel="stylesheet" href="dist/css/framework7-icons.css">
@@ -31,6 +29,7 @@ $signPackage = $jssdk->GetSignPackage();
     <!-- Path to Framework7 Library JS-->
     <script type="text/javascript" src="dist/js/framework7.min.js"></script>
     <script src="https://static.jmlk.co/scripts/dist/jmlink.min.js"></script>
+
 
 </head>
 
@@ -84,11 +83,21 @@ $signPackage = $jssdk->GetSignPackage();
             <!--</div>-->
         </div>
 
-
+    </div>
+    <div class="cangyu_bbs_tabber">
+        <a href="javascript:void(0)" class="close"></a>
+        <a id="btnOpenApp">
+            <div class="logo"></div>
+            <div class="banner-label">
+                <p class="tb" data-node="appName">下载APP</p>
+                <p class="title-sub">了解最新业内资讯</p>
+            </div>
+            <div class="open">立即打开</div>
+        </a>
     </div>
 
     <script>
-        $(".close").click(function() {
+        $(".close").click(function () {
             $(".cangyu_bbs_tabber").hide();
         });
     </script>
@@ -103,10 +112,10 @@ $signPackage = $jssdk->GetSignPackage();
     <script>
         wx.config({
             debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。移动端会通过弹窗来提示相关信息。如果分享信息配置不正确的话，可以开了看对应报错信息
-            appId: '<?php echo $signPackage["appId"]; ?>',
-            timestamp: '<?php echo $signPackage["timestamp"]; ?>',
-            nonceStr: '<?php echo $signPackage["nonceStr"]; ?>',
-            signature: '<?php echo $signPackage["signature"]; ?>',
+            appId: '<?php echo $signPackage["appId"];?>',
+            timestamp: '<?php echo $signPackage["timestamp"];?>',
+            nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+            signature: '<?php echo $signPackage["signature"];?>',
             jsApiList: [ //需要使用的JS接口列表,分享默认这几个，如果有其他的功能比如图片上传之类的，需要添加对应api进来
                 'checkJsApi',
                 'onMenuShareTimeline', //
@@ -124,8 +133,7 @@ $signPackage = $jssdk->GetSignPackage();
         var type = HttpHelper.getQuery('type');
 
         // 专题详情
-        $.getJSON(`${CYHOST}/icy/fakeGoods_details?id=${square_id}`, function(data) {
-            console.log("11111111");
+        $.getJSON(`${CYHOST}/icy/fakeGoods_details?id=${square_id}`, function (data) {
             console.log(data);
             var Odata = data.data.list;
             Odata.content = Odata.content.replace(/\<p\>/gi, '<p style="color:#666;">')
@@ -134,22 +142,21 @@ $signPackage = $jssdk->GetSignPackage();
             $('.price_history').html(price)
             var buymess = template('buy_mess', Odata);
             $('.buy_mess_div').html(buymess);
-            var share_content = Odata.share_content
             window.share_config = {
                 "share": {
                     "imgUrl": "http://www.icangyu.com/cangyuxyidong/img/icon.png", //分享图，默认当相对路径处理，所以使用绝对路径的的话，“http://”协议前缀必须在。
-                    "desc": share_content, //摘要,如果分享到朋友圈的话，不显示摘要。
+                    "desc": "", //摘要,如果分享到朋友圈的话，不显示摘要。
                     "title": "藏玉臻品", //分享卡片标题
                     "link": window.location.href, //分享出去后的链接，这里可以将链接设置为另一个页面。
-                    "success": function() {
+                    "success": function () {
                         //分享成功后的回调函数
                     },
-                    'cancel': function() {
+                    'cancel': function () {
                         // 用户取消分享后执行的回调函数
                     }
                 }
             };
-            wx.ready(function() {
+            wx.ready(function () {
                 wx.onMenuShareAppMessage(share_config.share); //分享给好友
                 wx.onMenuShareTimeline(share_config.share); //分享到朋友圈
                 wx.onMenuShareQQ(share_config.share); //分享给手机QQ
@@ -179,14 +186,15 @@ $signPackage = $jssdk->GetSignPackage();
         <div class="price_list">
             <div class='price_title'>市场估价:</div>
             <%for(var i=0 ; i < price_des.length ; i ++){%>
-            <div class="price" style="color:#BC2E2E"><span><%=price_des[i].title%></span>&nbsp;￥<%=price_des[i].value%></div>
+            <div class="price" style="color:#BC2E2E"><span><%=price_des[i].title%></span>&nbsp;￥<%=price_des[i].value%>
+            </div>
             <%}%>
 		
 	</div>
 	
     </script>
     <script>
-        $("#btnOpenApp").click(function() {
+        $("#btnOpenApp").click(function () {
             var configs = [{
                 jmlink: 'https://a0ipue.jmlk.co/AA09',
                 button: document.querySelector('a#btnOpenApp'),

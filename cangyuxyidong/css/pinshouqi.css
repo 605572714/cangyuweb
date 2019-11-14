@@ -3,6 +3,11 @@
     padding: 0;
 }
 
+a{
+    text-decoration: none;
+    color: #333;
+}
+
 .header_img {
     display: block;
 }
@@ -27,13 +32,16 @@
 .detail_right {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    /* justify-content: space-around; */
     position: relative;
     padding-left: 15px;
 }
-
+.detail_right .title {
+   margin-top: 14px;
+}
 
 .detail_right .price {
+    margin-top: 14px;
     font-size: 18px;
     color: #B4282D;
 }
@@ -50,6 +58,7 @@
 }
 
 .contain {
+    margin-top: 14px;
     width: 90px;
     height: 15px;
     border: 1px solid #f0c16f;

@@ -94,7 +94,8 @@ $signPackage = $jssdk->GetSignPackage();
         });
     </script>
     <script>
-        var square_id = HttpHelper.getQuery('id');
+        var square_id = HttpHelper.getQuery('item_id');
+        // var square_id = 6;
         var wWidth = document.body.clientWidth;
         var app = new Vue({
             el: '#app',
@@ -151,24 +152,24 @@ $signPackage = $jssdk->GetSignPackage();
                                 "desc": that.content, //摘要,如果分享到朋友圈的话，不显示摘要。
                                 "title": that.pro_name, //分享卡片标题
                                 "link": window.location.href, //分享出去后的链接，这里可以将链接设置为另一个页面。
-                                "success": function() { //分享成功后的回调函数
+                                "success": function () { //分享成功后的回调函数
                                 },
-                                'cancel': function() {
+                                'cancel': function () {
                                     // 用户取消分享后执行的回调函数
                                 }
                             }
                         };
-                        wx.ready(function() {
+                        wx.ready(function () {
                             wx.onMenuShareAppMessage(share_config.share); //分享给好友
                             wx.onMenuShareTimeline(share_config.share); //分享到朋友圈
                             wx.onMenuShareQQ(share_config.share); //分享给手机QQ
                         });
-                        wx.error(function(res) {
+                        wx.error(function (res) {
                             console.log(res)
                         })
                         wx.checkJsApi({
                             jsApiList: ['previewImage'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
-                            success: function(res) {
+                            success: function (res) {
                                 console.log(res)
                                 // 以键值对的形式返回，可用的api值true，不可用为false
                                 // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
@@ -199,10 +200,10 @@ $signPackage = $jssdk->GetSignPackage();
         </a>
     </div>
     <script>
-        $(".close").click(function() {
+        $(".close").click(function () {
             $(".cangyu_bbs_tabber").hide();
         });
-        $("#btnOpenApp").click(function() {
+        $("#btnOpenApp").click(function () {
             var configs = [{
                 jmlink: 'https://a0ipue.jmlk.co/AA09',
                 button: document.querySelector('a#btnOpenApp'),

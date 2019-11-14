@@ -60,7 +60,8 @@
                 <div class="page-content infinite-scroll pull-to-refresh-content" data-distance="100">
 
                     <div class="cangyu_bbs_zhuanti">
-                        <div class="car_mess_div_list"></div>
+                        <div class="car_mess_div_top"></div>
+                        <div class="car_mess_div_list" style='padding: 15px;'></div>
                     </div>
 
                 </div>
@@ -92,10 +93,8 @@
 
     <script type="text/html" id="topic_comm_list">
         <%for(var i = 0; i < list.length; i ++){%>
-
         <div class="comment-item">
             <div class="m-box comment-con-top">
-
                 <div class="comment-user-img m-avatar-box">
                     <a href="#" class="m-img-box">
                         <%if(list[i].comment_avatar.indexOf('http')==-1){%>
@@ -118,6 +117,11 @@
         </div>
 
         <%}%>
+    </script>
+    <script type="text/html" id="topic_top">
+        <div class="title" style='padding:20px 0px 0px 15px;font-size:20px;'>
+            <%=title%>
+        </div>
     </script>
 
     <script type="text/javascript" src="js/config.js"></script>
@@ -150,6 +154,8 @@
             console.log(data);
             var Odata = data.data;
             $('.car_mess_div_list').html(Odata[0].custom_page);
+            var html = template('topic_top', Odata[0]);
+            $('.car_mess_div_top').html(html);
             document.title = Odata[0].title;
 
             var tit = Odata[0].title;

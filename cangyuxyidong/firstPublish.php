@@ -1,3 +1,11 @@
+<?php
+include '../extended/php/jssdk.php';
+$jssdk = new JSSDK("wxd076774039b4132e", "3006fa830349f4301e39899e6fe6e230");
+$signPackage = $jssdk->GetSignPackage();
+//print_r($signPackage);
+//echo "xx";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
