@@ -120,7 +120,9 @@ $signPackage = $jssdk->GetSignPackage();
 
     <script>
         var square_id = HttpHelper.getQuery('item_id');
-
+        if(!square_id){
+            square_id = HttpHelper.getQuery('screenings');
+        }
         //拍品列表
         $.getJSON(`https://app.icangyu.com/icyApi/spike_list?id=${square_id}`, function (data) {
             console.log(data);
