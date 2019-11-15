@@ -42,7 +42,7 @@ $signPackage = $jssdk->GetSignPackage();
         .topImg img {
             width: 100%;
         }
-
+/* 
         #flbtn {
             width: 90%;
             margin-left: 5%;
@@ -51,7 +51,7 @@ $signPackage = $jssdk->GetSignPackage();
             position: absolute;
             bottom: 7.5vw;
             opacity: 0;
-        }
+        } */
 
 
         .mallList {
@@ -190,7 +190,7 @@ $signPackage = $jssdk->GetSignPackage();
                     progress[i] = list[i].nums / list[i].nums_total * 90
                     listHTML +=
                         '<div class="detailItem">' +
-                        '<a id="goBuy"  onclick="godetail(' + list[i].id +
+                        '<a  onclick="godetail(' + list[i].id +
                         ')" href="#"  target="_self" rel="nofollow">' +
                         '<img src = "' + list[i].headlines + ' ">' +
                         '<div class = "content" >  <div class = "title" id = "title">' + list[i].title +
@@ -228,29 +228,20 @@ $signPackage = $jssdk->GetSignPackage();
             $('#flbtn').click(function coupon() {
                 console.log("领取优惠券");
             });
-            configs = [{
-                jmlink: 'https://a0ipue.jmlk.co/AA09',
-                button: document.querySelector('a#goBuy'),
-                params: {
-                    'shareID': '',
-                    'shareIOS': 'KCNoviceShopVC',
-                    'shareAndroid': 'icangyu.jade.activities.seckill.NoviceDetailsActivity'
-                }
-            }];
-            new JMLink(configs);
-
         });
 
         function godetail(id) {
+            console.log(_from)
             if (_from === 'Jade') {
                 alert('novice_item_id=' + id)
-            } else {
-                new JMLink(configs);
             }
+            //  else {
+            //     new JMLink(configs);
+            // }
         }
     </script>
     <!-- Bottom Tabbar-->
-    <div class="cangyu_bbs_tabber">
+    <!-- <div class="cangyu_bbs_tabber">
         <a href="javascript:void(0)" class="close"></a>
         <a id="btnOpenApp">
             <div class="logo"></div>
@@ -275,7 +266,7 @@ $signPackage = $jssdk->GetSignPackage();
             }];
             new JMLink(configs);
         });
-    </script>
+    </script> -->
 </body>
 
 </html>

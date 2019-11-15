@@ -1,3 +1,10 @@
+<?php
+include '../extended/php/jssdk.php';
+$jssdk = new JSSDK("wxd076774039b4132e", "3006fa830349f4301e39899e6fe6e230");
+$signPackage = $jssdk->GetSignPackage();
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -224,6 +231,7 @@
         });
 
         function godetail(id) {
+            console.log(_from,'PPP')
             if (_from === 'Jade') {
                 alert('novice_item_id=' + id)
             }

@@ -31,7 +31,7 @@
        icangyu.jade.activities.contents.CrowdDetailsActivity
        KCCorwdDetailVC
 新手商城
-       app/newcomerMall.html?from
+       app/newcomerMall.php?from
        icangyu.jade.activities.seckill.NoviceDetailsActivity
        KCNoviceShopVC
 文章详情
