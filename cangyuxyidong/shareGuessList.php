@@ -130,7 +130,7 @@ $signPackage = $jssdk->GetSignPackage();
     var square_title = HttpHelper.getQuery('square_title');
 
     //拍品列表
-    $.getJSON(`https://app.icangyu.com/icy/guess_list?id=${square_id}`, function (data) {
+    $.getJSON(`https://app.icangyu.com/icyApi/guess_list?id=${square_id}`, function (data) {
         console.log(data);
         var Odata = data.data;
         var html = template('car_mess_div_list2',Odata);

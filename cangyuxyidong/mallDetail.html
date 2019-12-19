@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>商品详情</title>
+		<script src="js/vue/vue.min.js"></script>
+		<script src="js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="js/config.js"></script>
+		<script src="js/vue-resource/vue-resource.min.js"></script>
+		<script src="https://static.jmlk.co/scripts/dist/jmlink.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/mallDetail.css" />
+	</head>
+	<body>
+		<div id="app" class="contain" v-if="detail">
+			<!-- <loading v-if="loading" /> -->
+			<template v-if="video_url">
+				<video class="video" :src="video_url" :poster="detail.video_cover" controls />
+			</template>
+			<template v-else>
+				<img class="video" :src="headlines" mode="aspectFill"></img>
+			</template>
+			<div class="novip" v-if="detail.member_price != 0" @click="getVip">
+				<div class="left">会员专享-立即开通</div>
+				<div class="right">专有更多权限</div>
+			</div>
+			<div class="top">
+				<template>
+					<div class="progress" v-if="detail.nums > 1">
+						<div class="progress_back" :style="'width:' + detail.schedule * 180 + 'rpx;'">
+							<text v-if="detail.left_nums > 0">仅剩{{ detail.left_nums }}件</text>
+							<text v-else>已售罄</text>
+						</div>
+					</div>
+				</template>
+				<div class="title">{{ detail.title }}</div>
+				<div class="priceList" v-if="detail.member_price != 0">
+					<div class="price">¥{{ detail.member_price }}</div>
+					<div class="old_price">¥{{ detail.old_price }}</div>
+					<div class="priceList" v-else>
+						<div class="price">¥{{ detail.discount_price }}</div>
+						<div class="old_price" v-if="detail.discount_price != detail.old_price">¥{{ detail.old_price }}</div>
+					</div>
+				</div>
+
+				<div class="discount">
+					<div class="item" v-if="detail.tag_string">{{ detail.tag_string }}</div>
+				</div>
+				<div class="members" v-if="detail.member_price != 0" @click="getVip">
+					<!-- <img class="vipIcon" src="../../static/img/vipIcon.png" mode=""></img> -->
+					<div>
+						开通会员，可享专属会员价
+						<text>&nbsp;&nbsp;¥{{ detail.member_price }}</text>
+					</div>
+					<!-- <img class="vipInter" src="../../static/img/vipInter.png" mode=""></img> -->
+				</div>
+				<div class="attributes" v-if="attributes.length > 0">
+					<Attributes :attributes="attributes" />
+				</div>
+			</div>
+			<Service />
+			<div class="detail">
+				<div class="album" v-for="(item, index) in detail.album" :key="index">
+					<img class="img background" :width="item.width" :height="item.height" :src="item.file_path" @click="clickImg(index)"
+					 mode="aspectFill"></img>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var CYHOST = 'https://testicy.icangyu.com',
+				square_id = 94
+			var app = new Vue({
+				el: "#app",
+				data() {
+					return {
+						detail: null,
+						video_url: null,
+						headlines: null
+					}
+				},
+				mounted() {
+					var that = this;
+					that.getDetail()
+				},
+				methods: {
+					getDetail() {
+						var that = this;
+						that.$http.get(`${CYHOST}/icyApi/mall_details?id=${square_id}`).then(
+							res => {
+								console.log(res.data.data);
+								var res = res.data.data
+								that.detail = res;
+								that.video_url = res.video_url;
+								that.headlines = res.headlines;
+								res.schedule = res.left_nums / res.nums;
+								that.attributes = res.attributes;
+								if (res.album.length > 0) {
+									for (var i = 0; i < res.album.length; i++) {
+										console.log(res.album[0].file_path);
+										// that.album[i] = res.album[i].file_path;
+									}
+								}
+							})
+					},
+					getVip() {
+						uni.showModal({
+							title: '提示',
+							content: '如需开通会员或查看相关信息，请前往APP查看',
+							showCancel: false,
+							confirmColor: '#d0b483'
+						});
+					}
+				},
+
+			})
+		</script>
+	</body>
+</html>

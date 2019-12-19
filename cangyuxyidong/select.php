@@ -193,7 +193,7 @@ $signPackage = $jssdk->GetSignPackage();
         });
 
         // //严选详情
-        $.getJSON(`${CYHOST}/icy/share_product?id=${square_id}`, function (data) {
+        $.getJSON(`${CYHOST}/icyApi/share_product?id=${square_id}`, function (data) {
 
             detailsData = data;
             store.set('order_details', JSON.stringify(detailsData.data));

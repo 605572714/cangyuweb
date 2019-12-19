@@ -1,4 +1,3 @@
-
 <?php
 include '../extended/php/jssdk.php';
 $jssdk = new JSSDK("wxd076774039b4132e", "3006fa830349f4301e39899e6fe6e230");
@@ -6,9 +5,6 @@ $signPackage = $jssdk->GetSignPackage();
 //print_r($signPackage);
 //echo "xx";
 ?>
-
-
-
 <!DOCTYPE html>
 <html>
 
@@ -104,35 +100,45 @@ $signPackage = $jssdk->GetSignPackage();
             <%for(var i = 0; i < list.length; i ++){%>
             <div class="price_content">
                 <div class="price_left">
+                    <%if(list[i].avatar.indexOf('http')==-1){%>
                     <img src="https://app.icangyu.com<%=list[i].avatar%>" alt="">
+                    <%}else{%>
+                    <img src="<%=list[i].avatar%>" alt="">
+                    <%}%>
+    
                     <div class="price_nick">
                         <div class='nickname'><%=list[i].nickname%></div>
-                        <div class='createdate'><%=list[i].createdate%></div>
-                    </div>
-                </div>
+                <div class='createdate'><%=list[i].createdate%></div>
+            </div>
+        </div>
 
-                <div class="price_right">
-                    <%if(list[i].status==2){%>
-                    <span class='price_win'>￥<%=list[i].price%></span>
-                    <span class='type_win'><%=list[i].type_status%></span>
-                    <%}else{%>
-                    <span class='price_lose'>￥<%=list[i].price%></span>
-                    <span class='type_lose'><%=list[i].type_status%></span>
-                    <%}%>
+        <div class="price_right">
+            <%if(list[i].status==2){%>
+            <span class='price_win'>￥<%=list[i].price%></span>
+            <span class='type_win'><%=list[i].type_status%></span>
+            <%}else{%>
+            <span class='price_lose'>￥<%=list[i].price%></span>
+            <span class='type_lose'><%=list[i].type_status%></span>
+            <%}%>
                     </div>
                 </div>
                 <%}%>
-                </div>
+        </div>
     </script>
 
 
     <script type="text/html" id="buy_mess">
         <div class='top_img'>
+            <%if(list.video_url.length>0){%>
+            <video src="<%=list.video_url%>" style="width:100%;" controls="controls" />
+            <%}else{%>
             <%if(list.album[0].file_path.indexOf('http')==-1){%>
             <img src="https://app.icangyu.com<%=list.album[0].file_path%>" style='width:100%;' alt="">
             <%}else{%>
             <img src="<%=list.album[0].file_path%>" style='width:100%;' alt="">
             <%}%>
+            <%}%>
+
         </div>
         <div class='header_title'>
             <%=list.title%>
@@ -161,27 +167,24 @@ $signPackage = $jssdk->GetSignPackage();
     <div class="card-content content" style='padding:15px 0px;'>
 
             <div class="card-content-inner">
-                <h2 class="card-content-yylm-t content_title">拍品描述</h2>
+                <h2 class="card-content-yylm-t content_title">商品详情</h2>
                 <h3 class="card-content-yylm-t content_detail"><%=list.content%></h3>
             <div class="maimai_xq_img" style='padding:0px 15px;'>
-
                 <%for(var k = 0; k < list.album.length; k ++){%>
-
                 <a onclick="showPhoto('<%=convert_to_string(list.album)%>','<%=k%>')">
                     <%if(list.album[0].file_path.indexOf('http')==-1){%>
-                        <img src="https://app.icangyu.com<%=list.album[k].file_path%>" alt="" />
-                        <%}else{%>
-                            <img src="<%=list.album[k].file_path%>" alt="" />
-                        <%}%>
-                  
+                    <img src="https://app.icangyu.com<%=list.album[k].file_path%>" alt="" />
+                    <%}else{%>
+                    <img src="<%=list.album[k].file_path%>" alt="" />
+                    <%}%>
                 </a>
 
                 <%}%>
 
-                </div>
             </div>
+        </div>
 
-    </div>
+        </div>
     </script>
 
     <script>
@@ -203,7 +206,7 @@ $signPackage = $jssdk->GetSignPackage();
     <script>
         var square_id = HttpHelper.getQuery('item_id');
         //拍卖详情
-        $.getJSON(`${CYHOST}/icy/share_sale?id=${square_id}`, function (data) {
+        $.getJSON(`${CYHOST}/icyApi/sale_details?id=${square_id}`, function (data) {
             console.log(data);
             var Odata = data.data;
             var html = template('buy_mess', Odata);
@@ -231,7 +234,7 @@ $signPackage = $jssdk->GetSignPackage();
         })
 
         //出价列表
-        $.getJSON(`${CYHOST}/icy/bid_list?id=${square_id}`, function (data) {
+        $.getJSON(`${CYHOST}/icyApi/bid_list?id=${square_id}`, function (data) {
 
             console.log(data);
             var Odata = data.data;
@@ -241,7 +244,7 @@ $signPackage = $jssdk->GetSignPackage();
         })
 
         //    //买卖评论
-        //    $.getJSON(`${CYHOST}/icy/comment_lists?type=${type}&id=${square_id}&token=${token}`, function (data) {
+        //    $.getJSON(`${CYHOST}/icyApi/comment_lists?type=${type}&id=${square_id}&token=${token}`, function (data) {
         //        var Odata = data.data;
         //        var html = template('buy_comm_list',Odata);
         //        $('.buy_comm_div_list').html(html);
@@ -262,7 +265,11 @@ $signPackage = $jssdk->GetSignPackage();
         template.helper('convert_to_string', function (album) {
             var arr = [];
             for (var i = 0; i < album.length; i++) {
-                arr.push('https://app.icangyu.com' + album[i].file_path);
+                if (album[i].file_path.indexOf('http') == -1) {
+                    arr.push('https://app.icangyu.com' + album[i].file_path);
+                } else {
+                    arr.push(album[i].file_path);
+                }
             }
             return arr.join(';');
         });

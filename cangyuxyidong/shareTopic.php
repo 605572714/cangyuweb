@@ -5,8 +5,6 @@ $signPackage = $jssdk->GetSignPackage();
 //print_r($signPackage);
 //echo "xx";
 ?>
-
-
 <!DOCTYPE html>
 <html>
 
@@ -58,13 +56,12 @@ $signPackage = $jssdk->GetSignPackage();
                         data-distance="100">
 
                         <div class="vux-masker-box cangyu_bbs_huati_top">
-                            <div class="m-img"
-                                style="background-image: url(https://cdn.xiaotaojiang.com/uploads/82/1572ec37969ee263735262dc017975/_.jpg);">
+                            <div class="m-img">
                             </div>
                             <div class="vux-masker" style="background-color: rgba(0, 0, 0, 0.498039);">
                                 <!--201608002这个下面是新加的销售展示样式-->
                                 <div class="goumailianjie-xianshi"></div>
-                                <div slot="content" class="m-title"> 洗颜新潮流！人气洁面皂排行榜 <br>
+                                <div slot="content" class="m-title"> <br>
 
                                 </div>
                             </div>
@@ -72,7 +69,7 @@ $signPackage = $jssdk->GetSignPackage();
 
                         <div class="cangyu_bbs_huati_txt" style="margin-bottom:0px">
                             <p style="text-align:center;">
-                                当籽料的红皮遇上白肉，就成了一个难以割舍的经典。
+                                
                             </p>
                         </div>
 
@@ -110,7 +107,7 @@ $signPackage = $jssdk->GetSignPackage();
 
 
     <script type="text/html" id="topic_detail_list">
-        <div class=' total_support'>
+        <div class='total_support'>
             参与讨论(<%=total%>)
         </div>
         <%for(var i = 0;i < list.length; i++){%>
@@ -320,10 +317,11 @@ $signPackage = $jssdk->GetSignPackage();
         // &tid=3&token=43lef6ag4b2k&type=4
         //获取列表接口
         var listData;
-        $.post('https://app.icangyu.com/icy/square_list', listObj, function (data) {
-            Data = JSON.parse(data);
+        $.post('https://app.icangyu.com/icyApi/square_list', listObj, function (data) {
+            //Data = JSON.parse(data);
+            Data = data;
             listData = Data.data;
-            console.log(listData);
+            //console.log(listData);
             if (listData.list.length == 0) {
                 $('.infinite-scroll-preloader').hide();
                 return;
@@ -335,8 +333,10 @@ $signPackage = $jssdk->GetSignPackage();
         var topObj = {};
         topObj.id = square_id;
 
-        $.post('https://app.icangyu.com/icy/topic_list_top', topObj, function (data) {
-            Data = JSON.parse(data);
+        $.post('https://app.icangyu.com/icyApi/topic_list_top', topObj, function (data) {
+            //console.log(data);
+            //Data = JSON.parse(data);
+            Data = data;
             listData = Data.data.list[0].title;
 
             $('.m-title').html(Data.data.list[0].title)
@@ -392,7 +392,7 @@ $signPackage = $jssdk->GetSignPackage();
 
         function praise(square_id) {
             //点赞
-            // $.getJSON(`${CYHOST}/icy/square_praise_add?square_id=${square_id}&token=${token}`, function (data) {
+            // $.getJSON(`${CYHOST}/icyApi/square_praise_add?square_id=${square_id}&token=${token}`, function (data) {
             //     if (data.result === 100) {
             //         huatiApp.alert('点赞成功。', '提示');
             //     } else {
@@ -416,7 +416,7 @@ $signPackage = $jssdk->GetSignPackage();
                 listObj.token = token;
                 listObj.type = 4;
                 var listData;
-                $.post('https://app.icangyu.com/icy/square_list', listObj, function (data) {
+                $.post('https://app.icangyu.com/icyApi/square_list', listObj, function (data) {
                     Data = JSON.parse(data);
                     listData = Data.data;
                     // console.log(listData);

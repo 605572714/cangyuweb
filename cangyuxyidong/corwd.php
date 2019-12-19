@@ -128,7 +128,7 @@ $signPackage = $jssdk->GetSignPackage();
         var square_id = HttpHelper.getQuery('item_id');
 
         //拍卖详情
-        $.getJSON(`${CYHOST}/icy/prepare_details?id=${square_id}`, function (data) {
+        $.getJSON(`${CYHOST}/icyApi/prepare_details?id=${square_id}`, function (data) {
 
             console.log(data);
             var Odata = data;

@@ -5,7 +5,6 @@ $signPackage = $jssdk->GetSignPackage();
 //print_r($signPackage);
 //echo "xx";
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,6 +23,8 @@ $signPackage = $jssdk->GetSignPackage();
     <title>藏玉鉴定</title>
 </head>
 
+
+
 <body>
     <div id="app">
         <div class="top">
@@ -38,12 +39,12 @@ $signPackage = $jssdk->GetSignPackage();
         </div>
         <div class="img">
             <div v-for="item,index in album">
-                <img class="img_item" :src="item.file_path" alt="">
+                <img id="item.file_path" class="img_item" :src="item.file_path">
             </div>
         </div>
         <div class="clear"></div>
-        <div class="inner" v-if="detail.palm.length>0">
-            邀请掌眼：<span v-for='item,index in detail.palm'>{{item.nickname}}&nbsp;</span>
+        <div class="inner" v-if="palm">
+            邀请掌眼：<span v-for='item,index in palm'>{{item.nickname}}&nbsp;</span>
         </div>
         <div class="black"></div>
         <div class="discuss">
@@ -79,6 +80,7 @@ $signPackage = $jssdk->GetSignPackage();
                 nickname: null,
                 createdate: null,
                 rating: null,
+                palm: null,
                 content: null,
                 album: null,
                 comment: null,
@@ -89,7 +91,7 @@ $signPackage = $jssdk->GetSignPackage();
             },
             methods: {
                 getDetail() {
-                    this.$http.get(`${CYHOST}/icy/details_identify?id=${square_id}`)
+                    this.$http.get(`${CYHOST}/icyApi/details_identify?id=${square_id}`)
                         .then(res => {
                             console.log(res.body.data)
                             this.detail = res.body.data;
@@ -98,6 +100,7 @@ $signPackage = $jssdk->GetSignPackage();
                             this.rating = this.detail.rating;
                             this.content = this.detail.content;
                             this.album = this.detail.album;
+                            this.palm = this.detail.palm;
                             this.avatar = this.detail.avatar;
                             for (var i = 0; i < this.album.length; i++) {
                                 var item = this.album[i].file_path
@@ -111,14 +114,15 @@ $signPackage = $jssdk->GetSignPackage();
                         }).catch(res => {
                             console.log(res)
                         })
-                    this.$http.get(`${CYHOST}/icy/comment_lists?id=${square_id}&type=2&allLists=1`)
+                    this.$http.get(`${CYHOST}/icyApi/comment_lists?id=${square_id}&type=2&allLists=1`)
                         .then(res => {
                             console.log(res.body.data)
                             this.comment = res.body.data.list
                             for (var i = 0; i < res.body.data.total; i++) {
                                 var item = this.comment[i].comment_avatar
                                 if (item.indexOf("http") == -1) {
-                                    this.comment[i].comment_avatar = CYHOST + this.comment[i].comment_avatar
+                                    this.comment[i].comment_avatar = CYHOST + this.comment[i]
+                                        .comment_avatar
                                 }
                             }
 

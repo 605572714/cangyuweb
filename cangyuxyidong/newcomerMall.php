@@ -42,7 +42,7 @@ $signPackage = $jssdk->GetSignPackage();
         .topImg img {
             width: 100%;
         }
-
+/* 
         #flbtn {
             width: 90%;
             margin-left: 5%;
@@ -51,7 +51,7 @@ $signPackage = $jssdk->GetSignPackage();
             position: absolute;
             bottom: 7.5vw;
             opacity: 0;
-        }
+        } */
 
 
         .mallList {
@@ -191,7 +191,7 @@ $signPackage = $jssdk->GetSignPackage();
                     listHTML +=
                         '<div class="detailItem">' +
                         '<a  onclick="godetail(' + list[i].id +
-                        ')" href="javascript:void(0)">' +
+                        ')" href="#"  target="_self" rel="nofollow">' +
                         '<img src = "' + list[i].headlines + ' ">' +
                         '<div class = "content" >  <div class = "title" id = "title">' + list[i].title +
                         '</div> <div class = "price" >￥' + list[i].price + '<span>' + '￥' + list[i].old_price +
@@ -231,9 +231,22 @@ $signPackage = $jssdk->GetSignPackage();
         });
 
         function godetail(id) {
-            console.log(_from,'PPP')
+            console.log(_from)
             if (_from === 'Jade') {
                 alert('novice_item_id=' + id)
+            }
+             else {
+              var square_id = 1;
+              var configs = [{
+              	jmlink: 'https://a0ipue.jmlk.co/AA09',
+              	button: document.querySelector('a#btnOpenApp'),
+              	params: {
+              		'shareID': square_id,
+              		'shareIOS': 'KCNoviceShopVC',
+              		'shareAndroid': 'icangyu.jade.activities.seckill.NoviceDetailsActivity'
+              	}
+              }];
+              new JMLink(configs);
             }
         }
     </script>
@@ -250,10 +263,6 @@ $signPackage = $jssdk->GetSignPackage();
         </a>
     </div>
     <script>
-        if (_from != 'Jade') {
-            console.log('4444')
-            $('.cangyu_bbs_tabber').css.display = 'none'
-        }
         $("#btnOpenApp").click(function () {
             var square_id = '';
             var configs = [{

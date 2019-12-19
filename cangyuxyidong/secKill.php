@@ -90,12 +90,11 @@ $signPackage = $jssdk->GetSignPackage();
 
 
     <script type="text/html" id="buy_mess">
-        <div class="header">
-            <video class='header_video' src="<%=list.video_url%>" poster="https://app.icangyu.com<%=list.video_cover%>"
-                controls='controls'></video>
-            <div class="header_title"><%=list.title%></div>
-            <div class="header_price">￥<%=list.now_price%></div>
-        </div>
+			<div class="header">
+				<video class='header_video' src="<%=list.video_url%>" poster="<%=list.video_cover%>" controls='controls'></video>
+				<div class="header_title"><%=list.title%></div>
+				<div class="header_price">￥<%=list.now_price%></div>
+			</div>
         <div class="paipin_shuju">
             <%for(var i = 0; i < list.attributes.length; i ++){%>
             <div class="paimai_shuju_xhx">
@@ -111,7 +110,7 @@ $signPackage = $jssdk->GetSignPackage();
 
             <div class="card-content-inner">
 
-                <h2 class="card-content-yylm-t content_title">产品详情</h2>
+                <h2 class="card-content-yylm-t content_title">商品详情</h2>
                 <h3 class="card-content-yylm-t content_detail" ><%=list.content%></h3>
             <div class="maimai_xq_img">
 
@@ -139,7 +138,7 @@ $signPackage = $jssdk->GetSignPackage();
         var square_id = HttpHelper.getQuery('item_id');
 
         //产品详情
-        $.getJSON(`${CYHOST}/icy/spike_details?id=${square_id}`, function (data) {
+        $.getJSON(`${CYHOST}/icyApi/spike_details?id=${square_id}`, function (data) {
 
             console.log(data);
             var Odata = data.data;
@@ -209,7 +208,11 @@ $signPackage = $jssdk->GetSignPackage();
         template.helper('convert_to_string', function (album) {
             var arr = [];
             for (var i = 0; i < album.length; i++) {
-                arr.push('https://app.icangyu.com' + album[i].file_path);
+                if (album[i].file_path.indexOf('http') == -1) {
+                    arr.push('https://app.icangyu.com' + album[i].file_path);
+                } else {
+                    arr.push(album[i].file_path);
+                }
             }
             return arr.join(';');
         });

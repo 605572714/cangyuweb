@@ -135,7 +135,7 @@ $signPackage = $jssdk->GetSignPackage();
     <script type="text/html" id="buy_mess">
         <div class='header_video'>
             <%if(list.video_url){%>
-            <video class='header_video' src="<%=list.video_url%>" controls='controls'></video>
+            <video class='header_video' src="<%=list.video_url%>" controls='controls' poster='<%=list.headlines%>'></video>
             <%}else{%>
             <%if(list.headline.indexOf('http')==-1){%>
             <img src="https://app.icangyu.com<%=list.headlines%>" alt="">
@@ -171,7 +171,7 @@ $signPackage = $jssdk->GetSignPackage();
     <div class="card-content content" style='padding:15px 0px;'>
 
             <div class="card-content-inner">
-                <h2 class="card-content-yylm-t content_title">拍品描述</h2>
+                <h2 class="card-content-yylm-t content_title">商品详情</h2>
                 <h3 class="card-content-yylm-t content_detail"><%=list.content%></h3>
             <div class="maimai_xq_img" style='padding:0px 15px;'>
 
@@ -214,7 +214,7 @@ $signPackage = $jssdk->GetSignPackage();
         var square_id = HttpHelper.getQuery('item_id');
 
         //拍卖详情pick_details
-        $.getJSON(`${CYHOST}/icy/pick_details?id=${square_id}`, function (data) {
+        $.getJSON(`${CYHOST}/icyApi/pick_up_details?id=${square_id}`, function (data) {
 
             console.log(data);
             var Odata = data.data;
@@ -242,7 +242,7 @@ $signPackage = $jssdk->GetSignPackage();
         })
 
         //出价列表
-        $.getJSON(`${CYHOST}/icy/bid_list?id=${square_id}`, function (data) {
+        $.getJSON(`${CYHOST}/icyApi/bid_list?id=${square_id}`, function (data) {
             console.log(data);
             var Odata = data.data;
             var html = template('buy_comm_list', Odata);
@@ -265,7 +265,11 @@ $signPackage = $jssdk->GetSignPackage();
         template.helper('convert_to_string', function (album) {
             var arr = [];
             for (var i = 0; i < album.length; i++) {
-                arr.push('https://app.icangyu.com' + album[i].file_path);
+                if (album[i].file_path.indexOf('http') == -1) {
+                    arr.push('https://app.icangyu.com' + album[i].file_path);
+                } else {
+                    arr.push(album[i].file_path);
+                }
             }
             return arr.join(';');
         });

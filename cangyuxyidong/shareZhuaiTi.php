@@ -156,7 +156,7 @@ $signPackage = $jssdk->GetSignPackage();
         var type = HttpHelper.getQuery('type');
 
         // 专题详情
-        $.getJSON(`${CYHOST}/icy/details_topic?id=${square_id}`, function (data) {
+        $.getJSON(`${CYHOST}/icyApi/details_topic?id=${square_id}`, function (data) {
             console.log(data);
             var Odata = data.data;
             $('.car_mess_div_list').html(Odata[0].custom_page);

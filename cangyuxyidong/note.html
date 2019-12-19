@@ -180,8 +180,7 @@
                                         <img class='left_img'
                                             src="https://app.icangyu.com<%=data.praise_list[n].avatar_want%>">
                                         <%}else{%>
-                                        <img class='left_img'
-                                            src="<%=data.praise_list[n].avatar_want%>">
+                                        <img class='left_img' src="<%=data.praise_list[n].avatar_want%>">
 
                                         <%}%>
                                         </span>
@@ -237,7 +236,7 @@
         var type = HttpHelper.getQuery('type');
 
         //微博评论
-        $.getJSON(`${CYHOST}/icy/comment_lists?type=${type}&id=${square_id}&allLists=1`, function (data) {
+        $.getJSON(`${CYHOST}/icyApi/comment_lists?type=${type}&id=${square_id}&allLists=1`, function (data) {
             console.log(data);
             var Odata = data.data;
             if (Odata.list.length < 10) {
@@ -248,7 +247,7 @@
         })
 
         //微博详情
-        $.getJSON(`https://app.icangyu.com/icy/share_wb?id=${square_id}`, function (data) {
+        $.getJSON(`https://app.icangyu.com/icyApi/share_wb?id=${square_id}`, function (data) {
             console.log(data);
             var html = template('wei_mess', data);
             $('.wei_mess_div').html(html);
@@ -276,7 +275,7 @@
 
         // 点赞
         function praise() {
-            $.getJSON(`${CYHOST}/icy/square_praise_add?square_id=${square_id}&token=${token}`, function (data) {
+            $.getJSON(`${CYHOST}/icyApi/square_praise_add?square_id=${square_id}&token=${token}`, function (data) {
                 if (data.result === 100) {
                     tieziApp.alert('点赞成功。', '提示');
                 } else {
@@ -302,7 +301,11 @@
         template.helper('convert_to_string', function (album) {
             var arr = [];
             for (var i = 0; i < album.length; i++) {
-                arr.push(album[i].file_path);
+                if (album[i].file_path.indexOf('http') == -1) {
+                    arr.push('https://app.icangyu.com' + album[i].file_path);
+                } else {
+                    arr.push(album[i].file_path);
+                }
             }
             return arr.join(';');
         });

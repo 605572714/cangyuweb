@@ -145,7 +145,7 @@
 
 <body>
     <div class="topImg">
-        <img src="img/coupon4.png" alt="">
+        <img src="img/coupon5.png" alt="">
     </div>
     <div class="mallList">
         <h1>新人专享价</h1>
@@ -184,7 +184,7 @@
                     listHTML +=
                         '<div class="detailItem">' +
                         '<a  onclick="godetail(' + list[i].id +
-                        ')" href="javascript:void(0)">' +
+                        ')" href="javascript:void(0)" id="btnOpenApp">' +
                         '<img src = "' + list[i].headlines + ' ">' +
                         '<div class = "content" >  <div class = "title" id = "title">' + list[i].title +
                         '</div> <div class = "price" >￥' + list[i].price + '<span>' + '￥' + list[i].old_price +
@@ -226,6 +226,18 @@
         function godetail(id) {
             if (_from === 'Jade') {
                 alert('novice_item_id=' + id)
+            } else {
+                var square_id = id;
+                var configs = [{
+                    jmlink: 'https://a0ipue.jmlk.co/AA09',
+                    button: document.querySelector('a#btnOpenApp'),
+                    params: {
+                        'shareID': square_id,
+                        'shareIOS': 'KCNoviceShopVC',
+                        'shareAndroid': 'icangyu.jade.activities.seckill.NoviceDetailsActivity'
+                    }
+                }];
+                new JMLink(configs);
             }
         }
     </script>

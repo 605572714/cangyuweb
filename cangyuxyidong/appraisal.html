@@ -16,12 +16,15 @@
     <title>藏玉鉴定</title>
 </head>
 
+
+
 <body>
     <div id="app">
         <div class="top">
             <img :src="avatar" alt="" class="avatar">
             <div class="nick">
-                <div class="name">{{nickname}}<span class="level" :style="rating<8?'background:#F6F7F9;':''">LV.{{rating}}</span></div>
+                <div class="name">{{nickname}}<span class="level"
+                        :style="rating<8?'background:#F6F7F9;':''">LV.{{rating}}</span></div>
                 <div class="time">{{createdate}}</div>
             </div>
         </div>
@@ -29,13 +32,13 @@
             {{content}}
         </div>
         <div class="img">
-            <div v-for="item,index in album">
-                <img class="img_item" :src="item.file_path" alt="">
+            <div v-for="item,index in album" class="img_item">
+                <img :id="item.file_path" :src="item.file_path" @click="getImg(item)">
             </div>
         </div>
         <div class="clear"></div>
-        <div class="inner" v-if="detail.palm.length>0">
-            邀请掌眼：<span v-for='item,index in detail.palm'>{{item.nickname}}&nbsp;</span>
+        <div class="inner" v-if="palm">
+            邀请掌眼：<span v-for='item,index in palm'>{{item.nickname}}&nbsp;</span>
         </div>
         <div class="black"></div>
         <div class="discuss">
@@ -45,7 +48,8 @@
                     <img class="discuss_avatar" :src="item.comment_avatar" alt="">
                     <div class="name"> {{item.nickname}}</div>
                 </div>
-                <div class="comment"> <span v-if="item.tonickname">回复<span style="color:#666;">{{item.tonickname}}</span>:</span>{{item.comment}}</div>
+                <div class="comment"> <span v-if="item.tonickname">回复<span
+                            style="color:#666;">{{item.tonickname}}</span>:</span>{{item.comment}}</div>
             </div>
         </div>
         <!-- Bottom Tabbar-->
@@ -71,6 +75,7 @@
                 nickname: null,
                 createdate: null,
                 rating: null,
+                palm: null,
                 content: null,
                 album: null,
                 comment: null,
@@ -81,7 +86,7 @@
             },
             methods: {
                 getDetail() {
-                    this.$http.get(`${CYHOST}/icy/details_identify?id=${square_id}`)
+                    this.$http.get(`${CYHOST}/icyApi/details_identify?id=${square_id}`)
                         .then(res => {
                             console.log(res.body.data)
                             this.detail = res.body.data;
@@ -90,12 +95,14 @@
                             this.rating = this.detail.rating;
                             this.content = this.detail.content;
                             this.album = this.detail.album;
+                            this.palm = this.detail.palm;
                             this.avatar = this.detail.avatar;
                             for (var i = 0; i < this.album.length; i++) {
                                 var item = this.album[i].file_path
                                 if (item.indexOf("http") == -1) {
                                     this.album[i].file_path = CYHOST + this.album[i].file_path
                                 }
+                                console.log(this.album[i].file_path.height, this.album[i].file_path.width)
                             }
                             if (this.avatar.indexOf("http") == -1) {
                                 this.avatar = CYHOST + this.detail.avatar
@@ -103,14 +110,15 @@
                         }).catch(res => {
                             console.log(res)
                         })
-                    this.$http.get(`${CYHOST}/icy/comment_lists?id=${square_id}&type=2&allLists=1`)
+                    this.$http.get(`${CYHOST}/icyApi/comment_lists?id=${square_id}&type=2&allLists=1`)
                         .then(res => {
                             console.log(res.body.data)
                             this.comment = res.body.data.list
                             for (var i = 0; i < res.body.data.total; i++) {
                                 var item = this.comment[i].comment_avatar
                                 if (item.indexOf("http") == -1) {
-                                    this.comment[i].comment_avatar = CYHOST + this.comment[i].comment_avatar
+                                    this.comment[i].comment_avatar = CYHOST + this.comment[i]
+                                        .comment_avatar
                                 }
                             }
 
@@ -123,15 +131,15 @@
                             "desc": this.content, //摘要,如果分享到朋友圈的话，不显示摘要。
                             "title": '鉴定', //分享卡片标题
                             "link": window.location.href, //分享出去后的链接，这里可以将链接设置为另一个页面。
-                            "success": function() {
+                            "success": function () {
                                 //分享成功后的回调函数
                             },
-                            'cancel': function() {
+                            'cancel': function () {
                                 // 用户取消分享后执行的回调函数
                             }
                         }
                     };
-                    wx.ready(function() {
+                    wx.ready(function () {
                         wx.onMenuShareAppMessage(share_config.share); //分享给好友
                         wx.onMenuShareTimeline(share_config.share); //分享到朋友圈
                         wx.onMenuShareQQ(share_config.share); //分享给手机QQ
@@ -151,6 +159,15 @@
                 },
                 close() {
                     this.closeBottom = true
+                },
+                getImg(img) {
+                    var imgSrc = img.attr("src");
+                    getImageWidth(imgSrc, function (w, h) {
+                        console.log({
+                            width: w,
+                            height: h
+                        });
+                    });
                 }
             }
         });

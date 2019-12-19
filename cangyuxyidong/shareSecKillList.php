@@ -29,7 +29,6 @@ $signPackage = $jssdk->GetSignPackage();
     <script type="text/javascript" src="js/template-native.js"></script>
     <!-- Path to Framework7 Library JS-->
     <script type="text/javascript" src="dist/js/framework7.min.js"></script>
-    <script src="https://static.jmlk.co/scripts/dist/jmlink.min.js"></script>
 
 </head>
 
@@ -123,6 +122,7 @@ $signPackage = $jssdk->GetSignPackage();
         if(!square_id){
             square_id = HttpHelper.getQuery('screenings');
         }
+    
         //拍品列表
         $.getJSON(`https://app.icangyu.com/icyApi/spike_list?id=${square_id}`, function (data) {
             console.log(data);

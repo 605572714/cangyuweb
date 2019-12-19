@@ -42,7 +42,8 @@ $signPackage = $jssdk->GetSignPackage();
         .topImg img {
             width: 100%;
         }
-/* 
+
+        /* 
         #flbtn {
             width: 90%;
             margin-left: 5%;
@@ -152,7 +153,7 @@ $signPackage = $jssdk->GetSignPackage();
 
 <body>
     <div class="topImg">
-        <img src="img/coupon4.png" alt="">
+        <img src="img/coupon5.png" alt="">
     </div>
     <div class="mallList">
         <h1>新人专享价</h1>
@@ -178,7 +179,7 @@ $signPackage = $jssdk->GetSignPackage();
     <script>
         const _from = HttpHelper.getQuery('from'); //获取user_id
         const url = 'http://app.icangyu.com/icyApi/'; //线上接口
-        $.get(url + 'novice_mall_list', function (res) {
+        $.get(url + 'novice_mall_list', function(res) {
             var Winwidth = document.body.clientWidth,
                 Winheight = document.body.clientHeight;
             if (res.result == 100) {
@@ -191,7 +192,7 @@ $signPackage = $jssdk->GetSignPackage();
                     listHTML +=
                         '<div class="detailItem">' +
                         '<a  onclick="godetail(' + list[i].id +
-                        ')" href="#"  target="_self" rel="nofollow">' +
+                        ')" href="javescrip:void(0);"  target="_self" rel="nofollow" id="btnOpenApp">' +
                         '<img src = "' + list[i].headlines + ' ">' +
                         '<div class = "content" >  <div class = "title" id = "title">' + list[i].title +
                         '</div> <div class = "price" >￥' + list[i].price + '<span>' + '￥' + list[i].old_price +
@@ -210,15 +211,15 @@ $signPackage = $jssdk->GetSignPackage();
                         "desc": '新手商城，特价好物', //摘要,如果分享到朋友圈的话，不显示摘要。
                         "title": '藏玉新手商城', //分享卡片标题
                         "link": window.location.href, //分享出去后的链接，这里可以将链接设置为另一个页面。
-                        "success": function () {
+                        "success": function() {
                             //分享成功后的回调函数
                         },
-                        'cancel': function () {
+                        'cancel': function() {
                             // 用户取消分享后执行的回调函数
                         }
                     }
                 };
-                wx.ready(function () {
+                wx.ready(function() {
                     wx.onMenuShareAppMessage(share_config.share); //分享给好友
                     wx.onMenuShareTimeline(share_config.share); //分享到朋友圈
                     wx.onMenuShareQQ(share_config.share); //分享给手机QQ
@@ -234,10 +235,19 @@ $signPackage = $jssdk->GetSignPackage();
             console.log(_from)
             if (_from === 'Jade') {
                 alert('novice_item_id=' + id)
+            } else {
+                var square_id = id;
+                var configs = [{
+                    jmlink: 'https://a0ipue.jmlk.co/AA09',
+                    button: document.querySelector('a#btnOpenApp'),
+                    params: {
+                        'shareID': square_id,
+                        'shareIOS': 'KCNoviceShopVC',
+                        'shareAndroid': 'icangyu.jade.activities.seckill.NoviceDetailsActivity'
+                    }
+                }];
+                new JMLink(configs);
             }
-            //  else {
-            //     new JMLink(configs);
-            // }
         }
     </script>
     <!-- Bottom Tabbar-->

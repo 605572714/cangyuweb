@@ -285,12 +285,11 @@
     <!-- 页面信息 -->
     <div class="container" id="buy_mess">
         <!-- 顶部轮播图 -->
-        <div class="swiper-container" id="swiper-container">
+        <div class="top_img" id="top_img"></div>
+        <!-- <div class="swiper-container" id="swiper-container">
             <div class="swiper-wrapper" id="swiper_img">
             </div>
-            <!-- Add Pagination -->
-            <div class="swiper-pagination"></div>
-        </div>
+        </div> -->
         <!-- 标题 -->
         <div class="top">
             <div>商品详情</div>
@@ -322,7 +321,6 @@
         </div>
         <!-- 制作过程 -->
         <div class="author">
-            <div class="detail">制作过程</div>
             <div class="my-gallery" id="detail"></div>
         </div>
     </div>
@@ -336,7 +334,7 @@
         }
         //证书详情
         $.getJSON(`${CYHOST}/icyApi/certificateDetails?id=${square_id}`, function (data) {
-        // $.getJSON(`http://testicy.icangyu.com/icyApi/certificateDetails?id=${square_id}`, function (data) {
+            // $.getJSON(`http://testicy.icangyu.com/icyApi/certificateDetails?id=${square_id}`, function (data) {
             console.log(data);
             if (data.result == 100) {
                 document.getElementById("default_page").style.display = "none";
@@ -344,21 +342,21 @@
                 var cert = data.data;
                 console.log(cert.carousel)
                 // 轮播图
-                var swiper_img = "";
+                var top_img = "";
                 var width = document.body.clientWidth;
                 var height = parseInt(width / 16 * 9);
-                for (var i = 0; i < cert.carousel.length; i++) {
-                    swiper_img += "<div class='swiper-slide'>" + "<a href='" + cert.carousel[i].file_path +
-                        "'  data-size='1920x1080'>" + "<img src='" + cert.carousel[i].file_path +
-                        "'>" +
-                        "</a>" + "</div>";
-                    console.log()
-                }
-                document.getElementById("swiper-container").style.width = width + "px";
-                document.getElementById("swiper-container").style.height = height + "px";
-                document.getElementById("swiper_img").style.width = width + "px";
-                document.getElementById("swiper_img").style.height = height + "px";
-                document.getElementById("swiper_img").innerHTML = swiper_img;
+                // for (var i = 0; i < cert.carousel.length; i++) {
+                top_img = "<a href='" + cert.carousel[0].file_path +
+                    "'  data-size='1920x1080'>" + "<img style='width:100%;' src='" + cert.carousel[0].file_path +
+                    "'>" +
+                    "</a>";
+                console.log()
+                // }
+                // document.getElementById("swiper-container").style.width = width + "px";
+                // document.getElementById("swiper-container").style.height = height + "px";
+                // document.getElementById("swiper_img").style.height = height + "px";
+                document.getElementById("top_img").innerHTML = top_img;
+                document.getElementById("top_img").style.width = width + "px";
                 console.log(width, height);
                 // 商品详情
                 var detail_td = "";
@@ -396,6 +394,7 @@
             } else {
                 document.getElementById("buy_mess").style.display = "none";
                 document.getElementById("default_page").style.display = "flex";
+
             }
         })
     </script>

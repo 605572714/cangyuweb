@@ -9,8 +9,7 @@ $signPackage = $jssdk->GetSignPackage();
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <title>藏玉</title>
@@ -98,7 +97,7 @@ $signPackage = $jssdk->GetSignPackage();
 
 
     <script>
-        $(".close").click(function () {
+        $(".close").click(function() {
             $(".cangyu_bbs_tabber").hide();
         });
     </script>
@@ -165,12 +164,9 @@ $signPackage = $jssdk->GetSignPackage();
                                     <li>
                                         <a onclick="showPhoto('<%=convert_to_string(data.album)%>','<%=k%>')">
                                             <%if(data.album[k].file_path.indexOf('http')==-1){%>
-                                            <img data-node="pic" data-act-type="hover"
-                                                src="https://app.icangyu.com<%=data.album[k].file_path%>"
-                                                class="loaded" />
+                                            <img data-node="pic" data-act-type="hover" src="https://app.icangyu.com<%=data.album[k].file_path%>" class="loaded" />
                                             <%}else{%>
-                                            <img data-node="pic" data-act-type="hover"
-                                                src="<%=data.album[k].file_path%>" class="loaded" />
+                                            <img data-node="pic" data-act-type="hover" src="<%=data.album[k].file_path%>" class="loaded" />
                                             <%}%>
                                         </a>
                                     </li>
@@ -186,11 +182,9 @@ $signPackage = $jssdk->GetSignPackage();
                                     <%if(n<3){%>
                                     <span>
                                         <%if(data.praise_list[n].avatar_want.indexOf('http')==-1){%>
-                                        <img class='left_img'
-                                            src="https://app.icangyu.com<%=data.praise_list[n].avatar_want%>">
+                                        <img class='left_img' src="https://app.icangyu.com<%=data.praise_list[n].avatar_want%>">
                                         <%}else{%>
-                                        <img class='left_img'
-                                            src="<%=data.praise_list[n].avatar_want%>">
+                                        <img class='left_img' src="<%=data.praise_list[n].avatar_want%>">
 
                                         <%}%>
                                         </span>
@@ -246,7 +240,7 @@ $signPackage = $jssdk->GetSignPackage();
         var type = HttpHelper.getQuery('type');
 
         //微博评论
-        $.getJSON(`${CYHOST}/icy/comment_lists?type=${type}&id=${square_id}&allLists=1`, function (data) {
+        $.getJSON(`${CYHOST}/icyApi/comment_lists?type=${type}&id=${square_id}&allLists=1`, function(data) {
             console.log(data);
             var Odata = data.data;
             if (Odata.list.length < 10) {
@@ -257,7 +251,7 @@ $signPackage = $jssdk->GetSignPackage();
         })
 
         //微博详情
-        $.getJSON(`https://app.icangyu.com/icy/share_wb?id=${square_id}`, function (data) {
+        $.getJSON(`https://app.icangyu.com/icyApi/share_wb?id=${square_id}`, function(data) {
             console.log(data);
             var html = template('wei_mess', data);
             $('.wei_mess_div').html(html);
@@ -268,15 +262,15 @@ $signPackage = $jssdk->GetSignPackage();
                     "desc": data.data.content, //摘要,如果分享到朋友圈的话，不显示摘要。
                     "title": '藏于帖子', //分享卡片标题
                     "link": window.location.href, //分享出去后的链接，这里可以将链接设置为另一个页面。
-                    "success": function () {
+                    "success": function() {
                         //分享成功后的回调函数
                     },
-                    'cancel': function () {
+                    'cancel': function() {
                         // 用户取消分享后执行的回调函数
                     }
                 }
             };
-            wx.ready(function () {
+            wx.ready(function() {
                 wx.onMenuShareAppMessage(share_config.share); //分享给好友
                 wx.onMenuShareTimeline(share_config.share); //分享到朋友圈
                 wx.onMenuShareQQ(share_config.share); //分享给手机QQ
@@ -285,7 +279,7 @@ $signPackage = $jssdk->GetSignPackage();
 
         // 点赞
         function praise() {
-            $.getJSON(`${CYHOST}/icy/square_praise_add?square_id=${square_id}&token=${token}`, function (data) {
+            $.getJSON(`${CYHOST}/icyApi/square_praise_add?square_id=${square_id}&token=${token}`, function(data) {
                 if (data.result === 100) {
                     tieziApp.alert('点赞成功。', '提示');
                 } else {
@@ -308,10 +302,14 @@ $signPackage = $jssdk->GetSignPackage();
             // ... other parameters
         });
 
-        template.helper('convert_to_string', function (album) {
+        template.helper('convert_to_string', function(album) {
             var arr = [];
             for (var i = 0; i < album.length; i++) {
-                arr.push(album[i].file_path);
+                if (album[i].file_path.indexOf('http') == -1) {
+                    arr.push('https://app.icangyu.com' + album[i].file_path);
+                } else {
+                    arr.push(album[i].file_path);
+                }
             }
             return arr.join(';');
         });
@@ -330,7 +328,7 @@ $signPackage = $jssdk->GetSignPackage();
         }
     </script>
     <script>
-        $("#btnOpenApp").click(function () {
+        $("#btnOpenApp").click(function() {
             var configs = [{
                 jmlink: 'https://a0ipue.jmlk.co/AA09',
                 button: document.querySelector('a#btnOpenApp'),

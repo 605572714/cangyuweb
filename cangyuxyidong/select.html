@@ -149,7 +149,7 @@
                 <div class='black'></div>
                 <div class="card-content content">
                     <div class="card-content-inner">
-                        <h2 class="card-content-yylm-t content_title">产品详情</h2>
+                        <h2 class="card-content-yylm-t content_title">商品详情</h2>
                         <h3 class="card-content-yylm-t content_detail"><%=data.pro_descript%></h3>
                     </div>
                 </div>
@@ -185,7 +185,7 @@
         });
 
         // //严选详情
-        $.getJSON(`${CYHOST}/icy/share_product?id=${square_id}`, function (data) {
+        $.getJSON(`${CYHOST}/icyApi/share_product?id=${square_id}`, function (data) {
 
             detailsData = data;
             store.set('order_details', JSON.stringify(detailsData.data));
@@ -247,7 +247,11 @@
         template.helper('convert_to_string', function (album) {
             var arr = [];
             for (var i = 0; i < album.length; i++) {
-                arr.push('https://app.icangyu.com' + album[i].file_path);
+                if (album[i].file_path.indexOf('http') == -1) {
+                    arr.push('https://app.icangyu.com' + album[i].file_path);
+                } else {
+                    arr.push(album[i].file_path);
+                }
             }
             return arr.join(';');
         });

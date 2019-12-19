@@ -133,7 +133,7 @@ $signPackage = $jssdk->GetSignPackage();
         var type = HttpHelper.getQuery('type');
 
         // 专题详情
-        $.getJSON(`${CYHOST}/icy/fakeGoods_details?id=${square_id}`, function (data) {
+        $.getJSON(`${CYHOST}/icyApi/fakeGoods_details?id=${square_id}`, function (data) {
             console.log(data);
             var Odata = data.data.list;
             Odata.content = Odata.content.replace(/\<p\>/gi, '<p style="color:#666;">')

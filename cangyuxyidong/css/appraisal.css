@@ -61,7 +61,18 @@
     height: 100px;
     margin-left: 5px;
     margin-bottom: 5px;
+    overflow: hidden;
+    position: relative;
+}
 
+.img_item img {
+    width: 100%;
+    min-height: 100%;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .clear {
@@ -148,6 +159,11 @@
     color: #81848b;
     cursor: pointer;
     margin-right: 5px;
+}
+
+.support .right .icon_support img {
+    width: 24px;
+    height: 24px;
 }
 
 .price_top {
