@@ -18,7 +18,7 @@
 <body>
     <div id="vue" class="vue-phone">
         <div class="pc-title">藏玉商城</div>
-        <van-tabs v-model="active">
+        <van-tabs v-model="active" @change="onChange">
             <van-tab title="全部">
                 <div class="list" :style="'display:'+listDisplay" v-if="homeList">
                     <div class="item" v-for="item in homeList">
@@ -44,6 +44,7 @@
                         </a>
                     </div>
                     <div class="get-more" v-if="homeFinish" style="color: #888">已加载全部</div>
+                    <!-- <div class="get-more" v-else @click="getMore">加载更多中...</div> -->
                     <div class="get-more" v-else @click="getMore">点击加载更多</div>
                 </div>
             </van-tab>
@@ -72,7 +73,9 @@
                         </a>
                     </div>
                     <div class="get-more" v-if="vipFinish" style="color: #888">已加载全部</div>
+                    <!-- <div class="get-more" v-else @click="getMore">加载更多中...</div> -->
                     <div class="get-more" v-else @click="getMore">点击加载更多</div>
+
                 </div>
             </van-tab>
             <van-tab title="折扣特惠">
@@ -101,7 +104,9 @@
                         </a>
                     </div>
                     <div class="get-more" v-if="saleFinish" style="color: #888">已加载全部</div>
+                    <!-- <div class="get-more" v-else @click="getMore">加载更多中...</div> -->
                     <div class="get-more" v-else @click="getMore">点击加载更多</div>
+
                 </div>
 
             </van-tab>
@@ -131,7 +136,9 @@
                         </a>
                     </div>
                     <div class="get-more" v-if="csmFinish" style="color: #888">已加载全部</div>
+                    <!-- <div class="get-more" v-else @click="getMore">加载更多中...</div> -->
                     <div class="get-more" v-else @click="getMore">点击加载更多</div>
+
                 </div>
             </van-tab>
         </van-tabs>
@@ -179,7 +186,10 @@
                 closeBottom: false
             }
         },
-        beforeMounted() {},
+        // created() {
+        //     var that = this;
+        //     window.addEventListener('scroll', this.scroll, true)
+        // },
         mounted() {
             var that = this;
             this.browserRedirect();
@@ -204,6 +214,9 @@
             };
 
         },
+        // destroyed() {
+        //     window.removeEventListener('scroll', this.scroll, true)
+        // },
         methods: {
             getHomeList() {
                 var that = this;
@@ -293,6 +306,10 @@
                         }
                     })
             },
+            onChange() {
+                document.documentElement.scrollTop = 0;
+                document.body.scrollTop = 0;
+            },
             // 判断是移动端还是PC端
             browserRedirect() {
                 var sUserAgent = navigator.userAgent.toLowerCase();
@@ -328,7 +345,18 @@
             },
             close() {
                 this.closeBottom = true
-            }
+            },
+            // scroll() {
+            //     var that = this;
+            //     var scrollTop = document.documentElement.scrollTop || document.body.scrollTop; // 滚动高度
+            //     var windowHeight = document.documentElement.clientHeight || document.body.clientHeight; // 窗口高度
+            //     var scrollHeight = document.body.scrollHeight; // 可滚动高度
+            //     // console.log(scrollTop + windowHeight, scrollHeight)
+            //     if (scrollTop + windowHeight >= scrollHeight) { //测试浏览器有的时候相加 会出现小数点 这里用 >= 不用 ==
+            //         that.getMore();
+            //         console.log('加载更多');
+            //     }
+            // }
         }
     });
 </script>
