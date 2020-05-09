@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>藏玉证书</title>
+		<link rel="stylesheet" href="css/my-app.css">
+		<!-- Path to jquary Library JS-->
+		<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="js/template-native.js"></script>
+		<!-- Path to Framework7 Library JS-->
+		<script type="text/javascript" src="dist/js/framework7.min.js"></script>
+		<!-- Banner-->
+		<link rel="stylesheet" href="swiper/swiper.min.css">
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			function obj(name) {
+				if (name) {
+					this.name = name
+				}
+				return this
+			}
+			obj.prototype.name = 'name2';
+			var a = obj('name1');
+			var b = new obj;
+			console.log(a.name);
+			console.log(b.name);
+		</script>
+	</body>
+
+</html>

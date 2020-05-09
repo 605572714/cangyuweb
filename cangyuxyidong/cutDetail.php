@@ -24,6 +24,7 @@ $signPackage = $jssdk->GetSignPackage();
     <script src="photoswipe/photoswipe-ui-default.min.js"></script>
     <script src="https://static.jmlk.co/scripts/dist/jmlink.min.js"></script>
     <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="js/weixinWeb.js"></script>
     <title>藏玉砍价</title>
 </head>
 

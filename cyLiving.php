@@ -29,7 +29,7 @@ $signPackage = $jssdk->GetSignPackage();
                             echo $_GET['width'];
                         } else {
                             echo 1280;
-                        } ?>,
+                        } ?>
             //height: <?php if (is_array($_GET) && count($_GET) > 0 && isset($_GET['height'])) {
                             echo $_GET['height'];
                         } else {

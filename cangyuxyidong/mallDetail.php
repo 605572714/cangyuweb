@@ -19,6 +19,7 @@ $signPackage = $jssdk->GetSignPackage();
 		<script src="https://static.jmlk.co/scripts/dist/jmlink.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/mallDetail.css" />
 		<link rel="stylesheet" href="css/my-app.css">
+		<script type="text/javascript" src="js/weixinWeb.js"></script>
 		<script src="http://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
 	</head>
 	<body>
@@ -59,9 +60,6 @@ $signPackage = $jssdk->GetSignPackage();
 						<span>¥{{ detail.member_price }}</span>
 					</div>
 					<!-- <img class="vipInter" src="../../static/img/vipInter.png" mode=""></img> -->
-				</div>
-				<div class="attributes" v-if="attributes.length > 0">
-					<Attributes :attributes="attributes" />
 				</div>
 			</div>
 			<Service />
@@ -113,7 +111,6 @@ $signPackage = $jssdk->GetSignPackage();
 								that.video_url = res.video_url;
 								that.headlines = res.headlines;
 								res.schedule = res.left_nums / res.nums;
-								that.attributes = res.attributes;
 
 							})
 						window.share_config = {

@@ -29,7 +29,7 @@ $signPackage = $jssdk->GetSignPackage();
     <!-- Path to Framework7 Library JS-->
     <script type="text/javascript" src="dist/js/framework7.min.js"></script>
     <script src="https://static.jmlk.co/scripts/dist/jmlink.min.js"></script>
-
+    <script type="text/javascript" src="js/weixinWeb.js"></script>
 
 </head>
 

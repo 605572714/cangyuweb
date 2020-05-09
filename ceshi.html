@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>leftpad</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			function leftPad1(str, len, ch) {
+				if (!ch & ch !== 0) {
+					ch = ''
+				}
+				len = len - str.length
+				return Array(len).join(ch) + str
+			}
+
+			function leftPad(str, len, ch) {
+				len = len - str.length
+				let total = '';
+				while (len) {
+					if (len % 2 == 1) {
+						total += ch
+					}
+					if (len == 1) {
+						return total + str
+					}
+					ch += ch
+					len = parseInt(len / 2)
+				}
+			}
+			console.log(leftPad('hello', 10, '0'));
+		</script>
+	</body>
+</html>

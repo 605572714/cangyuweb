@@ -11,8 +11,7 @@ $signPackage = $jssdk->GetSignPackage();
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <title>藏玉</title>
@@ -25,6 +24,7 @@ $signPackage = $jssdk->GetSignPackage();
     <link rel="stylesheet" href="css/secKillDetail.css">
 
     <!-- Path to jquary Library JS-->
+    <script type="text/javascript" src="js/weixinWeb.js"></script>
     <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="js/template-native.js"></script>
     <!-- Path to Framework7 Library JS-->
@@ -89,7 +89,7 @@ $signPackage = $jssdk->GetSignPackage();
     </div>
 
     <script>
-        $(".close").click(function () {
+        $(".close").click(function() {
             $(".cangyu_bbs_tabber").hide();
         });
     </script>
@@ -139,7 +139,7 @@ $signPackage = $jssdk->GetSignPackage();
                         <span>细度:</span>
                     </div>
                     <div class="paimai_shuju_xhx">
-                        <%=data.run%>
+                        <%=data.fineness%>
                     </div>
                     <div class="paimai_shuju_xhx">
                         <span>润度:</span>
@@ -193,7 +193,7 @@ $signPackage = $jssdk->GetSignPackage();
         });
 
         // //严选详情
-        $.getJSON(`${CYHOST}/icyApi/share_product?id=${square_id}`, function (data) {
+        $.getJSON(`${CYHOST}/icyApi/share_product?id=${square_id}`, function(data) {
 
             detailsData = data;
             store.set('order_details', JSON.stringify(detailsData.data));
@@ -217,14 +217,14 @@ $signPackage = $jssdk->GetSignPackage();
                     "desc": shareContent, //摘要,如果分享到朋友圈的话，不显示摘要。
                     "title": '藏玉严选', //分享卡片标题
                     "link": window.location.href, //分享出去后的链接，这里可以将链接设置为另一个页面。
-                    "success": function () { //分享成功后的回调函数
+                    "success": function() { //分享成功后的回调函数
                     },
-                    'cancel': function () {
+                    'cancel': function() {
                         // 用户取消分享后执行的回调函数
                     }
                 }
             };
-            wx.ready(function () {
+            wx.ready(function() {
                 wx.onMenuShareAppMessage(share_config.share); //分享给好友
                 wx.onMenuShareTimeline(share_config.share); //分享到朋友圈
                 wx.onMenuShareQQ(share_config.share); //分享给手机QQ
@@ -234,7 +234,7 @@ $signPackage = $jssdk->GetSignPackage();
 
 
 
-            setTimeout(function () {
+            setTimeout(function() {
                 myApp.swiper('.yanxuan-lunbo', {
                     pagination: '.yanxuan-lunbo .swiper-pagination',
                     preloadImages: false,
@@ -252,7 +252,7 @@ $signPackage = $jssdk->GetSignPackage();
 
 
     <script>
-        template.helper('convert_to_string', function (album) {
+        template.helper('convert_to_string', function(album) {
             var arr = [];
             for (var i = 0; i < album.length; i++) {
                 arr.push('https://app.icangyu.com' + album[i].file_path);
@@ -274,7 +274,7 @@ $signPackage = $jssdk->GetSignPackage();
         }
     </script>
     <script>
-        $("#btnOpenApp").click(function () {
+        $("#btnOpenApp").click(function() {
             var configs = [{
                 jmlink: 'https://a0ipue.jmlk.co/AA09',
                 button: document.querySelector('a#btnOpenApp'),

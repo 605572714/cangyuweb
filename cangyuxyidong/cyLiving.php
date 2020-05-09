@@ -26,8 +26,8 @@ $signPackage = $jssdk->GetSignPackage();
         <div id="video"></div>
     </div>
     <script type="text/javascript">
-        // var square_id = HttpHelper.getQuery('item_id');
-        var square_id = '1573458572';
+        var square_id = HttpHelper.getQuery('item_id');
+        // var square_id = '1573458572';
         var detail=null;
         var wWidth = document.body.clientWidth;
         var wHeight = document.body.clientHeight;

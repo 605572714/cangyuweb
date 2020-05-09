@@ -22,7 +22,7 @@ $signPackage = $jssdk->GetSignPackage();
     <!-- Path to your custom app styles-->
     <link rel="stylesheet" href="css/my-app.css">
     <link rel="stylesheet" href="css/secKillList.css">
-
+    <script type="text/javascript" src="js/weixinWeb.js"></script>
     <!-- Path to jquary Library JS-->
     <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="js/template-native.js"></script>

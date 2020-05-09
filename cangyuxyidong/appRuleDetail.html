@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<script src="js/config.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue-resource/vue-resource.min.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+		<style type="text/css">
+			img {
+				width: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<div v-html=content></div>
+		</div>
+
+		<script type="text/javascript">
+			var square_id = HttpHelper.getQuery('item_id');
+			// var square_id = 'rule003';
+			var app = new Vue({
+				el: '#app',
+				data: {
+					content: null
+				},
+				mounted() {
+					var that = this,
+						urlDetail = CYHOST + '/icyApi/rule?id=' + square_id,
+						ruleTitle = CYHOST + '/icyApi/rule_list';
+					this.$http.get(ruleTitle).then(res => {
+						console.log(res.body.data);
+						var list = res.body.data
+						for (var i = 0; i < list.length; i++) {
+							if (list[i].id == square_id) {
+								document.title = list[i].title
+							}
+						}
+					})
+					this.$http.get(urlDetail).then(res => {
+						that.content = res.body.data.content
+					})
+
+				}
+			})
+		</script>
+	</body>
+</html>
