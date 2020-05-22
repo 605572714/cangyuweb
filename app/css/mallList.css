@@ -23,7 +23,7 @@ body {
     justify-content: space-around;
     flex-wrap: wrap;
     position: relative;
-    margin-bottom: 60px;
+    /* margin-bottom: 60px; */
 }
 
 .vue-phone .item {
@@ -68,6 +68,12 @@ body {
 .vue-phone .item-img {
     width: 46vw;
     height: 46vw;
+}
+
+.vue-phone .item-img img {
+    width: 46vw;
+    height: 46vw;
+    object-fit: cover;
 }
 
 .vue-phone .item-detail {
@@ -170,7 +176,7 @@ body {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    margin-bottom: 60px;
+    /* margin-bottom: 60px; */
 
     /* padding: 0 10px; */
 }
@@ -216,6 +222,12 @@ body {
 .vue-pc .item-img {
     width: 173px;
     height: 173px;
+}
+
+.vue-pc .item-img img {
+    width: 173px;
+    height: 173px;
+    object-fit: cover;
 }
 
 .vue-pc .item-detail {

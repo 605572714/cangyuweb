@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title></title>
+	<style type="text/css">
+		img {
+			width: 100%;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="app">
+		<div v-html=content></div>
+	</div>
+	<script src="js/config.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/axios.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		var square_id = HttpHelper.getQuery('item_id');
+		var app = new Vue({
+			el: '#app',
+			data: {
+				content: null
+			},
+			mounted() {
+				var that = this,
+					urlDetail = CYHOST + '/icyApi/rule?id=' + square_id,
+					ruleTitle = CYHOST + '/icyApi/rule_list';
+				axios.get(ruleTitle).then(res => {
+					var list = res.data.data
+					for (var i = 0; i < list.length; i++) {
+						if (list[i].id == square_id) {
+							document.title = list[i].title
+						}
+					}
+				})
+				axios.get(urlDetail).then(res => {
+					that.content = res.data.data.content
+				})
+
+			}
+		});
+	</script>
+</body>
+
+</html>

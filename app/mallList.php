@@ -1,3 +1,8 @@
+<?php
+include '../extended/php/jssdk.php';
+$jssdk = new JSSDK("wxd076774039b4132e", "3006fa830349f4301e39899e6fe6e230");
+$signPackage = $jssdk->GetSignPackage();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,28 +13,28 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <title>藏玉商城</title>
-    <link rel="stylesheet" href="css/my-app.css">
+    <!-- <link rel="stylesheet" href="css/my-app.css"> -->
     <link rel="stylesheet" href="css/mallList.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.2/lib/index.css">
-    <script src="http://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
-    <script src="https://static.jmlk.co/scripts/dist/jmlink.min.js"></script>
+    <link rel="stylesheet" href="css/vant.css">
 </head>
 
 <body>
     <div id="vue" class="vue-phone">
         <div class="pc-title">藏玉商城</div>
-        <van-tabs v-model="active" @change="onChange">
+        <van-tabs v-model="active" swipeable @change="onChange">
             <van-tab title="全部">
                 <div class="list" :style="'display:'+listDisplay" v-if="homeList">
                     <div class="item" v-for="item in homeList">
-                        <a :href="'mallDetail.html?item_id='+item.id" class="block-a">
+                        <a :href="'mallDetail.php?item_id='+item.id" class="block-a">
                             <div class="item-muns" v-if="item.left_nums>0">
                                 仅剩{{item.left_nums}}件
                             </div>
                             <div class="item-no-muns" v-else>
                                 已结缘
                             </div>
-                            <img class="item-img" :src="item.headlines" alt="">
+                            <div class="item-img">
+                                <img :src="item.headlines" alt="">
+                            </div>
                             <div class="item-detail">
                                 <div class="item-title">
                                     {{item.title}}
@@ -44,8 +49,7 @@
                         </a>
                     </div>
                     <div class="get-more" v-if="homeFinish" style="color: #888">已加载全部</div>
-                    <!-- <div class="get-more" v-else @click="getMore">加载更多中...</div> -->
-                    <div class="get-more" v-else @click="getMore">点击加载更多</div>
+                    <div class="get-more" v-else @click="getMore">加载更多中...</div>
                 </div>
             </van-tab>
             <van-tab title="会员超值">
@@ -58,7 +62,9 @@
                             <div class="item-no-muns" v-else>
                                 已结缘
                             </div>
-                            <img class="item-img" :src="item.headlines" alt="">
+                            <div class="item-img">
+                                <img :src="item.headlines" alt="">
+                            </div>
                             <div class="item-detail">
                                 <div class="item-title">
                                     {{item.title}}
@@ -73,15 +79,13 @@
                         </a>
                     </div>
                     <div class="get-more" v-if="vipFinish" style="color: #888">已加载全部</div>
-                    <!-- <div class="get-more" v-else @click="getMore">加载更多中...</div> -->
-                    <div class="get-more" v-else @click="getMore">点击加载更多</div>
-
+                    <div class="get-more" v-else @click="getMore">加载更多中...</div>
                 </div>
             </van-tab>
             <van-tab title="折扣特惠">
                 <div class="list" :style="'display:'+listDisplay" v-if="saleList">
                     <div class="item" v-for="item in saleList">
-                        <a :href="'mallDetail.html?item_id='+item.id" class="block-a">
+                        <a :href="'mallDetail.php?item_id='+item.id" class="block-a">
 
                             <div class="item-muns" v-if="item.left_nums>0">
                                 仅剩{{item.left_nums}}件
@@ -89,7 +93,9 @@
                             <div class="item-no-muns" v-else>
                                 已结缘
                             </div>
-                            <img class="item-img" :src="item.headlines" alt="">
+                            <div class="item-img">
+                                <img :src="item.headlines" alt="">
+                            </div>
                             <div class="item-detail">
                                 <div class="item-title">
                                     {{item.title}}
@@ -104,13 +110,11 @@
                         </a>
                     </div>
                     <div class="get-more" v-if="saleFinish" style="color: #888">已加载全部</div>
-                    <!-- <div class="get-more" v-else @click="getMore">加载更多中...</div> -->
-                    <div class="get-more" v-else @click="getMore">点击加载更多</div>
-
+                    <div class="get-more" v-else @click="getMore">加载更多中...</div>
                 </div>
 
             </van-tab>
-            <van-tab title="玉友慧选">
+            <van-tab title="玉友惠选">
                 <div class="list" :style="'display:'+listDisplay" v-if="csmList">
                     <div class="item" v-for="item in csmList">
                         <a :href="'mallDetail.html?item_id='+item.id" class="block-a">
@@ -121,7 +125,9 @@
                             <div class="item-no-muns" v-else>
                                 已结缘
                             </div>
-                            <img class="item-img" :src="item.headlines" alt="">
+                            <div class="item-img">
+                                <img :src="item.headlines" alt="">
+                            </div>
                             <div class="item-detail">
                                 <div class="item-title">
                                     {{item.title}}
@@ -136,16 +142,14 @@
                         </a>
                     </div>
                     <div class="get-more" v-if="csmFinish" style="color: #888">已加载全部</div>
-                    <!-- <div class="get-more" v-else @click="getMore">加载更多中...</div> -->
-                    <div class="get-more" v-else @click="getMore">点击加载更多</div>
-
+                    <div class="get-more" v-else @click="getMore">加载更多中...</div>
                 </div>
             </van-tab>
         </van-tabs>
         <a class="return-top" href="#top" target="_self">
             <img src="img/returnTop.png" alt="">
         </a>
-        <div class="cangyu_bbs_tabber" v-if="!closeBottom">
+        <!-- <div class="cangyu_bbs_tabber" v-if="!closeBottom">
             <a href="javascript:void(0)" class="close" @click='close'></a>
             <a href="http://a.app.qq.com/o/simple.jsp?pkgname=icangyu.jade" target="_self" class="download" rel="nofollow">
                 <div class="logo"></div>
@@ -155,15 +159,43 @@
                 </div>
                 <div class="open">立即打开</div>
             </a>
-        </div>
+        </div> -->
     </div>
 
 </body>
-<script src="js/jquery-2.1.4.min.js"></script>
-<script src="js/config.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vant@2.2/lib/vant.min.js"></script>
-<script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.min.js"></script>
+
+<!-- 图片预览 -->
+<script type="text/javascript" src="js/viewer.js"></script>
+<!-- 极光魔链 -->
+<script type="text/javascript" src="js/jmlink.min.js"></script>
+<!-- 微信验证 -->
+<!-- <script type="text/javascript" src="js/weixinWeb.js"></script> -->
+<!-- 公共文件 -->
+<script type="text/javascript" src="js/config.js"></script>
+<!-- vue -->
+<script type="text/javascript" src="js/vue.min.js"></script>
+<!-- axios -->
+<script type="text/javascript" src="js/axios.min.js"></script>
+<!-- vant -->
+<script type="text/javascript" src="js/vant.js"></script>
+<!-- 微信分享 -->
+<script type="text/javascript" src="js/jssdk.js"></script>
+<script>
+    wx.config({
+        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。移动端会通过弹窗来提示相关信息。如果分享信息配置不正确的话，可以开了看对应报错信息
+        appId: '<?php echo $signPackage["appId"]; ?>',
+        timestamp: '<?php echo $signPackage["timestamp"]; ?>',
+        nonceStr: '<?php echo $signPackage["nonceStr"]; ?>',
+        signature: '<?php echo $signPackage["signature"]; ?>',
+        jsApiList: [ //需要使用的JS接口列表,分享默认这几个，如果有其他的功能比如图片上传之类的，需要添加对应api进来
+            'checkJsApi',
+            'onMenuShareTimeline', //
+            'onMenuShareAppMessage',
+            'onMenuShareQQ',
+            'onMenuShareWeibo'
+        ]
+    });
+</script>
 <script>
     new Vue({
         el: '#vue',
@@ -186,10 +218,10 @@
                 closeBottom: false
             }
         },
-        // created() {
-        //     var that = this;
-        //     window.addEventListener('scroll', this.scroll, true)
-        // },
+        created() {
+            var that = this;
+            window.addEventListener('scroll', this.scroll, true)
+        },
         mounted() {
             var that = this;
             this.browserRedirect();
@@ -199,10 +231,9 @@
             this.getCsmList();
             window.share_config = {
                 "share": {
-                    "imgUrl": "http://www.icangyu.com/cangyuxyidong/img/icon.png",
-                    //分享图，默认当相对路径处理，所以使用绝对路径的的话，“http://”协议前缀必须在。
+                    "imgUrl": "http://www.icangyu.com/cangyuxyidong/img/icon.png", //分享图，默认当相对路径处理，所以使用绝对路径的的话，“http://”协议前缀必须在。
                     "desc": '', //摘要,如果分享到朋友圈的话，不显示摘要。
-                    "title": '商品详情', //分享卡片标题
+                    "title": '藏玉商城', //分享卡片标题
                     "link": window.location.href, //分享出去后的链接，这里可以将链接设置为另一个页面。
                     "success": function() {
                         //分享成功后的回调函数
@@ -212,11 +243,16 @@
                     }
                 }
             };
+            wx.ready(function() {
+                wx.onMenuShareAppMessage(share_config.share); //分享给好友
+                wx.onMenuShareTimeline(share_config.share); //分享到朋友圈
+                wx.onMenuShareQQ(share_config.share); //分享给手机QQ
+            });
 
         },
-        // destroyed() {
-        //     window.removeEventListener('scroll', this.scroll, true)
-        // },
+        destroyed() {
+            window.removeEventListener('scroll', this.scroll, true)
+        },
         methods: {
             getHomeList() {
                 var that = this;
@@ -346,17 +382,21 @@
             close() {
                 this.closeBottom = true
             },
-            // scroll() {
-            //     var that = this;
-            //     var scrollTop = document.documentElement.scrollTop || document.body.scrollTop; // 滚动高度
-            //     var windowHeight = document.documentElement.clientHeight || document.body.clientHeight; // 窗口高度
-            //     var scrollHeight = document.body.scrollHeight; // 可滚动高度
-            //     // console.log(scrollTop + windowHeight, scrollHeight)
-            //     if (scrollTop + windowHeight >= scrollHeight) { //测试浏览器有的时候相加 会出现小数点 这里用 >= 不用 ==
-            //         that.getMore();
-            //         console.log('加载更多');
-            //     }
-            // }
+            scroll() {
+                var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                var windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+                var scrollHeight = document.body.scrollHeight;
+                // console.log(scrollTop + windowHeight, scrollHeight)
+                if (scrollTop + windowHeight >= scrollHeight) { //测试浏览器有的时候相加 会出现小数点 这里用 >= 不用 ==
+                    console.log('加载更多');
+                    if (!this.timer) {
+                        this.timer = setTimeout(() => {
+                            this.getMore(); //请求商品数据的方法
+                            this.timer = null;
+                        }, 1000)
+                    }
+                }
+            }
         }
     });
 </script>

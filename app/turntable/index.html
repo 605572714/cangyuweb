@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>幸运大转盘</title>
+	<link rel="stylesheet" href="css/GB-canvas-turntable.css">
+	<link rel="stylesheet" type="text/css" href="css/hlhs.css">
+
+</head>
+
+<body>
+
+	<img class="bg" src="bg.png" alt="">
+	<div class="zhuanp">
+		<section id="turntable" class="gb-turntable">
+			<div class="gb-turntable-container">
+				<canvas class="gb-turntable-canvas" width="300px" height="300px">抱歉！浏览器不支持。</canvas>
+			</div>
+
+			<a class="gb-turntable-btn" href="javascript:;">会员抽奖</a>
+		</section>
+	</div>
+
+	<script src="js/GB-canvas-turntable.js"></script>
+	<script>
+		// 当初始的 HTML 文档被完全加载和解析完成之后，DOMContentLoaded 事件被触发，而无需等待样式表、图像和子框架的完全加载
+		document.addEventListener('DOMContentLoaded', function () {
+			gbTurntable.init({
+				id: 'turntable',
+				config: function (callback) {
+					// 获取奖品信息
+					// callback && callback(['11元红包','2元红包','3元红包','4元红包','5元红包','6元红包']);
+					callback && callback([{
+						text: '藏玉盲盒',
+					}, {
+						text: '优惠券'
+					}, {
+						text: '200积分'
+					}, {
+						text: '一个月会员'
+					}, {
+						text: '藏玉杂志'
+					}, {
+						text: '谢谢惠顾'
+					}])
+				},
+				getPrize: function (callback) {
+					// 获取中奖信息
+					// var num = Math.random() * 5 >>> 0, //奖品ID
+					// chances = num; // 可抽奖次数
+					var num, nums = Math.random() * 100 >>> 0;
+					// console.log(nums);
+					if (nums < 1) {
+						num = 0;
+					} else if (nums <= 5) {
+						num = 1;
+					} else if (nums < 15) {
+						num = 2;
+					} else if (nums < 30) {
+						num = 3;
+					} else if (nums < 60) {
+						num = 4;
+					} else {
+						num = 5;
+					}
+					var chances = num;
+					// console.log(num);
+					callback && callback([num, chances]);
+				},
+				gotBack: function (data) {
+					// 清除ios的alert网址
+					window.alert = function (str) {
+
+						var alertFram = document.createElement("DIV");
+						alertFram.id = "alertFram";
+						alertFram.style.position = "fixed";
+						alertFram.style.width = "100%";
+						alertFram.style.height = "100%";
+						alertFram.style.top = "0";
+						alertFram.style.textAlign = "center";
+						alertFram.style.lineHeight = "150px";
+						alertFram.style.zIndex = "300";
+						alertFram.style.backgroundColor = "rgba(0, 0, 0, 0.58)";
+						alertFram.style.fontSize = "12px";
+						strHtml = '<ul class="alert_ul">';
+						strHtml += '<li class="alert_content">' + str + '</li>';
+						strHtml +=
+							'<li class="alert_btn-wrap"><a type="button" value="确定" onclick="doOk()" class="alert_btn">确定</a> </li> ';
+						strHtml += '</ul>';
+						alertFram.innerHTML = strHtml;
+						document.body.appendChild(alertFram);
+						this.doOk = function () {
+							alertFram.style.display = "none";
+						}
+					}
+					alert('恭喜抽中' + data);
+					console.log(data);
+				}
+			});
+		}, false);
+	</script>
+
+</body>
+
+</html>

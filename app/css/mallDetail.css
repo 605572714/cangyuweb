@@ -9,16 +9,16 @@ body {
 	align-items: center;
 }
 
-.contain {
+.vue {
 	width: 100%;
 }
 
-.contain .video {
+.vue .video {
 	width: 100%;
 	vertical-align: middle;
 }
 
-.contain .novip {
+.vue .novip {
 	padding: 0px 15px;
 	height: 38px;
 	background: #e1cb9a;
@@ -29,27 +29,27 @@ body {
 	color: #463d2d;
 }
 
-.contain .novip .left {
+.vue .novip .left {
 	font-size: 18px;
 }
 
-.contain .novip .right {
+.vue .novip .right {
 	font-size: 14px;
 }
 
-.contain .top {
+.vue .top {
 	padding: 0px 15px 25px;
 	background: #fff;
 	position: relative;
 	background: fff;
 }
 
-.contain .top .attributes {
+.vue .top .attributes {
 	width: 100%;
 	margin-top: 10px;
 }
 
-.contain .top .progress {
+.vue .top .progress {
 	width: 90px;
 	height: 15px;
 	border: 1px solid #f0c16f;
@@ -58,14 +58,14 @@ body {
 	background: #fff;
 }
 
-.contain .top .progress .progress_back {
+.vue .top .progress .progress_back {
 	background: rgba(251, 200, 112, 0.24);
 	position: relative;
 	width: 90px;
 	height: 15px;
 }
 
-.contain .top .progress .progress_back span {
+.vue .top .progress .progress_back span {
 	position: absolute;
 	width: 90px;
 	height: 15px;
@@ -76,56 +76,57 @@ body {
 	color: #bd892f;
 }
 
-.contain .top .title {
+.vue .top .title {
 	padding-top: 20px;
 	font-size: 32px;
 	color: #333;
 }
 
-.contain .top .progress {
+.vue .top .progress {
 	float: right;
 	margin-top: 20px;
 }
 
-.contain .top .priceList {
+.vue .top .priceList {
 	display: flex;
 	flex-direction: row;
+	align-items: center;
 }
 
-.contain .top .priceList .price {
+.vue .top .priceList .price {
 	font-size: 28px;
 	color: #d0b483;
-	padding-top: 5px;
+	/* padding-top: 5px; */
 }
 
-.contain .top .priceList .member_price {
+.vue .top .priceList .member_price {
 	font-size: 14px;
 	color: #888;
 	padding-left: 5px;
-	padding-top: 10px;
+	/* padding-top: 10px; */
 }
 
-.contain .top .priceList .old_price {
+.vue .top .priceList .old_price {
 	font-size: 14px;
 	color: #888;
 	text-decoration: line-through;
 	padding-left: 5px;
-	padding-top: 10px;
+	/* padding-top: 10px; */
 }
 
-.contain .top .priceList .vip_price {
+.vue .top .priceList .vip_price {
 	font-size: 14px;
 	color: #333;
 	padding-left: 5px;
 	padding-top: 10px;
 }
 
-.contain .top .discount {
+.vue .top .discount {
 	margin-top: 3px;
 	height: 18px;
 }
 
-.contain .top .discount .item {
+.vue .top .discount .item {
 	display: inline;
 	line-height: 18px;
 	border-radius: 10px;
@@ -136,7 +137,7 @@ body {
 	padding: 0px 5px;
 }
 
-.contain .top .members {
+.vue .top .members {
 	margin-top: 10px;
 	padding: 0px 15px;
 	height: 36px;
@@ -149,18 +150,18 @@ body {
 	align-items: center;
 }
 
-.contain .top .members .vipIcon {
+.vue .top .members .vipIcon {
 	width: 42px;
 	height: 16px;
 	margin-right: 8px;
 }
 
-.contain .top .members span {
+.vue .top .members span {
 	color: #d0b483;
 	margin-left: 5px;
 }
 
-.contain .top .members .vipInter {
+.vue .top .members .vipInter {
 	width: 6px;
 	height: 11px;
 	display: block;
@@ -173,14 +174,14 @@ body {
 	background: rgba(247, 247, 247, 1);
 }
 
-.contain .detail {
+.vue .detail {
 	padding: 15px 4%;
 	background: #fff;
 	padding-bottom: 60px;
 	width: 92%;
 }
 
-.contain .detail .detail-title {
+.vue .detail .detail-title {
 	width: 100%;
 	text-align: center;
 	font-size: 16px;
@@ -188,13 +189,13 @@ body {
 	margin-bottom: 25px;
 }
 
-.contain .detail .detail-content {
+.vue .detail .detail-content {
 	font-size: 14px;
 	color: #666;
 	margin-bottom: 10px;
 }
 
-.contain .detail .album .img {
+.vue .detail .album .img {
 	vertical-align: middle;
 	width: 100%;
 	clear: both;

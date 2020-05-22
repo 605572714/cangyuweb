@@ -1,8 +1,8 @@
 //----------------------- HTTP -----------------------//
 
-var HttpHelper = (function(){
+var HttpHelper = (function () {
     return {
-        getJSON: function(url, templateId, containerId, isReset, cb){
+        getJSON: function (url, templateId, containerId, isReset, cb) {
             $.getJSON(url, function (data) {
                 var Odata = data.data;
                 var html = template(templateId, Odata);
@@ -12,13 +12,13 @@ var HttpHelper = (function(){
                     $(containerId).append(html);
                 }
 
-                if(cb && typeof(cb) === 'function'){
+                if (cb && typeof (cb) === 'function') {
                     cb(data);
                 }
             })
         },
-        getCookie: function(name){
-            if(!name) return null;
+        getCookie: function (name) {
+            if (!name) return null;
 
             var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
             if (arr = document.cookie.match(reg)) {
@@ -27,15 +27,13 @@ var HttpHelper = (function(){
                 return null;
             }
         },
-        getQuery: function(name){
-            if(!name) return null;
-
+        getQuery: function (name) {
+            if (!name) return null;
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
             var r = window.location.search.substr(1).match(reg);
             if (r != null) {
-                return unescape(r[2]); 
+                return unescape(r[2]);
             }
-            
             return null;
         }
     };
@@ -45,6 +43,5 @@ var HttpHelper = (function(){
 
 // var CYHOST = 'http://118.190.47.197';
 var CYHOST = 'https://app.icangyu.com';
-// var CYHOST = 'https://testicy.icangyu.com';
+var CYHOST_TEST = 'https://testicy.icangyu.com';
 var token = HttpHelper.getCookie("JADE_TOKEN");
-
