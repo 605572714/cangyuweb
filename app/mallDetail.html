@@ -9,7 +9,8 @@
 	<link rel="stylesheet" href="css/mallDetail.css" />
 	<link rel="stylesheet" href="css/my-app.css">
 	<link rel="stylesheet" href="css/vant.css">
-	<link rel="stylesheet" href="css/viewer.css">
+	<link rel="stylesheet" href="photoswipe/default-skin.css">
+	<link rel="stylesheet" href="photoswipe/photoswipe.css">
 </head>
 
 <body>
@@ -45,10 +46,52 @@
 			<div class="detail-content" v-if="content.length>5">
 				{{detail.content}}
 			</div>
-			<div ref="album" id="album" class="album">
-				<img class="img background" v-for="(item, index) in detail.album" :key="index"
-					@click="bigImg(item.file_path)" :style="content.length>5?'margin-bottom:10px':''"
-					:src="item.file_path"></img>
+			<!-- 图片 -->
+			<div class="my-gallery album" data-pswp-uid="1">
+				<figure v-for="item,index in detail.album">
+					<div>
+						<a :href="item.file_path" data-size="1920x1080">
+							<img class="img background" :style="content.length>5?'margin-bottom:10px':''"
+								:src="item.file_path"></img>
+						</a>
+					</div>
+				</figure>
+			</div>
+			<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="pswp__bg"></div>
+				<div class="pswp__scroll-wrap">
+					<div class="pswp__container">
+						<div class="pswp__item"></div>
+						<div class="pswp__item"></div>
+						<div class="pswp__item"></div>
+					</div>
+					<div class="pswp__ui pswp__ui--hidden">
+						<div class="pswp__top-bar">
+							<div class="pswp__counter"></div>
+							<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+							<button class="pswp__button pswp__button--share" title="Share"></button>
+							<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+							<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+							<div class="pswp__preloader">
+								<div class="pswp__preloader__icn">
+									<div class="pswp__preloader__cut">
+										<div class="pswp__preloader__donut"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+							<div class="pswp__share-tooltip"></div>
+						</div>
+						<button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+						</button>
+						<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+						</button>
+						<div class="pswp__caption">
+							<div class="pswp__caption__center"></div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<!-- Bottom Tabbar-->
@@ -66,7 +109,9 @@
 	</div>
 
 	<!-- 图片预览 -->
-	<script type="text/javascript" src="js/viewer.js"></script>
+	<script type="text/javascript" src="photoswipe/photoswipe-ui-default.min.js"></script>
+	<script type="text/javascript" src="photoswipe/photoswipe.js"></script>
+	<script type="text/javascript" src="js/photo.js"></script>
 	<!-- 极光魔链 -->
 	<script type="text/javascript" src="js/jmlink.min.js"></script>
 	<!-- 微信验证 -->
@@ -136,6 +181,7 @@
 						that.detail = res.data.data;
 						that.tag_string = that.detail.tag_string;
 						that.content = that.detail.content;
+						initPhotoSwipeFromDOM('.my-gallery');
 						that.$refs.vue.style.display = 'block';
 						window.share_config = {
 							"share": {
@@ -157,17 +203,6 @@
 							wx.onMenuShareQQ(share_config.share); //分享给手机QQ
 						});
 					})
-				},
-				// 点击显示大图
-				bigImg(img) {
-					console.log(img);
-					var viewer = new Viewer(this.$refs.album, {
-						// 具体参数配置，后面会讲到
-						url: img,
-						toolbar: false,
-						button: false,
-						title: false
-					});
 				},
 				getVip() {
 					var that = this;

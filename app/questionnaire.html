@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>问卷调查</title>
+    <!-- <link rel="stylesheet" href="css/my-app.css"> -->
+    <link rel="stylesheet" href="css/vant.css">
+    <style>
+        .list {
+            display: flex;
+            flex-direction: row;
+
+        }
+
+        .checked {
+            font-size: 14px;
+            overflow-wrap: normal;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" id='vue'>
+        <h1>会员服务满意度调查问卷</h1>
+        <p>
+            尊敬的会员朋友：您好！感谢您一直以来对藏玉的支持和关爱。
+            为了给您营造更加安全放心，优雅舒适的消费环境，以及更加精准的会员服务，
+            我们真诚的邀请贵宾会员及至尊会员参与以下的问卷调查。我们保证对本问卷内容严格保密，
+            填写完毕提交后还有价1888元优惠券大礼包可以领取，期待您的参与。
+        </p>
+        <div class="list">
+            <div>Q1：</div>
+            <div>您的联系电话?</div>
+            <div style="border-bottom: 1px solid #d9d9d9;">
+                <input class="input-style" :value="value" type="number" maxlength="11">
+                </input>
+            </div>
+
+        </div>
+        <div class="list">
+            <div>Q2：</div>
+            <div>您的生日?</div>
+            <div style="border-bottom: 1px solid #d9d9d9;margin-left: 30px;">
+                <input class="input-style" :value="timeValue" type="date">
+                </input>
+            </div>
+        </div>
+
+        <div class="list">
+            <div>Q3：</div>
+            <div style="font-size: 14px;">您对藏玉APP内现有商品满意吗？（商城内上架商品，直播、拍卖等场次内所上商品）</div>
+        </div>
+        <div v-for="item,index in checkedList">
+            <van-checkbox icon-size="16" class="checked" :value="item.value" @click="onChange(index)">
+                {{item.name}}
+            </van-checkbox>
+        </div>
+        <div class="sumb" @click="submine">提交</div>
+    </div>
+</body>
+<!-- 公共文件 -->
+<script type="text/javascript" src="js/config.js"></script>
+<!-- vue -->
+<script type="text/javascript" src="js/vue.min.js"></script>
+<!-- axios -->
+<script type="text/javascript" src="js/axios.min.js"></script>
+<!-- vant -->
+<script type="text/javascript" src="js/vant.js"></script>
+<!-- 微信分享 -->
+<script type="text/javascript" src="js/jssdk.js"></script>
+<script>
+    wx.config({
+        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。移动端会通过弹窗来提示相关信息。如果分享信息配置不正确的话，可以开了看对应报错信息
+        appId: '<?php echo $signPackage["appId"]; ?>',
+        timestamp: '<?php echo $signPackage["timestamp"]; ?>',
+        nonceStr: '<?php echo $signPackage["nonceStr"]; ?>',
+        signature: '<?php echo $signPackage["signature"]; ?>',
+        jsApiList: [ //需要使用的JS接口列表,分享默认这几个，如果有其他的功能比如图片上传之类的，需要添加对应api进来
+            'checkJsApi',
+            'onMenuShareTimeline', //
+            'onMenuShareAppMessage',
+            'onMenuShareQQ',
+            'onMenuShareWeibo',
+            'previewImage'
+        ]
+    });
+</script>
+<script>
+    var square_id = HttpHelper.getQuery('item_id');
+    console.log(square_id);
+    var vue = new Vue({
+        el: "#vue",
+        data() {
+            return {
+                value: '',
+                timeValue: '',
+                checkedList: [{
+                        name: '非常满意',
+                        value: true
+                    },
+                    {
+                        name: '满意',
+                        value: true
+                    },
+                    {
+                        name: '一般',
+                        value: true
+                    },
+                    {
+                        name: '不满意',
+                        value: true
+                    },
+                    {
+                        name: '非常不满意',
+                        value: true
+                    }
+                ]
+            }
+        },
+        created() {
+
+        },
+        methods: {
+
+            onInput(event) {
+                this.setData({
+                    currentDate: event.detail,
+                });
+            },
+            onChange(event) {
+                console.log(event);
+                this.checkedList[event].value = !this.checkedList[event].value;
+                if (this.checkedList[event].value) {}
+            },
+            submine() {
+                for (let i = 0; i < this.checkedList.length; i++) {
+
+                }
+            }
+        }
+    });
+</script>
+
+</html>

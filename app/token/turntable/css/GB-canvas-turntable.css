@@ -1,0 +1,443 @@
+/* DaTouWang URL: www.datouwang.com */
+
+/* 375px = 100vw;
+    336px = 89.6vw;
+    304px = 81.07vw
+    290px = 77.33vw;
+    284px = 75.73vw
+    260px = 69.33vw;
+		250px = 66.67vw;
+    210px = 56vw;
+    182px = 48.53vw;
+    140px = 37.33vw;
+    125px = 33.33vw;
+		113px = 30.13vw;
+		77px = 20.53vw;
+		50px = 13.33vw;
+		40px = 10.67vw;
+		33px = 8.8vw;
+		30px = 8vw;
+		28px = 7.47vw;
+		22.5px = 6vw;
+		20px = 5.33vw;
+		18px = 4.8vw;
+		16px = 4.27vw;
+		15px = 4vw;
+		14px = 3.7vw;
+		13px = 3.45vw;
+		12px = 3.2vw;
+		10px = 2.7vw;
+		9px = 2.4vw;
+		5px = 1.33vw;
+		4px = 1.07vw;
+    3px = 0.8vw;
+    2px = 0.53vw;
+     */
+.table-top,
+.gift,
+.rule {
+  width: 92vw;
+  margin: 0 4vw;
+  background: rgba(251, 249, 240, 1);
+  box-shadow: 0px 0px 4px 0px rgba(197, 175, 129, 1);
+  border-radius: 8px;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 4vw;
+}
+
+.table-top-title {
+  margin-top: 6.33vw;
+  font-size: 5.33vw;
+}
+
+.table-top-sub-title {
+  font-size: 3.7vw;
+  margin-top: 2px;
+  margin-bottom: 5.87vw;
+}
+
+.zhuanp {
+  margin-bottom: 8.8vw;
+}
+
+.gb-turntable ul,
+.gb-turntable li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gb-turntable {
+  position: relative;
+  width: 81.07vw;
+  height: 81.07vw;
+  border-radius: 50%;
+  background: linear-gradient(40deg, rgba(229, 73, 52, 1) 0%, rgba(254, 189, 40, 1) 100%);
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gb-turntabl-table {
+  position: absolute;
+  width: 75.73vw;
+  height: 75.73vw;
+  border-radius: 50%;
+  background: linear-gradient(45deg, rgba(255, 109, 55, 1) 0%, rgba(255, 141, 53, 1) 100%);
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gb-turntabl-table-rotate {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 0.53vw;
+  width: 2.14vw;
+  height: 2.14vw;
+  border-radius: 50%;
+  transform-origin: 0px 37.33vw;
+}
+
+.gb-turntable-container {
+  position: relative;
+  z-index: 3;
+  width: 69.33vw;
+  height: 69.33vw;
+  border-radius: 50%;
+  background: linear-gradient(36deg, rgba(242, 105, 25, 1) 0%, rgba(250, 121, 45, 1) 100%);
+  -webkit-transition: transform 6s ease;
+  transition: transform 6s ease;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gb-turntable-container canvas {
+  position: absolute;
+  width: 66.67vw;
+  height: 66.67vw;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.gb-turntalbe-list {
+  position: absolute;
+  width: 66.67vw;
+  height: 66.67vw;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.gb-turntable-item {
+  position: absolute;
+  width: 66.67vw;
+  height: 66.67vw;
+  border-radius: 50%;
+  color: #333;
+}
+
+
+.gb-turntable-item-span {
+  position: relative;
+  display: inline-flex;
+  font-size: 3.7vw;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+  padding-top: 2vw;
+  margin-left: 24vw;
+  -webkit-transform-origin: 50% 33.33vw;
+  -ms-transform-origin: 50% 33.33vw;
+  transform-origin: 50% 33.33vw;
+}
+
+.font {
+  display: inline-block;
+  width: 18vw;
+  /* width: auto; */
+}
+
+.gb-turntable-item .icon {
+  margin-top: 2vw;
+  width: 9.6vw;
+  height: 9.6vw;
+}
+
+.gb-turntable-btn-father {
+  position: absolute;
+  z-index: 3;
+  width: 29.33vw;
+  height: 29.33vw;
+  border-radius: 50%;
+  background: #F99A47;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gb-turntable-btn {
+  width: 26.13vw;
+  height: 26.13vw;
+  border-radius: 50%;
+  color: #F4E9CC;
+  background-color: #FFE153;
+  line-height: 26.13vw;
+  text-align: center;
+  font-size: 20px;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gb-turntable-btn::after {
+  position: absolute;
+  display: block;
+  content: '';
+  left: 11.8vw;
+  top: -8vw;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  border-top-width: 5.3vw;
+  border-bottom-width: 6.4vw;
+  border-left-width: 2.7vw;
+  border-right-width: 2.7vw;
+  border-style: solid;
+  border-color: transparent;
+  border-bottom-color: #FFE153;
+}
+
+.gb-turntable-btn-icon {
+  width: 21.33vw;
+  text-align: center;
+  line-height: 21.33vw;
+  height: 21.33vw;
+  border-radius: 50%;
+  background: linear-gradient(180deg, rgba(255, 251, 231, 1) 0%, rgba(248, 217, 81, 1) 100%);
+  box-shadow: 0px 0px 2px 0px rgba(247, 176, 140, 1);
+  color: rgba(238, 114, 65, 1);
+  font-size: 9.6vw;
+}
+
+.gb-turntable-btn.disabled {
+  pointer-events: none;
+  /* background: #B07A7B; */
+  color: #ccc;
+}
+
+.gb-turntable-btn.disabled::after {
+  /* border-bottom-color: #B07A7B; */
+}
+
+.gb-run {
+  -webkit-transition: all 6s ease;
+  transition: all 6s ease;
+}
+
+.lucky-list {
+  width: 100%;
+  height: 48.53vw;
+  background: rgba(255, 245, 225, 1);
+  box-shadow: 0px 0px 4px 0px rgba(197, 175, 129, 0.46);
+  display: flex;
+  flex-direction: row;
+}
+
+.lucky-list-left,
+.lucky-list-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: #666;
+
+}
+
+.lucky-list-left {
+  width: 11.2vw;
+  background: #F9DCAF;
+  margin-left: 4vw;
+  font-size: 5.33vw;
+  line-height: 6vw;
+}
+
+.lucky-list-right {
+  width: 76.8vw;
+  font-size: 3.2vw;
+}
+
+.lucky-list-right-list {
+  width: 76.8vw;
+  overflow: hidden;
+  position: relative;
+  height: 36vw;
+}
+
+.lucky-item {
+  width: 73vw;
+  border-bottom: 0.5px solid #D7C99F;
+  display: flex;
+  flex-direction: row;
+  height: 6.67vw;
+  line-height: 6.67vw;
+}
+
+#list {
+  position: absolute;
+}
+
+.lucky-item-nick {
+  width: 9.7vw;
+  /*要显示文字的宽度*/
+  text-overflow: ellipsis;
+  /*让截断的文字显示为点点。还有一个值是clip意截断不显示点点*/
+  white-space: nowrap;
+  /*让文字不换行*/
+  overflow: hidden;
+  /*超出要隐藏*/
+}
+
+.checkbtn {
+  width: 53.6vw;
+  height: 10.67vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background: rgba(222, 180, 125, 1);
+  border-radius: 5.33vw;
+  font-size: 3.7vw;
+  color: #fff;
+  margin-top: 8vw;
+  margin-bottom: 10.8vw;
+}
+
+.gift,
+.rule {
+  padding: 4vw;
+  width: 84vw;
+  padding-bottom: 7vw;
+}
+
+.gift-title,
+.rule-title {
+  width: 100%;
+  font-size: 4.8vw;
+  color: #333;
+  margin-top: 2.7vw;
+  margin-bottom: 4vw;
+}
+
+
+.gift-item,
+.rule-item {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  font-size: 3.7vw;
+  margin-bottom: 1.6vw;
+  color: #666;
+}
+
+.gift-icon,
+.rule-icon {
+  width: 4vw;
+  text-align: center;
+}
+
+.gift-icon span,
+.rule-icon span {
+  display: block;
+  width: 1.33vw;
+  height: 1.33vw;
+  border-radius: 50%;
+  margin-top: 1.7vw;
+  background: rgba(215, 201, 159, 1);
+}
+
+.gift-text,
+.rule-text {
+  width: 80vw;
+}
+
+
+.rule {
+  margin-bottom: -70px;
+  position: relative;
+}
+
+/*# sourceMappingURL=GB-canvas-turntable.css.map */
+
+.alert {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -60%);
+  width: 271px;
+  height: 322px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.alert-bg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.h1 {
+  margin-top: 132px;
+  color: #745C45;
+  font-size: 19px;
+  z-index: 5;
+}
+
+.h2 {
+  margin-top: 2px;
+  color: rgba(116, 92, 69, 1);
+  font-size: 19px;
+  z-index: 5;
+}
+
+.h3 {
+  margin-top: 5px;
+  color: rgba(116, 92, 69, 1);
+  font-size: 13px;
+  z-index: 5;
+}
+
+.bindtop {
+  margin-top: 14px;
+  background: rgba(224, 86, 31, 1);
+  color: rgba(254, 239, 214, 1);
+  z-index: 5;
+  width: 165px;
+  text-align: center;
+  line-height: 34px;
+  height: 34px;
+  border-radius: 17px;
+
+}
+
+.bindbot {
+  margin-top: 10px;
+  border: 1px solid rgba(216, 114, 80, 1);
+  color: rgba(216, 114, 80, 1);
+  z-index: 5;
+  width: 165px;
+  height: 34px;
+  text-align: center;
+  line-height: 34px;
+  border-radius: 17px;
+}

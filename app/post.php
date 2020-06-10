@@ -12,8 +12,9 @@ $signPackage = $jssdk->GetSignPackage();
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>藏玉帖子</title>
     <link rel="stylesheet" href="css/my-app.css">
-    <link rel="stylesheet" href="css/viewer.css">
     <link rel="stylesheet" href="css/appraisal.css">
+    <link rel="stylesheet" href="photoswipe/default-skin.css">
+    <link rel="stylesheet" href="photoswipe/photoswipe.css">
 </head>
 
 <body>
@@ -37,8 +38,50 @@ $signPackage = $jssdk->GetSignPackage();
             <div class="video" v-if="detail.video_url">
                 <video class="video" :src="detail.video_url" controls></video>
             </div>
-            <div id="album" ref="album" class="album" v-else>
-                <img class="img" v-for="item,index in detail.album" :src="checkImg(item.file_path,'img')" @click="bigImg(item.file_path)">
+            <div class="my-gallery album" data-pswp-uid="1" v-else>
+                <figure v-for="item,index in detail.album">
+                    <div>
+                        <a :href="checkImg(item.file_path,'img')" data-size="1920x1080">
+                            <img class="img" :src="checkImg(item.file_path,'img')">
+                        </a>
+                    </div>
+                </figure>
+            </div>
+            <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="pswp__bg"></div>
+                <div class="pswp__scroll-wrap">
+                    <div class="pswp__container">
+                        <div class="pswp__item"></div>
+                        <div class="pswp__item"></div>
+                        <div class="pswp__item"></div>
+                    </div>
+                    <div class="pswp__ui pswp__ui--hidden">
+                        <div class="pswp__top-bar">
+                            <div class="pswp__counter"></div>
+                            <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                            <button class="pswp__button pswp__button--share" title="Share"></button>
+                            <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                            <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                            <div class="pswp__preloader">
+                                <div class="pswp__preloader__icn">
+                                    <div class="pswp__preloader__cut">
+                                        <div class="pswp__preloader__donut"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                            <div class="pswp__share-tooltip"></div>
+                        </div>
+                        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                        </button>
+                        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                        </button>
+                        <div class="pswp__caption">
+                            <div class="pswp__caption__center"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- 点赞 -->
@@ -83,7 +126,9 @@ $signPackage = $jssdk->GetSignPackage();
 
 
 <!-- 图片预览 -->
-<script type="text/javascript" src="js/viewer.js"></script>
+<script type="text/javascript" src="photoswipe/photoswipe-ui-default.min.js"></script>
+<script type="text/javascript" src="photoswipe/photoswipe.js"></script>
+<script type="text/javascript" src="js/photo.js"></script>
 <!-- 极光魔链 -->
 <script type="text/javascript" src="js/jmlink.min.js"></script>
 <!-- 微信验证 -->
@@ -135,7 +180,8 @@ $signPackage = $jssdk->GetSignPackage();
                 axios.get(`${CYHOST}/icyApi/details_wb?id=${square_id}&type=1`).then(res => {
                     // console.log(res.data.data);
                     that.detail = res.data.data;
-                    that.praise_list = that.detail.praise_list
+                    that.praise_list = that.detail.praise_list;
+                    initPhotoSwipeFromDOM('.my-gallery');
                     that.$refs.vue.style.display = "block";
                     console.log(that.detail);
                     window.share_config = {
@@ -178,17 +224,6 @@ $signPackage = $jssdk->GetSignPackage();
                 }).catch(err => {
                     console.log(err);
                 })
-            },
-            // 点击显示大图
-            bigImg(img) {
-                console.log(img);
-                var viewer = new Viewer(this.$refs.album, {
-                    // 具体参数配置，后面会讲到
-                    url: img,
-                    toolbar: false,
-                    button: false,
-                    title: false
-                });
             },
             // 验证图片是否有效
             checkImg(img, type) {

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- <link rel="stylesheet" href="css/hlhs.css"> -->
+    <title>我的中奖纪录</title>
+    <style>
+        /* DaTouWang URL: www.datouwang.com */
+        body,
+        div,
+        dl,
+        dt,
+        dd,
+        ul,
+        ol,
+        li,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        pre,
+        code,
+        form,
+        fieldset,
+        legend,
+        input,
+        textarea,
+        p,
+        blockquote,
+        th,
+        td,
+        hr,
+        button,
+        article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        menu,
+        nav,
+        section {
+            margin: 0;
+            padding: 0;
+        }
+
+        .list {
+            width: 92vw;
+            margin-left: 4vw;
+            padding-right: 4vw;
+            height: 13.07vw;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            color: #333;
+            border-bottom: 0.5px solid #d9d9d9;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="vue" class="vue">
+        <div class="list" v-for="item,index in list">
+            <div class="gift" v-text="checkGift(item.grade)"></div>
+            <div class="time" v-text="checkTime(item.createdate)"></div>
+        </div>
+    </div>
+</body>
+<script src="../js/vue.min.js"></script>
+<script src="../js/config.js"></script>
+<script src="../js/axios.min.js"></script>
+<script>
+    var token = HttpHelper.getQuery('token');
+    // var phase = HttpHelper.getQuery('token');
+    var vue = new Vue({
+        el: '#vue',
+        data() {
+            return {
+                list: [],
+                page: 0,
+                loadFinish: false
+            }
+        },
+        created() {
+            var that = this;
+            window.addEventListener('scroll', this.scroll, true)
+        },
+        mounted() {
+            var that = this;
+            that.getList();
+        },
+        methods: {
+            getList() {
+                var that = this;
+                if (that.loadFinish == true) return;
+                axios.get(`${CYHOST_TEST}/icyApi/lotteryList?token=${token}&page=${this.page}`)
+                    .then(res => {
+                        that.list = that.list.concat(res.data.data.list);
+                        that.total = res.data.data.total;
+                        console.log(res.data.data);
+                        if (that.list.length < that.total) {
+                            console.log(that.list.length);
+                            that.page += res.data.data.list.length;
+                            console.log(that.page);
+
+                        } else {
+                            that.loadFinish = true;
+                        }
+                    })
+            },
+            checkGift(grade) {
+                switch (Number(grade)) {
+                    case 1:
+                        return '抽中一等奖“神秘大奖一份”'
+                        break;
+                    case 2:
+                        return '抽中二等奖“价值1888元通用优惠券”'
+                        break;
+                    case 3:
+                        return '抽中三等奖“200积分”'
+                        break;
+                    case 4:
+                        return '抽中四等奖“会员有效期延长1个月”'
+                        break;
+                    case 5:
+                        return '抽中五等奖“藏玉杂志一本”'
+                        break;
+                    case 6:
+                        return '抽中六等奖“谢谢参与”'
+                        break;
+
+                    default:
+                        break;
+                }
+            },
+            checkTime(time) {
+                return time.trim().split(" ")[0];
+            },
+            scroll() {
+                var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                var windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+                var scrollHeight = document.body.scrollHeight;
+                // console.log(scrollTop + windowHeight, scrollHeight)
+                if (scrollTop + windowHeight >= scrollHeight) { //测试浏览器有的时候相加 会出现小数点 这里用 >= 不用 ==
+                    console.log('加载更多');
+                    if (!this.timer) {
+                        this.timer = setTimeout(() => {
+                            this.getList(); //请求商品数据的方法
+                            this.timer = null;
+                        }, 1000)
+                    }
+                }
+            }
+        },
+        destroyed() {
+            window.removeEventListener('scroll', this.scroll, true)
+        },
+    });
+</script>
+
+</html>

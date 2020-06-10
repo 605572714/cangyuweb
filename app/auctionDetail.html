@@ -8,8 +8,9 @@
     <title>藏玉拍卖</title>
     <link rel="stylesheet" href="css/my-app.css">
     <link rel="stylesheet" href="css/vant.css">
-    <link rel="stylesheet" href="css/viewer.css">
     <link rel="stylesheet" href="css/spickDetail.css">
+    <link rel="stylesheet" href="photoswipe/default-skin.css">
+    <link rel="stylesheet" href="photoswipe/photoswipe.css">
     <style>
         .price {
             color: #bc2e2e;
@@ -20,16 +21,16 @@
 
 <body>
     <div ref="vue" id="vue" class="vue">
-        <video v-if="detail.video_url&&detail.video_url!=0" :src="detail.video_url" controls></video>
+        <video v-if="detail.video_url&&detail.video_url!=0" :src="detail.video_url" controls autoplay muted></video>
         <img v-else :src="detail.video_cover" />
         <div class="status" :style="checkStatus(detail,'background')">
             <span class="state" v-text="checkStatus(detail,'text')"></span>
             <van-count-down :time="detail.start_time>0?detail.start_time*1000:detail.end_time*1000">
                 <template v-slot="timeData">
-                    <span class="time" v-if="checkStatus(detail,'text')=='即将开始'" v-text="timeData.days>0?`距开始还剩 ${timeData.days}天${ timeData.hours }时`:`${timeData.hours}时${
+                    <span class="time" v-if="checkStatus(detail,'text')=='即将开始'" v-text="timeData.days>0?`距开始还剩 ${timeData.days}天${ timeData.hours }时`:`距开始还剩 ${timeData.hours}时${
           timeData.minutes }分${ timeData.seconds }秒`">
                     </span>
-                    <span class="time" v-if="checkStatus(detail,'text')=='进行中'" v-text="timeData.days>0?`距结束还剩 ${timeData.days}天${ timeData.hours }时`:`${timeData.hours}时${
+                    <span class="time" v-if="checkStatus(detail,'text')=='进行中'" v-text="timeData.days>0?`距结束还剩 ${timeData.days}天${ timeData.hours }时`:`距结束还剩 ${timeData.hours}时${
           timeData.minutes }分${ timeData.seconds }秒`">
                     </span>
                     <span class="time" v-if="checkStatus(detail,'text')=='已结束'" v-text="">
@@ -68,9 +69,57 @@
                 <span v-text="'产品介绍'"></span>
             </div>
             <div class="content" v-text="detail.content"></div>
-            <div class="album" ref="album">
+            <!-- 显示图片 -->
+            <!-- <div class="album" ref="album">
                 <img :src="item.file_path" v-for="item in detail.album" @click="checkImg(item.file_path)">
+            </div> -->
+            <div class="my-gallery album" data-pswp-uid="1">
+                <figure v-for="item,index in detail.album">
+                    <div>
+                        <a :href="checkImg(item.file_path,'img')" data-size="1920x1080">
+                            <img class="img" :src="checkImg(item.file_path,'img')">
+                        </a>
+                    </div>
+                    <!-- <figcaption style="display:none;">在这里可增加图片描述</figcaption> -->
+                </figure>
             </div>
+            <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="pswp__bg"></div>
+                <div class="pswp__scroll-wrap">
+                    <div class="pswp__container">
+                        <div class="pswp__item"></div>
+                        <div class="pswp__item"></div>
+                        <div class="pswp__item"></div>
+                    </div>
+                    <div class="pswp__ui pswp__ui--hidden">
+                        <div class="pswp__top-bar">
+                            <div class="pswp__counter"></div>
+                            <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                            <button class="pswp__button pswp__button--share" title="Share"></button>
+                            <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                            <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                            <div class="pswp__preloader">
+                                <div class="pswp__preloader__icn">
+                                    <div class="pswp__preloader__cut">
+                                        <div class="pswp__preloader__donut"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                            <div class="pswp__share-tooltip"></div>
+                        </div>
+                        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                        </button>
+                        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                        </button>
+                        <div class="pswp__caption">
+                            <div class="pswp__caption__center"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
         <!-- Bottom Tabbar-->
         <div ref="goApp" class="cangyu_bbs_tabber">
@@ -89,7 +138,9 @@
 
 
 <!-- 图片预览 -->
-<script type="text/javascript" src="js/viewer.js"></script>
+<script type="text/javascript" src="photoswipe/photoswipe-ui-default.min.js"></script>
+<script type="text/javascript" src="photoswipe/photoswipe.js"></script>
+<script type="text/javascript" src="js/photo.js"></script>
 <!-- 极光魔链 -->
 <script type="text/javascript" src="js/jmlink.min.js"></script>
 <!-- 微信验证 -->
@@ -141,6 +192,7 @@
                 axios.get(`${CYHOST}/icyApi/sale_details?id=${square_id}`).then(res => {
                     // console.log(res.data.data);
                     that.detail = res.data.data.list;
+                    initPhotoSwipeFromDOM('.my-gallery');
                     that.$refs.vue.style.display = 'block';
                     console.log(that.detail);
                     window.share_config = {
@@ -181,14 +233,17 @@
                         break;
                 }
             },
-            checkImg(img) {
-                var viewer = new Viewer(this.$refs.album, {
-                    // 具体参数配置，后面会讲到
-                    url: img,
-                    toolbar: false,
-                    button: false,
-                    title: false
-                });
+            // 验证图片是否有效
+            checkImg(img, type) {
+                // console.log('check图片', img, type);
+                if (img && img.indexOf('http') == -1) {
+                    img = CYHOST + img;
+                } else {
+                    if (type == 'avatar') {
+                        img = 'img/avatar.png';
+                    }
+                }
+                return img;
             },
             // 跳转APP
             goApp() {

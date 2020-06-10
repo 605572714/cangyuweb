@@ -1,0 +1,639 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>会员服务满意度调查问卷</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" type="text/css" href="../../css/vant.css">
+  <style>
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      width: 100vw;
+      height: 100vh;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .alertStyle {
+      width: 61.33vw;
+    }
+
+    .alertIcon {
+      width: 8.53vw;
+      height: 8.53vw;
+      margin-top: 5.33vw;
+    }
+
+    .bg {
+      width: 100%;
+    }
+
+    .title {
+      position: absolute;
+      top: 87vw;
+      left: 10vw;
+      font-size: 4.8vw;
+      font-weight: bold;
+      /* font-family: PingFangSC-Medium, PingFang SC; */
+      color: rgba(76, 70, 66, 1);
+    }
+
+    .content {
+      position: absolute;
+      top: 95.5vw;
+      width: 80vw;
+      font-size: 3.7vw;
+      /* font-family: PingFangSC-Regular, PingFang SC; */
+      color: rgba(76, 70, 66, 1);
+      left: 10vw;
+
+    }
+
+    .question-notice {
+      position: absolute;
+      width: 18.13vw;
+      right: 6.93vw;
+    }
+
+    .question {
+      position: absolute;
+      width: 100vw;
+      text-align: center;
+      top: 149vw;
+      font-size: 5.33vw;
+      /* font-family: PingFangSC-Medium, PingFang SC; */
+      color: rgba(82, 138, 113, 1);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="all_660" id="vue">
+    <img class="question-notice" @click="alertNotice" src="../../img/question-notice.png" alt="">
+    <div class="title">尊敬的用户，您好！</div>
+    <div class="content">
+      尊敬的会员朋友：您好！感谢您一直以来对藏玉的支持和关爱。
+      为了给您营造更加安全放心，优雅舒适的消费环境，以及更加精准的会员服务，
+      我们真诚的邀请贵宾会员及至尊会员参与以下的问卷调查。我们保证对本问卷内容严格保密，
+      填写完毕提交后还有价<span style="color: #BC2E2E;font-weight: bold">1888元优惠券</span>大礼包可以领取，期待您的参与。
+    </div>
+    <div class="question">开始答题</div>
+    <img src="../../img/question.png" alt="" class="bg">
+    <div class="yd_box">
+      <!-- Q1：您的联系电话？ -->
+      <div class="tm_btitlt">
+        <div class="tm_nmb"><i>1</i></div>
+        <div class="tm_right">
+          <i class="bt_title">您的联系电话？</i>
+          <input name="phone" v-model="phone" type="text" @input="inputPhone(phone)" placeholder="请输入联系方式"
+            class="wenb_input">
+        </div>
+      </div>
+      <!-- Q2：您的生日？ -->
+      <div class="tm_btitlt">
+        <div class="tm_nmb"><i>2</i></div>
+        <div class="tm_right">
+          <i class="bt_title">您的生日？</i>
+          <input name="phone" v-model="date" @input="inputDate(date)" type="date" class="wenb_input" placeholder="请选择">
+        </div>
+      </div>
+      <!-- Q3：您对藏玉APP内现有商品满意吗？（商城内上架商品，直播、拍卖等场次内所上商品） -->
+      <div class="tm_btitlt">
+        <div class="tm_nmb"><i>3</i></div>
+        <div class="tm_right">
+          <i class="bt_title">您对藏玉APP内现有商品满意吗？<span>（商城内上架商品，直播、拍卖等场次内所上商品）</span></i>
+          <van-radio-group :value="q3radio" @input="changeQ3">
+            <van-radio checked-color="#bc2e2e" icon-size='17px' class="radio_list" v-for="item,index in Q3list"
+              :name="index+1">
+              {{item.name}}
+            </van-radio>
+            <van-radio checked-color="#bc2e2e" icon-size='17px' class="radio_list" style="margin-top: 0px"
+              :name="Q3list.length+1">
+              其他<input v-model="Q3remark" @input="checkQ3(Q3remark)" type="text" placeholder="请输入其他建议">
+            </van-radio>
+          </van-radio-group>
+        </div>
+      </div>
+      <!-- Q4：您对藏玉APP中的专题、话题和帖子社区功能是否满意？ -->
+      <div class="tm_btitlt">
+        <div class="tm_nmb"><i>4</i></div>
+        <div class="tm_right">
+          <i class="bt_title" v-text="'您对藏玉APP中的专题、话题和帖子社区功能是否满意？'"></i>
+          <van-radio-group :value="q4radio" @input="changeQ4">
+            <van-radio checked-color="#bc2e2e" icon-size='17px' class="radio_list" v-for="item,index in Q4list"
+              :name="index+1">
+              <span v-text="item.name"></span>
+            </van-radio>
+            <van-radio checked-color="#bc2e2e" icon-size='17px' class="radio_list" style="margin-top: 0px"
+              :name="Q4list.length+1">
+              其他<input v-model="Q4remark" @input="checkQ4(Q4remark)" type="text" placeholder="请输入其他建议">
+            </van-radio>
+          </van-radio-group>
+        </div>
+      </div>
+      <!-- Q5：您是否希望开通藏玉活动上线的专属通知呢？（包含线上活动和线下活动） -->
+      <div class="tm_btitlt">
+        <div class="tm_nmb"><i>5</i></div>
+        <div class="tm_right">
+          <i class="bt_title" v-html="'您是否希望开通藏玉活动上线的专属通知呢？<span>(包含线上活动和线下活动）</span>'"></i>
+          <van-radio-group :value="q5radio" @input="changeQ5">
+            <van-radio checked-color="#bc2e2e" icon-size='17px' class="radio_list" v-for="item,index in Q5list"
+              :name="index+1">
+              {{item.name}}
+            </van-radio>
+          </van-radio-group>
+        </div>
+      </div>
+      <!-- Q6：您是否希望开通藏玉臻品上新的专属通知呢？ -->
+      <div class="tm_btitlt">
+        <div class="tm_nmb"><i>6</i></div>
+        <div class="tm_right">
+          <i class="bt_title">您是否希望开通藏玉臻品上新的专属通知呢？</i>
+          <van-radio-group :value="q6radio" @input="changeQ6">
+            <van-radio checked-color="#bc2e2e" icon-size='17px' class="radio_list" v-for="item,index in Q6list"
+              :name="index+1">
+              {{item.name}}
+            </van-radio>
+          </van-radio-group>
+        </div>
+      </div>
+      <!-- Q7：同等价位下更看重作品的哪些方面? （可多项选择） -->
+      <div class="tm_btitlt">
+        <div class="tm_nmb"><i>7</i></div>
+        <div class="tm_right">
+          <i class="bt_title">同等价位下更看重作品的哪些方面？</i>
+          <van-checkbox-group :value="q7result" @input="changeQ7">
+            <van-checkbox checked-color="#bc2e2e" icon-size='17px' class="radio_list" :name="index+1"
+              v-for="item,index in Q7list">{{item.name}}</van-checkbox>
+          </van-checkbox-group>
+        </div>
+      </div>
+      <!-- Q8：不考虑价格的情况下更看中作品的哪些方面？（可多项选择） -->
+      <div class="tm_btitlt">
+        <div class="tm_nmb"><i>8</i></div>
+        <div class="tm_right">
+          <i class="bt_title">不考虑价格的情况下更看中作品的哪些方面？</i>
+          <van-checkbox-group :value="q8result" @input="changeQ8">
+            <van-checkbox checked-color="#bc2e2e" icon-size='17px' class="radio_list" :name="index+1"
+              v-for="item,index in Q8list">{{item.name}}</van-checkbox>
+          </van-checkbox-group>
+        </div>
+      </div>
+      <!-- Q9：籽料特色喜好?（可多项选择） -->
+      <div class="tm_btitlt">
+        <div class="tm_nmb"><i>9</i></div>
+        <div class="tm_right">
+          <i class="bt_title">籽料特色喜好？</i>
+          <van-checkbox-group :value="q9result" @input="changeQ9">
+            <van-checkbox checked-color="#bc2e2e" icon-size='17px' class="radio_list" :name="index+1"
+              v-for="item,index in Q9list">{{item.name}}</van-checkbox>
+            <van-checkbox checked-color="#bc2e2e" icon-size='17px' class="radio_list" style="margin-top: 0px"
+              :name="Q9list.length+1">
+              其他<input v-model="Q9value" @input="checkQ9(Q9value)" type="text" placeholder="请输入其他建议">
+            </van-checkbox>
+          </van-checkbox-group>
+        </div>
+      </div>
+      <!-- Q10：宝贝类型喜好?（可多项选择） -->
+      <div class="tm_btitlt">
+        <div class="tm_nmb"><i>10</i></div>
+        <div class="tm_right">
+          <i class="bt_title">籽料特色喜好？</i>
+          <van-checkbox-group :value="q10result" @input="changeQ10">
+            <van-checkbox checked-color="#bc2e2e" icon-size='17px' class="radio_list" :name="index+1"
+              v-for="item,index in Q10list">{{item.name}}</van-checkbox>
+            <van-checkbox checked-color="#bc2e2e" icon-size='17px' class="radio_list" style="margin-top: 0px"
+              :name="Q10list.length+1">
+              其他<input v-model="Q10value" @input="checkQ10(Q10value)" type="text" placeholder="请输入其他建议">
+            </van-checkbox>
+          </van-checkbox-group>
+        </div>
+      </div>
+      <!-- Q11：请问您对藏玉还有其他的意见和建议吗？ -->
+      <div class="tm_btitlt">
+        <div class="tm_nmb"><i>11</i></div>
+        <div class="tm_right">
+          <i class="bt_title">请问您对藏玉还有其他的意见和建议吗？</i>
+          <!-- <van-cell-group class="message">
+            <van-field class="message-input" :value="message" type="textarea" placeholder="请输入其它建议~" autosize
+              :border="false" />
+          </van-cell-group> -->
+          <textarea v-model="Q11value" @change="checkQ11(Q11value)" type="textarea" placeholder="请输入其它建议～"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="submit" @click="submit">
+      <span>提 交</span>
+    </div>
+    <van-overlay :show="alertShow" @click="onClickHide">
+      <div class="wrapper">
+        <img class="alertStyle" src="../../img/alert.png" />
+        <img class="alertIcon" src="../../img/alert-close.png" alt="">
+      </div>
+    </van-overlay>
+    <!-- <div class="coupon">
+      <div class="coupon_title">优惠券大礼包内含：</div>
+      <ul>
+        <li v-for="item in couponlist">
+          <div class="coupon_item">{{item}}</div>
+        </li>
+      </ul>
+    </div>
+    <div class="notice">
+      <div class="notice_title">注意事项：</div>
+      <ul>
+        <li v-for="item in noticelist">
+          <div class="notice_item">{{item}}</div>
+        </li>
+      </ul>
+    </div> -->
+  </div>
+</body>
+<script src="../../js/vue.min.js"></script>
+<script src="../../js/config.js"></script>
+<script src="../../js/vant.js"></script>
+<script src="../../js/axios.min.js"></script>
+<script>
+  var vue = new Vue({
+    el: '#vue',
+    data() {
+      return {
+        alertShow: false,
+        phone: '',
+        date: "",
+        q3radio: 0,
+        Q3remark: '',
+        message: '',
+        Q3list: [{
+            name: '非常满意',
+            value: false
+          },
+          {
+            name: '满意',
+            value: false
+          },
+          {
+            name: '一般',
+            value: false
+          },
+          {
+            name: '不满意',
+            value: false
+          },
+          {
+            name: '非常不满意',
+            value: false
+          },
+        ],
+        q4radio: 0,
+        Q4remark: '',
+        Q4list: [{
+            name: '非常满意',
+            value: false
+          },
+          {
+            name: '满意',
+            value: false
+          },
+          {
+            name: '一般',
+            value: false
+          },
+          {
+            name: '不满意',
+            value: false
+          },
+          {
+            name: '非常不满意',
+            value: false
+          }
+        ],
+        q5radio: 0,
+        Q5list: [{
+            name: '希望开通',
+            value: false
+          },
+          {
+            name: '一般',
+            value: false
+          },
+          {
+            name: '不希望开通',
+            value: false
+          }
+        ],
+        q6radio: 0,
+        Q6list: [{
+            name: '希望开通',
+            value: false
+          },
+          {
+            name: '一般',
+            value: false
+          },
+          {
+            name: '不希望开通',
+            value: false
+          }
+        ],
+        q7result: [],
+        Q7list: [{
+            name: '玉质',
+            value: false
+          },
+          {
+            name: '雕工',
+            value: false
+          },
+          {
+            name: '作者',
+            value: false
+          },
+          {
+            name: '题材',
+            value: false
+          },
+        ],
+        q8result: [],
+        Q8list: [{
+            name: '名家',
+            value: false
+          },
+          {
+            name: '白度',
+            value: false
+          },
+          {
+            name: '脂粉',
+            value: false
+          },
+          {
+            name: '细度',
+            value: false
+          },
+          {
+            name: '油份',
+            value: false
+          }, {
+            name: '型',
+            value: false
+          },
+        ],
+        q9result: [],
+        Q9value: '',
+        Q9list: [{
+            name: '皮色料',
+            value: false
+          },
+          {
+            name: '沁料',
+            value: false
+          },
+          {
+            name: '肉质老熟',
+            value: false
+          },
+          {
+            name: '白度',
+            value: false
+          },
+          {
+            name: '特色料',
+            value: false
+          }
+        ],
+        q10result: [],
+        Q10value: '',
+        Q10list: [{
+            name: '巧做（皮色巧做）',
+            value: false
+          },
+          {
+            name: '摆件',
+            value: false
+          },
+          {
+            name: '工艺（细工）',
+            value: false
+          },
+          {
+            name: '器皿',
+            value: false
+          },
+          {
+            name: '手镯扳指',
+            value: false
+          },
+          {
+            name: '特色玉种（桃花玉、沙枣青、大化和田等）',
+            value: false
+          },
+          {
+            name: '俏色类（碧玉、糖白玉、青花等）',
+            value: false
+          },
+        ],
+        Q11value: '',
+        couponlist: [
+          '满0减8（2张）',
+          '满0减18（4张）',
+          '满800减36（2张）',
+          '满1500减66（2张）',
+          '满3500减166（2张）',
+          '满6000减266（2张）',
+          '满8000减366（2张）'
+        ],
+        noticelist: [
+          '1、优惠券适用于藏玉严选、拍卖、捡漏、猜价、秒杀、直播、首发、商城（商城内仅限普通商品可用，优惠不可同享），限单个商品单个订单满足使用门槛时可用一张，不可叠加使用；',
+          '2、优惠券有效期：自成功提交之日起一年内有效，请注意及时使用，避免过期失效；',
+          '3、优惠券使用时，需用户在确认订单地址页面，自行手动选择优惠券使用（如确认信息时未选择优惠券，确认后无法返回重新选择优惠券）；',
+          '4、相应问题后，用户可选择某一选项、填写内容、或选择其他后填写内容；',
+          '5、后台记录会员提交问卷情况，含昵称、提交时间、填写内容；',
+          '6、每位会员在本次调查问卷时期内，仅可提交一次，优惠券于会员点击提交后，自动获取'
+        ]
+      }
+    },
+
+    mounted() {
+
+    },
+    methods: {
+      onClickHide() {
+        this.alertShow = false
+      },
+      alertNotice() {
+        this.$dialog.alert({
+          messageAlign: 'left',
+          title: '注意事项',
+          message: '1.优惠券适用于藏玉严选、拍卖、捡漏、猜价、秒杀、直播、首发、商城（商城内仅限普通商品可用，优惠不可同享），限单个商品单个订单满足使用门槛时可用一张，不可叠加使用；\n2.优惠券有效期：自成功提交之日起一年内有效，请注意及时使用，避免过期失效；\n3、优惠券使用时，需用户在确认订单地址页面，自行手动选择优惠券使用（如确认信息时未选择优惠券，确认后无法返回重新选择优惠券）'
+        })
+      },
+      // 手机号
+      inputPhone(value) {
+        console.log('手机号', value);
+        this.phone = value
+      },
+      // 生日
+      inputDate(value) {
+        console.log(value);
+        this.date = value
+      },
+      // 问题3
+      changeQ3(event) {
+        console.log('问题3', event);
+        this.q3radio = event
+      },
+      checkQ3(value) {
+        console.log('问题3附加', value);
+        this.Q3remark = value;
+      },
+      // 问题4
+      changeQ4(event) {
+        console.log('问题4', event);
+        this.q4radio = event
+      },
+      checkQ4(value) {
+        console.log('问题4附加', value);
+        this.Q4remark = value;
+
+      },
+      changeQ5(event) {
+        console.log(event);
+        this.q5radio = event
+      },
+      changeQ6(event) {
+        console.log(event);
+        this.q6radio = event
+      },
+      changeQ7(event) {
+        console.log(event);
+        this.q7result = event
+      },
+      changeQ8(event) {
+        console.log(event);
+        this.q8result = event
+      },
+      changeQ9(event) {
+        this.q9result = event
+        console.log(this.q9result);
+
+      },
+      checkQ9(event) {
+        console.log('特色喜好', event);
+        this.Q9remark = event;
+        console.log('特色喜好', this.Q9remark);
+      },
+      changeQ10(event) {
+        this.q10result = event
+        console.log(this.q10result);
+
+      },
+      checkQ10(event) {
+        console.log('特色喜好', event);
+        this.Q10remark = event;
+      },
+      checkQ11(event) {
+        console.log('更多建议', event);
+        this.Q11remark = event;
+      },
+
+      submit() {
+        if (!this.phone || this.phone.length != 11) {
+          this.$dialog.alert({
+            message: '请填写正确的手机号码'
+          })
+          return;
+        }
+        if (!this.date) {
+          this.$dialog.alert({
+            message: '请填写生日'
+          })
+          return;
+        }
+        if (this.q3radio == 0) {
+          this.$dialog.alert({
+            message: '请填写第三题'
+          })
+          return;
+        }
+        if (this.q4radio == 0) {
+          this.$dialog.alert({
+            message: '请填写第四题'
+          })
+          return;
+        }
+        if (this.q5radio == 0) {
+          this.$dialog.alert({
+            message: '请填写第五题'
+          })
+          return;
+        }
+        if (this.q6radio == 0) {
+          this.$dialog.alert({
+            message: '请填写第六题'
+          })
+          return;
+        }
+        if (this.q7result.length == 0) {
+          this.$dialog.alert({
+            message: '请填写第七题'
+          })
+          return;
+        }
+        if (this.q8result.length == 0) {
+          this.$dialog.alert({
+            message: '请填写第八题'
+          })
+          return;
+        }
+        if (this.q9result.length == 0) {
+          this.$dialog.alert({
+            message: '请填写第九题'
+          })
+          return;
+        }
+        if (this.q10result.length == 0) {
+          this.$dialog.alert({
+            message: '请填写第十题'
+          })
+          return;
+        }
+        axios.get(`${CYHOST_TEST}/icyApi/questionnaire`, {
+          params: {
+            token: '4dbk79fcha8821778',
+            Q1: this.phone,
+            Q2: this.date,
+            Q3: this.q3radio,
+            Q3_remark: this.Q3remark,
+            Q4: this.q4radio,
+            Q4_remark: this.Q4remark,
+            Q5: this.q5radio,
+            Q6: this.q6radio,
+            Q7: this.q7result.toString(),
+            Q8: this.q8result.toString(),
+            Q9: this.q9result.toString(),
+            Q9_remark: this.Q9remark,
+            Q10: this.q10result.toString(),
+            Q10_remark: this.Q10remark,
+            Q11_remark: this.Q11remark,
+          }
+        }).then(res => {
+          console.log(res.data.result);
+          if (res.data.result == 100) {
+            this.alertShow = true
+          } else {
+            this.$dialog.alert({
+              content: res.data.info
+            })
+          }
+        })
+      }
+    }
+  });
+</script>
+
+</html>

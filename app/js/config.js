@@ -35,7 +35,7 @@ var HttpHelper = (function () {
                 return unescape(r[2]);
             }
             return null;
-        }
+        },
     };
 })();
 
@@ -45,3 +45,14 @@ var HttpHelper = (function () {
 var CYHOST = 'https://app.icangyu.com';
 var CYHOST_TEST = 'https://testicy.icangyu.com';
 var token = HttpHelper.getCookie("JADE_TOKEN");
+var alert = function () {
+    window.alert = function (name) {
+        var iframe = document.createElement("IFRAME");
+        iframe.style.display = "none";
+        iframe.setAttribute("src", 'data:text/plain,');
+        document.documentElement.appendChild(iframe);
+        window.frames[0].window.alert(name);
+        iframe.parentNode.removeChild(iframe);
+    };
+
+};

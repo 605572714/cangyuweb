@@ -1,0 +1,409 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    vertical-align: middle;
+}
+
+/* 375px = 100vw;
+        		336px = 89.6vw;
+        		290px = 77.33vw;
+        		250px = 66.67vw;
+        		210px = 56vw;
+        		113px = 30.13vw;
+        		77px = 20.53vw;
+        		50px = 13.33vw;
+        		40px = 10.67vw;
+        		33px = 8.8vw;
+        		30px = 8vw;
+        		28px = 7.47vw;
+        		22.5px = 6vw;
+        		20px = 5.33vw;
+        		18px = 4.8vw;
+        		16px = 4.27vw;
+        		15px = 4vw;
+        		14px = 3.7vw;
+        		13px = 3.45vw;
+        		12px = 3.2vw;
+        		10px = 2.7vw;
+        		9px = 2.4vw;
+        		5px = 1.33vw;
+        		4px = 1.07vw;
+        		3px = 0.8vw;
+                */
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+}
+
+.container .detail {
+    width: 92vw;
+    padding: 0vw 4vw;
+    margin-bottom: 6.4vw;
+}
+
+.container .title {
+    font-size: 6.4vw;
+    margin-top: 10.67vw;
+}
+
+.container .sub-title {
+    font-size: 5.33vw;
+    margin-top: 6.4vw;
+}
+
+.container .sub-line {
+    width: 10vw;
+    height: 2px;
+    background: #bc2e2e;
+    margin-top: 2.7vw;
+    margin-bottom: 8vw;
+}
+
+.container p {
+    font-size: 3.7vw;
+    line-height: 6.4vw;
+    color: #000;
+}
+
+.container img {
+    width: 100%;
+}
+
+.container .detail img {
+    width: 100%;
+    margin: 2.7vw 0;
+    border-radius: 3px;
+}
+
+.container .download {
+    width: 100vw;
+    padding-bottom: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(252, 240, 223, 1) 100%);
+}
+
+.container .downlogo {
+    width: 32vw;
+    height: 32vw;
+    margin-top: 11.4vw;
+    margin-bottom: 2.7vw;
+}
+
+.container .download span {
+    font-size: 4.27vw;
+    color: #1F180F;
+}
+
+/*  */
+
+.container-pc {
+    width: 375px;
+}
+
+.container-pc .detail {
+    width: 345px;
+    padding: 0 15px;
+    margin-bottom: 25px;
+}
+
+.container-pc .title {
+    font-size: 24px;
+    margin-top: 40px;
+}
+
+.container-pc .sub-title {
+    font-size: 20px;
+    margin-top: 25px;
+}
+
+.container-pc .sub-line {
+    width: 40px;
+    height: 2px;
+    background: #bc2e2e;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+.container-pc p {
+    font-size: 14px;
+    line-height: 25px;
+    color: #000;
+}
+
+.container-pc img {
+    width: 100%;
+    max-width: 375px;
+}
+
+.container-pc .detail img {
+    width: 100%;
+    margin: 10px 0;
+    border-radius: 3px;
+}
+
+.container-pc .download {
+    width: 375px;
+    height: 263px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(252, 240, 223, 1) 100%);
+}
+
+.container-pc .downlogo {
+    width: 120px;
+    height: 120px;
+    margin-top: 43px;
+    margin-bottom: 10px;
+}
+
+.container .download span {
+    font-size: 16px;
+    color: #1F180F;
+}
+
+.container .cangyu_bbs_tabber {
+    width: 100%;
+    left: 0;
+    right: 0;
+}
+
+.container-pc .cangyu_bbs_tabber {
+    width: 100%;
+    max-width: 375px;
+}
+
+.cangyu_bbs_tabber {
+    position: fixed;
+    height: 72px;
+    background: rgba(51, 51, 51, 1);
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: 100% 100%;
+    color: #fff;
+    bottom: 0px;
+    z-index: 9999;
+    box-sizing: content-box;
+}
+
+.cangyu_bbs_tabber .close {
+    height: 40px;
+    width: 20px;
+    padding: 5px;
+    position: absolute;
+    right: 0;
+    background: url(../img/banner_ic_close.png) no-repeat 50%;
+    background-size: 14px;
+    top: 10px;
+    /* top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%); */
+}
+
+.cangyu_bbs_tabber .banner-label,
+.cangyu_bbs_tabber .close,
+.cangyu_bbs_tabber .logo,
+.cangyu_bbs_tabber .open {
+    position: absolute;
+    /* top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%); */
+    top: 10px;
+}
+
+
+.cangyu_bbs_tabber .logo {
+    height: 40px;
+    width: 40px;
+    left: 15px;
+    background: url(../img/share_logo.png) no-repeat;
+    overflow: hidden;
+    background-size: 40px;
+}
+
+.cangyu_bbs_tabber .open {
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    right: 40px;
+    width: 60px;
+    font-size: 14px;
+    line-height: 30px;
+    padding: 0 10px;
+    border-radius: 2px;
+    background: #bc2e2e;
+    display: inline-block;
+    color: #fff;
+    text-align: center;
+}
+
+
+
+.cangyu_bbs_tabber .banner-label {
+    left: 60px;
+}
+
+.cangyu_bbs_tabber .banner-label p {
+    text-align: left;
+    margin: 0px;
+    color: #fff;
+    font-size: 14px;
+    line-height: 18px;
+}
+
+.cangyu_bbs_tabber:before {
+    background-color: #3e3633;
+}
+
+a {
+    text-decoration: none;
+}
+
+.container-pc .list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 345px;
+    padding: 15px;
+    background: linear-gradient(180deg, rgba(255, 243, 227, 1) 0%, rgba(254, 223, 182, 1) 100%);
+    box-shadow: 0px 2px 4px 0px rgba(234, 219, 199, 1);
+    border-radius: 1px;
+}
+
+.container .list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 92vw;
+    padding: 4vw;
+    background: linear-gradient(180deg, rgba(255, 243, 227, 1) 0%, rgba(254, 223, 182, 1) 100%);
+    box-shadow: 0px 2px 4px 0px rgba(234, 219, 199, 1);
+    border-radius: 1px;
+}
+
+.container-pc .list .item {
+    width: 170px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #fff;
+    margin-bottom: 5px;
+    border-radius: 3px;
+}
+
+.container .list .item {
+    width: 45.33vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #fff;
+    margin-bottom: 1.33vw;
+    border-radius: 3px;
+}
+
+.container .list .item img {
+    width: 45.33vw;
+    height: 45.33vw;
+    background: #f9f9f9;
+}
+
+.container-pc .list .item img {
+    width: 170px;
+    height: 170px;
+    background: #f9f9f9;
+}
+
+.container .list .item .title {
+    font-size: 3.7vw;
+    line-height: 5.4vw;
+    color: #333;
+    margin-top: 1.6vw;
+}
+
+.container-pc .list .item .title {
+    font-size: 14px;
+    line-height: 20px;
+    color: #333;
+    margin-top: 6px;
+}
+
+.container .list .item .status {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 1.6vw;
+    width: 100%;
+}
+
+.container-pc .list .item .status {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 6px;
+    width: 100%;
+}
+
+.container .list .item .status span {
+    height: 4.27vw;
+    line-height: 4.27vw;
+    text-align: center;
+    background: rgba(251, 233, 234, 1);
+    border-radius: 2.4vw;
+    font-size: 2.7vw;
+    padding: 0.535vw 1.33vw;
+    color: rgba(188, 46, 46, 1);
+    margin-right: 1.33vw;
+}
+
+.container-pc .list .item .status span {
+    height: 16px;
+    line-height: 16px;
+    text-align: center;
+    background: rgba(251, 233, 234, 1);
+    border-radius: 9px;
+    font-size: 10px;
+    padding: 2px 5px;
+    color: rgba(188, 46, 46, 1);
+    margin-right: 5px;
+}
+
+.container .list .item .btn {
+    width: 28.8vw;
+    height: 6.4vw;
+    text-align: center;
+    line-height: 6.4vw;
+    background: rgba(188, 46, 46, 1);
+    border-radius: 2px;
+    border: 1px solid rgba(188, 46, 46, 1);
+    font-size: 3.7vw;
+    color: rgba(255, 255, 255, 1);
+    margin-top: 3vw;
+    margin-bottom: 2.7vw;
+}
+
+.container-pc .list .item .btn {
+    width: 108px;
+    height: 24px;
+    text-align: center;
+    line-height: 24px;
+    background: rgba(188, 46, 46, 1);
+    border-radius: 2px;
+    border: 1px solid rgba(188, 46, 46, 1);
+    font-size: 14px;
+    color: rgba(255, 255, 255, 1);
+    margin-top: 11px;
+    margin-bottom: 10px;
+}

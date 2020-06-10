@@ -1,0 +1,454 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>会员积分抽奖</title>
+	<link rel="stylesheet" href="css/GB-canvas-turntable.css">
+	<link rel="stylesheet" type="text/css" href="css/hlhs.css">
+	<link rel="stylesheet" type="text/css" href="../../css/vant.css">
+</head>
+
+<body>
+	<div ref="vue" id="vue" class="vue">
+		<!-- 顶部背景 -->
+		<img class="bg-top" src="img/back_top.png">
+		<!-- 抽奖框 -->
+		<div class="table-top">
+			<div class="table-top-title" v-text="'会员积分抽奖'+phase+'期'"></div>
+			<div class="table-top-sub-title">
+				<span v-text="'您有'"></span>
+				<span v-text="integral" style="color:#bc2e2e;font-weight: bold"></span>
+				<span v-text="'积分，剩余'"></span>
+				<span v-text="nums" style="color:#bc2e2e;font-weight: bold"></span>
+				<span v-text="'次抽奖机会~'"></span>
+
+			</div>
+			<div class="zhuanp">
+				<section id="turntable" class="gb-turntable">
+					<div class="gb-turntabl-table">
+						<li class="gb-turntabl-table-rotate" v-for="n,index in 24" :style="rotate(index)"></li>
+					</div>
+					<div class="gb-turntable-container">
+						<canvas class="gb-turntable-canvas" :width="winWidth/375*250+'px'"
+							:height="winWidth/375*250+'px'">抱歉！浏览器不支持。</canvas>
+					</div>
+					<div class="gb-turntable-btn-father">
+						<a class="gb-turntable-btn" href="javascript:;">
+							<span class="gb-turntable-btn-icon" @click="getLottery" v-text="'GO!'"></span>
+						</a>
+					</div>
+
+				</section>
+			</div>
+			<!-- 中奖名单 -->
+			<div class="lucky-list">
+				<div class="lucky-list-left">
+					<span v-text="'幸'"></span>
+					<span v-text="'运'"></span>
+					<span v-text="'中'"></span>
+					<span v-text="'奖'"></span>
+					<span v-text="'名'"></span>
+					<span v-text="'单'"></span>
+				</div>
+
+				<!-- <div class="lucky-list-right">
+					<div class="lucky-item" v-for='item,index in list' v-if="index<5">
+						“<div class="lucky-item-nick" v-text="item.nickname"></div>”
+						<div v-text="`在积分抽奖中获得“${checkGrade(item.grade)}”`"></div>
+					</div>
+				</div> -->
+
+				<div class="lucky-list-right">
+					<div class="lucky-list-right-list" id="vip">
+						<ul id="list" style="top: 0px;">
+							<li class="lucky-item" v-for='item,index in list'>
+								“<div class="lucky-item-nick" v-text="item.nickname"></div>”
+								<div v-text="`在积分抽奖中获得“${checkGrade(item.grade)}”`"></div>
+							</li>
+						</ul>
+						<ul id="list1" style="top: 0px;">
+							<li class="lucky-item" v-for='item,index in list'>
+								“<div class="lucky-item-nick" v-text="item.nickname"></div>”
+								<div v-text="`在积分抽奖中获得“${checkGrade(item.grade)}”`"></div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="checkbtn" @click="goList" v-text="'查看我的中奖/抽奖记录 >'"></div>
+		</div>
+
+		<!-- 奖品列表 -->
+		<div class="gift">
+			<div class="gift-title" v-text="'奖品一览'"></div>
+			<div class="gift-list">
+				<div class="gift-item">
+					<span class="gift-icon">
+						<span></span>
+					</span>
+					<span class="gift-text"
+						v-text="'一等奖：神秘大奖，可为一个小籽料或成套奖品，具体奖品以收到实物为准，抽到的用户收到奖品后于APP内发帖分享，还可获得分享礼包一份！(若本期抽奖未产生一等奖，此奖品自动归入下一期的奖池，同为一等奖）'">
+					</span>
+				</div>
+				<div class="gift-item">
+					<span class="gift-icon">
+						<span></span>
+					</span>
+					<span class="gift-text"
+						v-text="'二等奖：价值666元通用优惠券，适用范围：藏玉直播、拍卖、首发、严选、捡漏、猜价、秒杀、商城（普通商品），单个商品单个订单，满足使用门槛即可使用；'">
+					</span>
+				</div>
+				<div class="gift-item">
+					<span class="gift-icon">
+						<span></span>
+					</span>
+					<span class="gift-text" v-text="'三等奖：双倍积分，返还会员200积分；'"></span>
+				</div>
+				<div class="gift-item">
+					<span class="gift-icon">
+						<span></span>
+					</span>
+					<span class="gift-text" v-text="'四等奖：一个月会员，会员有效期顺延一个月；'"></span>
+				</div>
+				<div class="gift-item">
+					<span class="gift-icon">
+						<span></span>
+					</span>
+					<span class="gift-text" v-text="'五等奖：《藏玉观察》一本；'"></span>
+				</div>
+				<div class="gift-item">
+					<span class="gift-icon">
+						<span></span>
+					</span>
+					<span class="gift-text" v-text="'六等奖：谢谢参与。'"></span>
+				</div>
+			</div>
+		</div>
+		<div class="rule">
+			<div class="rule-title" v-text="'规则说明'"></div>
+			<div class="rule-list">
+				<div class="rule-item">
+					<span class="rule-icon">
+						<span></span>
+					</span>
+					<span class="rule-text" v-text="'积分转盘抽奖每个月为一期，每抽一次消耗100积分（开始抽奖时系统自动扣除）；'"></span>
+				</div>
+				<div class="rule-item">
+					<span class="rule-icon">
+						<span></span>
+					</span>
+					<span class="rule-text" v-text="'当一等奖——神秘大奖被抽中后或一月期到后，本期抽奖活动结束；'"></span>
+				</div>
+				<div class="rule-item">
+					<span class="rule-icon">
+						<span></span>
+					</span>
+					<span class="rule-text" v-text="'每位会员抽奖次数不限，只要有可用积分可多次抽取。'"></span>
+				</div>
+			</div>
+		</div>
+		<img class="bg-bottom" src="img/back_bottom.png">
+		<van-overlay :show="price01">
+			<div class="alert" v-if="price01">
+				<img class="alert-bg" src="img/price01.png" alt="">
+				<div class="h1" v-text="'恭喜你抽中了一等奖'"></div>
+				<div class="h2" v-text="'“神密大奖一份”'"></div>
+				<div class="bindbot" style="margin-top: 80px" @click="price01=!price01" v-text="'下次再来'"></div>
+			</div>
+		</van-overlay>
+		<van-overlay :show="price02" z-index="4">
+			<div class="alert">
+				<img class="alert-bg" src="img/price02.png" alt="">
+				<div class="h1">恭喜你抽中了二等奖</div>
+				<div class="h2">“全场通用满减优惠劵”</div>
+				<div class="h3">优惠券已发放到您的账户</div>
+				<div class="bindtop" @click="getLottery"><span @click="price02=!price02">再抽一次</span></div>
+				<div class="bindbot" @click="price02=!price02">下次再来</div>
+			</div>
+		</van-overlay>
+
+
+		<van-overlay :show="price03" z-index="4">
+			<div class="alert">
+				<img class="alert-bg" src="img/price03.png" alt="">
+				<div class="h1">恭喜你抽中了三等奖</div>
+				<div class="h2">“获得200积分”</div>
+				<div class="h3">目前你的总积分为{{integral}}</div>
+				<div class="bindtop" @click="getLottery"><span @click="price03=!price03">再抽一次</span></div>
+				<div class="bindbot" @click="price03=!price03">下次再来</div>
+			</div>
+		</van-overlay>
+
+		<van-overlay :show="price04" z-index="4">
+			<div class="alert">
+				<img class="alert-bg" src="img/price04.png" alt="">
+				<div class="h1">恭喜你抽中了四等奖</div>
+				<div class="h2">“会员有效期延长1个月”</div>
+				<div class="h3">会员有效期至{{vip_date}}</div>
+				<div class="bindtop" @click="getLottery"><span @click="price04=!price04">再抽一次</span></div>
+				<div class="bindbot" @click="price04=!price04">下次再来</div>
+			</div>
+		</van-overlay>
+
+		<van-overlay :show="price05" z-index="4">
+			<div class="alert">
+				<img class="alert-bg" src="img/price05.png" alt="">
+				<div class="h1">恭喜你抽中了五等奖</div>
+				<div class="h2">“《藏玉观察》一本”</div>
+				<div class="h3">终于有一本心爱的和田玉书籍啦～</div>
+				<div class="bindtop" @click="getLottery"><span @click="price05=!price05">再抽一次</span></div>
+				<div class="bindbot" @click="price05=!price05">下次再来</div>
+			</div>
+		</van-overlay>
+
+		<van-overlay :show="price06" z-index="4">
+			<div class="alert">
+				<img class="alert-bg" src="img/price06.png" alt="">
+				<div class="h1">恭喜你抽中了六等奖</div>
+				<div class="h2">“谢谢参与”</div>
+				<div class="h3">下次运气一定会很棒哦～</div>
+				<div class="bindtop" @click="getLottery"><span @click="price06=!price06">再抽一次</span></div>
+				<div class="bindbot" @click="price06=!price06">下次再来</div>
+			</div>
+		</van-overlay>
+
+		<van-overlay :show="notenough" z-index="4">
+			<div class="alert">
+				<img class="alert-bg" src="img/notenough.png" alt="">
+				<div class="h1">剩余积分不满足抽奖条件！</div>
+				<div class="h3">可以获得更多积分来抽奖哦～</div>
+				<div class="bindbot" style="margin-top: 80px" @click="notenough=!notenough">下次再来</div>
+			</div>
+		</van-overlay>
+
+		<van-overlay :show="finished" z-index="4">
+			<div class="alert">
+				<img class="alert-bg" src="img/finished.png" alt="">
+				<div class="h1">本期抽奖活动已结束，</div>
+				<div class="h2">请期待下一期</div>
+				<div class="bindbot" style="margin-top: 80px" @click="finished=!finished">下次再来</div>
+			</div>
+		</van-overlay>
+		<van-overlay :show=" novip" z-index="4">
+			<div class="alert">
+				<img class="alert-bg" src="img/finished.png" alt="">
+				<div class="h1">开通会员享积分</div>
+				<div class="h2">消费积分可抽奖</div>
+				<div class="bindbot" style="margin-top: 80px" @click="novip=!novip">下次再来</div>
+			</div>
+		</van-overlay>
+	</div>
+</body>
+
+<script src="js/GB-canvas-turntable.js"></script>
+<script src="../../js/vue.min.js"></script>
+<script src="../../js/vant.js"></script>
+<script src="../../js/config.js"></script>
+<script src="../../js/axios.min.js"></script>
+<script src="js/recordRoll.js"></script>
+<script>
+	// var token = HttpHelper.getQuery('token');
+	var token = '4dbr23goedm01';
+	// 当初始的 HTML 文档被完全加载和解析完成之后，DOMContentLoaded 事件被触发，而无需等待样式表、图像和子框架的完全加载
+	var vue = new Vue({
+		el: '#vue',
+		data() {
+			return {
+				winWidth: document.body.scrollWidth,
+				light: false,
+				bg_1: 'background:#FEE042',
+				bg_2: 'background:#FDBD47',
+				price01: false,
+				price02: false,
+				price03: false,
+				price04: false,
+				price05: false,
+				price06: false,
+				notenough: false,
+				finished: false,
+				vip_date: '',
+				novip: false,
+				integral: 0,
+				user_vip: 0,
+				list: [],
+				nums: 0,
+				phase: 1,
+				token: token
+			}
+		},
+		mounted() {
+			var that = this;
+			var father = document.getElementById("vip");
+			var children1 = document.getElementById("list")
+			var children2 = document.getElementById("list1")
+			axios.get(`${CYHOST_TEST}/icyApi/lotteryHome?token=${token}`).then(
+				res => {
+					console.log(res);
+					this.integral = res.data.data.list.integral;
+					this.list = res.data.data.list.lotteryList;
+					this.nums = res.data.data.list.nums;
+					this.phase = res.data.data.list.phase;
+					this.user_vip = res.data.data.list.user_vip;
+					this.scrollList();
+					that.goLight();
+					nes(father, children1, children2, this.list.length);
+					that.$refs.vue.style.display = 'block';
+				})
+			gbTurntable.init({
+				id: 'turntable',
+				config: function (callback) {
+					// 获取奖品信息
+					callback && callback([{
+						text: '藏玉盲盒',
+						img: 'img/01.png',
+						font: 'img/font01.png'
+					}, {
+						text: '优惠券',
+						img: 'img/02.png',
+						font: 'img/font02.png'
+					}, {
+						text: '200积分',
+						img: 'img/03.png',
+						font: 'img/font03.png'
+					}, {
+						text: '一个月会员',
+						img: 'img/04.png',
+						font: 'img/font04.png'
+					}, {
+						text: '藏玉杂志',
+						img: 'img/05.png',
+						font: 'img/font05.png'
+					}, {
+						text: '谢谢惠顾',
+						img: 'img/06.png',
+						font: 'img/font06.png'
+					}])
+				},
+				// getPrize: function (callback) {
+				// 	// 获取中奖信息
+				// 	// var num = Math.random() * 5 >>> 0, //奖品ID
+				// 	// chances = num; // 可抽奖次数
+				// 	// var num = res.data.data.list;
+				// 	// console.log(num)
+				// 	// var chances = num; // console.log(num); callback &&
+				// 	// callback([num, chances]);
+				// },
+				gotBack: function (data) {
+					console.log(data);
+					switch (data) {
+						case 0:
+							that.price01 = true
+							break;
+						case 1:
+							that.price02 = true
+							break;
+						case 2:
+							that.price03 = true
+							break;
+						case 3:
+							that.price04 = true
+							break;
+						case 4:
+							that.price05 = true
+							break;
+						case 5:
+							that.price06 = true
+							break;
+					}
+				}
+			})
+		},
+		methods: {
+			rotate(index) {
+				var that = this;
+				if (index % 2 == 0) {
+					return `transform:rotate(${360/24*(index)}deg);${that.light?that.bg_1:that.bg_2};`
+				} else {
+					return `transform:rotate(${360/24*(index)}deg);${that.light?that.bg_2:that.bg_1}`
+				}
+			},
+			goLight() {
+				var that = this;
+				that.light = !that.light
+				that.lightTimer()
+			},
+			lightTimer() {
+				var that = this;
+				that.lightTime = setInterval(() => {
+					that.light = !that.light
+				}, 1000);
+			},
+			getLottery() {
+				var that = this;
+				// axios.get(`${CYHOST}/icyApi/bargain/proDetail?id=${phase}`).then(res => {
+				axios.get(`${CYHOST_TEST}/icyApi/lottery?phase=${this.phase}&token=${this.token}`).then(res => {
+					console.log(res.data);
+					if (res.data.info == '积分不足') {
+						this.notenough = true
+					} else if (res.data.info == '抽奖结束') {
+						this.finished = true
+					} else if (res.data.info == "仅限会员可抽奖!") {
+						this.novip = true
+					} else {
+						this.integral = this.integral - 100;
+						this.nums = Math.floor(this.integral / 100)
+						if (res.data.data.list.grade == 3) {
+							this.integral = res.data.data.list.integral;
+							this.nums = Math.floor(this.integral / 100);
+						}
+						if (res.data.data.list.grade == 4) {
+							this.vip_date = res.data.data.list.vip_date;
+						}
+						events([res.data.data.list.grade - 1, 2])
+
+					}
+				})
+			},
+			scrollList() {
+				var that = this;
+				that.timer = setInterval(() => {
+					var item = that.list.shift();
+					that.list.push(item)
+				}, 2000);
+			},
+			checkGrade(grade) {
+				switch (Number(grade)) {
+					case 1:
+						return '神秘大奖一份';
+						break;
+					case 2:
+						return '价值666元通用优惠券';
+						break;
+					case 3:
+						return '双倍积分';
+						break;
+					case 4:
+						return '一个月会员';
+						break;
+					case 5:
+						return '《藏于观察》一本';
+						break;
+				}
+			},
+			goList() {
+				console.log(this.user_vip);
+				if (this.user_vip != 0) {
+					window.document.location.href = "mylist.html?token=" + this.token
+				} else {
+					this.novip = true;
+				}
+			}
+		},
+		beforeDestroyde() {
+			clearInterval(this.timer)
+		}
+
+
+	});
+</script>
+
+
+</html>

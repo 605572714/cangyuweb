@@ -13,6 +13,8 @@ $signPackage = $jssdk->GetSignPackage();
 	<link rel="stylesheet" href="css/my-app.css">
 	<link rel="stylesheet" href="css/viewer.css">
 	<link rel="stylesheet" href="css/appraisal.css">
+	<link rel="stylesheet" href="photoswipe/default-skin.css">
+	<link rel="stylesheet" href="photoswipe/photoswipe.css">
 	<title>藏玉鉴定</title>
 </head>
 
@@ -35,9 +37,55 @@ $signPackage = $jssdk->GetSignPackage();
 			<!-- 内容 -->
 			<div class="content" v-text="detail.content"></div>
 			<!-- 图片 -->
-			<div id="album" ref="album" class="album">
-				<img class="img" :style="checkSize(detail.album.length)" v-for="item,index in detail.album" :src="checkImg(item.file_path,'img')" @click="bigImg(item.file_path)">
+			<div class="my-gallery album" data-pswp-uid="1">
+				<figure v-for="item,index in detail.album">
+					<div>
+						<a :href="checkImg(item.file_path,'img')" data-size="1920x1080">
+							<img class="img" :src="checkImg(item.file_path,'img')">
+						</a>
+					</div>
+					<!-- <figcaption style="display:none;">在这里可增加图片描述</figcaption> -->
+				</figure>
 			</div>
+			<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="pswp__bg"></div>
+				<div class="pswp__scroll-wrap">
+					<div class="pswp__container">
+						<div class="pswp__item"></div>
+						<div class="pswp__item"></div>
+						<div class="pswp__item"></div>
+					</div>
+					<div class="pswp__ui pswp__ui--hidden">
+						<div class="pswp__top-bar">
+							<div class="pswp__counter"></div>
+							<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+							<button class="pswp__button pswp__button--share" title="Share"></button>
+							<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+							<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+							<div class="pswp__preloader">
+								<div class="pswp__preloader__icn">
+									<div class="pswp__preloader__cut">
+										<div class="pswp__preloader__donut"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+							<div class="pswp__share-tooltip"></div>
+						</div>
+						<button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+						</button>
+						<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+						</button>
+						<div class="pswp__caption">
+							<div class="pswp__caption__center"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- <div id="album" ref="album" class="album">
+				<img class="img" :style="checkSize(detail.album.length)" v-for="item,index in detail.album" :src="checkImg(item.file_path,'img')" @click="bigImg(item.file_path)">
+			</div> -->
 			<!-- 掌眼 -->
 			<div class="palm" v-if="detail.palm!=''">
 				<span class="title" v-text="'邀请掌眼：'"></span>
@@ -81,7 +129,9 @@ $signPackage = $jssdk->GetSignPackage();
 
 
 <!-- 图片预览 -->
-<script type="text/javascript" src="js/viewer.js"></script>
+<script type="text/javascript" src="photoswipe/photoswipe-ui-default.min.js"></script>
+<script type="text/javascript" src="photoswipe/photoswipe.js"></script>
+<script type="text/javascript" src="js/photo.js"></script>
 <!-- 极光魔链 -->
 <script type="text/javascript" src="js/jmlink.min.js"></script>
 <!-- 微信验证 -->
@@ -135,6 +185,7 @@ $signPackage = $jssdk->GetSignPackage();
 					}
 				}).then(res => {
 					that.detail = res.data.data;
+					initPhotoSwipeFromDOM('.my-gallery');
 					that.$refs.vue.style.display = 'block';
 					console.log('鉴定详情', that.detail);
 					window.share_config = {
@@ -206,15 +257,15 @@ $signPackage = $jssdk->GetSignPackage();
 				return img;
 			},
 			// 点击显示大图
-			bigImg(img) {
-				var viewer = new Viewer(this.$refs.album, {
-					// 具体参数配置，后面会讲到
-					url: img,
-					toolbar: false,
-					button: false,
-					title: false
-				});
-			},
+			// bigImg(img) {
+			// 	var viewer = new Viewer(this.$refs.album, {
+			// 		// 具体参数配置，后面会讲到
+			// 		url: img,
+			// 		toolbar: false,
+			// 		button: false,
+			// 		title: false
+			// 	});
+			// },
 			// 跳转APP
 			goApp() {
 				var configs = [{

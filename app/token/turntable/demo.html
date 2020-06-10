@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>demo</title>
+    <link rel="stylesheet" type="text/css" href="css/hlhs.css">
+    <!-- <link rel="stylesheet" href="css/GB-canvas-turntable.css"> -->
+    <style>
+        body,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        hr,
+        p,
+        blockquote,
+        dl,
+        dt,
+        dd,
+        ul,
+        ol,
+        li,
+        pre,
+        form,
+        fieldset,
+        legend,
+        button,
+        input,
+        textarea,
+        th,
+        td {
+            margin: 0;
+            padding: 0;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-size: 100%;
+        }
+
+        address,
+        cite,
+        dfn,
+        em,
+        var {
+            font-style: normal;
+        }
+
+        code,
+        kbd,
+        pre,
+        samp {
+            font-family: courier new, courier, monospace;
+        }
+
+        ul,
+        ol {
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+
+        sup {
+            vertical-align: text-top;
+        }
+
+        sub {
+            vertical-align: text-bottom;
+        }
+
+        legend {
+            color: #000;
+        }
+
+        fieldset,
+        img {
+            border: 0;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font-size: 100%;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        .clear {
+            clear: both;
+            float: none;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .title {
+            background: #D20F25;
+            width: 200px;
+            height: 40px;
+            color: #fff;
+            line-height: 40px;
+        }
+
+        .title p {
+            margin-left: 30px;
+        }
+
+        /* 
+        #vip {
+            background: #D20F25;
+            width: 200px;
+            height: 105px;
+            color: #FF92AD;
+            overflow: hidden;
+            position: relative;
+        } */
+
+
+        /*
+        #vip li {
+            height: 50px;
+            line-height: 24px;
+            font-size: 12px;
+            margin-left: 30px;
+        } */
+        .lucky-list {
+            width: 100%;
+            height: 48.53vw;
+            background: rgba(255, 245, 225, 1);
+            box-shadow: 0px 0px 4px 0px rgba(197, 175, 129, 0.46);
+            display: flex;
+            flex-direction: row;
+        }
+
+        .lucky-list-left,
+        .lucky-list-right,
+        .lucky-list-right-list {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            color: #666;
+
+        }
+
+        .lucky-list-left {
+            width: 11.2vw;
+            background: #F9DCAF;
+            margin-left: 4vw;
+            font-size: 5.33vw;
+            line-height: 6vw;
+        }
+
+        .lucky-list-right {
+            width: 76.8vw;
+            font-size: 3.2vw;
+            position: relative;
+        }
+
+        .lucky-list-right-list {
+            width: 76.8vw;
+            overflow: hidden;
+            position: relative;
+            height: 133px;
+        }
+
+        .lucky-item {
+            width: 73vw;
+            border-bottom: 0.5px solid #D7C99F;
+            display: flex;
+            flex-direction: row;
+            height: 6.67vw;
+            line-height: 6.67vw;
+            transition: all linear;
+        }
+
+        #list {
+            position: absolute;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="title">
+        <p>会员中奖榜</p>
+    </div>
+    <!-- <div id="vip">
+        <ul id="list" style="top: 0px;">
+            <li>m**b<br />抽中18积分</li>
+            <li>小**宫<br />抽中28积分</li>
+            <li>金**告<br />抽中8积分</li>
+            <li>真**生<br />抽中88积分</li>
+            <li>郑**9<br />抽中18积分</li>
+            <li>l**美<br />抽中8积分</li>
+        </ul>
+    </div> -->
+    <div class="lucky-list">
+        <div class="lucky-list-left">
+            <span v-text="''">幸</span>
+            <span v-text="''">运</span>
+            <span v-text="''">中</span>
+            <span v-text="''">奖</span>
+            <span v-text="''">名</span>
+            <span v-text="''">单</span>
+        </div>
+        <div class="lucky-list-right">
+            <div class="lucky-list-right-list" id="vip">
+                <ul id="list" style="top: 0px;">
+                    <li class="lucky-item">“大背头”在积分抽奖中获得“会员一个月”</li>
+                    <li class="lucky-item">“大背头”在积分抽奖中获得“会员二个月”</li>
+                    <li class="lucky-item">“大背头”在积分抽奖中获得“会员三个月”</li>
+                    <li class="lucky-item">“大背头”在积分抽奖中获得“会员四个月”</li>
+                    <li class="lucky-item">“大背头”在积分抽奖中获得“会员五个月”</li>
+                    <li class="lucky-item">“大背头”在积分抽奖中获得“会员六个月”</li>
+                    <li class="lucky-item">“大背头”在积分抽奖中获得“会员七个月”</li>
+                    <li class="lucky-item">“大背头”在积分抽奖中获得“会员八个月”</li>
+                    <li class="lucky-item">“大背头”在积分抽奖中获得“会员九个月”</li>
+                    <li class="lucky-item">“大背头”在积分抽奖中获得“会员十个月”</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="js/recordRoll.js"></script>
+    <script type="text/javascript">
+        var father = document.getElementById("vip");
+        var children = document.getElementById("list");
+        nes(father, children, 10);
+    </script>
+</body>
+
+</html>
