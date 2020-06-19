@@ -29,8 +29,11 @@
 
 <body>
     <div ref="vue" id="vue" class="vue">
-        <video v-if="detail.video_url&&detail.video_url!=0" :src="detail.video_url" controls></video>
-        <img v-else :src="detail.video_cover" />
+        <video v-if="detail.video_url&&detail.video_url!=0"
+            :poster="detail.video_cover?detail.video_cover:detail.album[0].file_path" controls>
+            <source :src="detail.video_url">
+        </video>
+        <img v-else-if="detail.album" :src="detail.video_cover?detail.video_cover:detail.album[0].file_path" />
         <div class="status" :style="checkStatus(detail,'background')">
             <span class="state" v-text="checkStatus(detail,'text')"></span>
             <van-count-down :time="detail.start_time>0?detail.start_time*1000:detail.end_time*1000">

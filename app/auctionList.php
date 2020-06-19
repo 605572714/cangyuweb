@@ -119,7 +119,7 @@ $signPackage = $jssdk->GetSignPackage();
         methods: {
             getDetail() {
                 var that = this;
-                axios.get(`${CYHOST}/icyApi/AuctionIndex?id=${square_id}`).then(res => {
+                axios.get(`${CYHOST}/icyApi/AuctionIndex?sale_list=${square_id}`).then(res => {
                     // console.log(res.data.data);
                     that.header = res.data.data.header;
                     that.list = res.data.data.list

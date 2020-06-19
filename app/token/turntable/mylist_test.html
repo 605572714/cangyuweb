@@ -102,7 +102,7 @@
             getList() {
                 var that = this;
                 if (that.loadFinish == true) return;
-                axios.get(`${CYHOST}/icyApi/lotteryList?token=${token}&page=${this.page}`)
+                axios.get(`${CYHOST_TEST}/icyApi/lotteryList?token=${token}&page=${this.page}`)
                     .then(res => {
                         that.list = that.list.concat(res.data.data.list);
                         that.total = res.data.data.total;

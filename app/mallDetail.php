@@ -21,10 +21,12 @@ $signPackage = $jssdk->GetSignPackage();
 <body>
 	<div ref="vue" id="vue" class="vue">
 		<template v-if="detail.video_url">
-			<video class="video" :src="detail.video_url" :poster="detail.video_cover" controls></video>
+			<video class="video" :poster="detail.video_cover?detail.video_cover:detail.headlines" controls>
+				<source :src="detail.video_url">
+			</video>
 		</template>
 		<template v-else>
-			<img class="video" :src="detail.headlines" mode="aspectFill"></img>
+			<img class="video" :src="detail.headlines" mode="aspectFill">
 		</template>
 		<div class="top" ref="top">
 			<div class="title">{{ detail.title }}</div>

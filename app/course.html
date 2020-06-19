@@ -18,8 +18,9 @@
         <!-- 头部视频播放位和图片展示位 -->
         <div class="video">
             <!-- 播放器 -->
-            <video ref="video" :src="detail.video_url" v-show="video" controls @ended='playEnd' @error='playErr'
-                @canplay='videoLoad'></video>
+            <video ref="video" v-show="video" controls @ended='playEnd' @error='playErr' @canplay='videoLoad'>
+                <source :src="detail.video_url">
+            </video>
             <!-- 介绍视频可以播放并且没有播放时展示 -->
             <img class="play-icon" src="img/play.png" v-if="canPlay&&!playing" @click='goPlay(index)'>
             <!-- 占位图 -->

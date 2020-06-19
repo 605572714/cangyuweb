@@ -22,7 +22,9 @@ $signPackage = $jssdk->GetSignPackage();
 
 <body>
     <div ref="vue" id="vue" class="vue">
-        <video v-if="detail.video_url&&detail.video_url!=0" :src="detail.video_url" controls></video>
+        <video v-if="detail.video_url&&detail.video_url!=0" controls>
+            <source :src="detail.video_url">
+        </video>
         <img v-else :src="detail.video_cover" />
         <div class="status" :style="checkStatus(detail,'background')">
             <span class="state" v-text="checkStatus(detail,'text')"></span>

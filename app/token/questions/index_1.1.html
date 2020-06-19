@@ -485,16 +485,14 @@
 
     mounted() {
       console.log(this.maxDate);
-      axios.get(`${CYHOST_TEST}/icyApi/questionnaireHome?token=${token}`).then(res => {
+      axios.get(`${CYHOST}/icyApi/questionnaireHome?token=${token}`).then(res => {
         console.log(res.data.data.list);
         if (res.data.data.list != 0) {
           this.$dialog.alert({
             title: '注意事项',
             confirmButtonColor: '#bc2e2e',
             message: '尊敬的用户您好，本次问卷调查是针对会员的，非会员填写提交无效哦~',
-          }).then(() => {
-
-          });
+          })
         }
       })
 

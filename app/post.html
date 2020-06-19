@@ -31,7 +31,9 @@
             <div class="content" v-text="detail.content"></div>
             <!-- 图片 -->
             <div class="video" v-if="detail.video_url">
-                <video class="video" :src="detail.video_url" controls></video>
+                <video class="video" :poster="checkImg(detail.album[0].file_path,'img')" autoplay controls>
+                    <source :src="detail.video_url">
+                </video>
             </div>
             <div class="my-gallery album" data-pswp-uid="1" v-else>
                 <figure v-for="item,index in detail.album">

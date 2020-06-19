@@ -13,7 +13,7 @@ function nes(father, children1, children2, length) {
     list1.style.top = width / 375 * 26 * length + "px";
     list1.style.position = "absolute";
     //插入文档流
-    vip.appendChild(list1);
+    // vip.appendChild(list1);
     //把第一个列表的结构内容复制给第二个
     // list1.innerHTML = list.innerHTML;
     //第一个列表
@@ -32,6 +32,7 @@ function nes(father, children1, children2, length) {
     //第二个列表与第一个列表操作一样，只是修改了高度
     function c() {
         list1.style.top = parseInt(list1.style.top) - (width / 375 * 12) + "px";
+
         if (parseInt(list1.style.top) < 0) {
             list1.style.top = width / 375 * 26 * length + "px";
         }

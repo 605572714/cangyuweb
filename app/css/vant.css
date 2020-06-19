@@ -3762,7 +3762,7 @@ textarea {
     display: flex;
     -webkit-box-align: center;
     -webkit-align-items: center;
-    align-items: center;
+    align-items: flex-start;
     overflow: hidden;
     -webkit-user-select: none;
     user-select: none
@@ -3981,7 +3981,7 @@ textarea {
     display: flex;
     -webkit-box-align: center;
     -webkit-align-items: center;
-    align-items: center;
+    align-items: flex-start;
     overflow: hidden;
     -webkit-user-select: none;
     user-select: none

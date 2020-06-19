@@ -151,8 +151,8 @@
 			</div>
 		</div>
 		<img class="bg-bottom" src="img/back_bottom.png">
-		<van-overlay :show="price01" z-index="4">
-			<div class="alert">
+		<van-overlay :show="price01">
+			<div class="alert" v-if="price01">
 				<img class="alert-bg" src="img/price01.png" alt="">
 				<div class="h1" v-text="'恭喜你抽中了一等奖'"></div>
 				<div class="h2" v-text="'“神密大奖一份”'"></div>
@@ -365,7 +365,7 @@
 				var father = that.$refs.vip;
 				var children1 = that.$refs.list;
 				var children2 = that.$refs.list1;
-				axios.get(`${CYHOST}/icyApi/lotteryHome?token=${token}`).then(
+				axios.get(`${CYHOST_TEST}/icyApi/lotteryHome?token=${token}`).then(
 					res => {
 						console.log(res);
 						this.integral = res.data.data.list.integral;
@@ -397,7 +397,7 @@
 			getLottery() {
 				var that = this;
 				// axios.get(`${CYHOST}/icyApi/bargain/proDetail?id=${phase}`).then(res => {
-				axios.get(`${CYHOST}/icyApi/lottery?phase=${this.phase}&token=${this.token}`).then(res => {
+				axios.get(`${CYHOST_TEST}/icyApi/lottery?phase=${this.phase}&token=${this.token}`).then(res => {
 					console.log(res.data);
 					if (res.data.info == '积分不足') {
 						this.notenough = true
@@ -406,7 +406,7 @@
 					} else if (res.data.info == "仅限会员可抽奖!") {
 						this.novip = true
 					} else {
-						axios.get(`${CYHOST}/icyApi/lotteryHome?token=${token}`).then(
+						axios.get(`${CYHOST_TEST}/icyApi/lotteryHome?token=${token}`).then(
 							res => {
 								this.integral = res.data.data.list.integral;
 								if (res.data.data.list.lotteryList[0] != undefined) {
@@ -448,7 +448,7 @@
 						return '一个月会员';
 						break;
 					case 5:
-						return '《藏玉观察》一本';
+						return '《藏于观察》一本';
 						break;
 				}
 			},
@@ -495,8 +495,6 @@
 		beforeDestroyde() {
 			clearInterval(this.timer)
 		}
-
-
 	});
 </script>
 
