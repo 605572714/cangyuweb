@@ -1,0 +1,361 @@
+/* 375px = 100vw;
+336px = 89.6vw;
+290px = 77.33vw;
+250px = 66.67vw;
+210px = 56vw;
+113px = 30.13vw;
+77px = 20.53vw;
+50px = 13.33vw;
+40px = 10.67vw;
+33px = 8.8vw;
+30px = 8vw;
+28px = 7.47vw;
+22.5px = 6vw;
+20px = 5.33vw;
+18px = 4.8vw;
+16px = 4.27vw;
+15px = 4vw;
+14px = 3.7vw;
+13px = 3.45vw;
+12px = 3.2vw;
+10px = 2.7vw;
+9px = 2.4vw;
+5px = 1.33vw;
+4px = 1.07vw;
+3px = 0.8vw;
+*/
+
+body {
+    background-color: #F36F4A;
+    margin: 0;
+    padding: 0;
+    vertical-align: middle;
+}
+
+#vue {
+    display: none;
+}
+
+.pageBack {
+    width: 100%;
+    height: auto;
+    vertical-align: middle;
+}
+
+.integral {
+    width: 53.6vw;
+    height: 9.6vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #FF7862;
+    border-radius: 5.33vw;
+    border: 0.27vw solid #F2B422;
+    color: #fff;
+    margin-top: -13.33vw;
+    margin-left: 50%;
+    transform: translate(-50%);
+    position: absolute;
+}
+
+#container {
+    position: relative;
+    display: block;
+    width: 90.67vw;
+    height: 81.07vw;
+    position: relative;
+    background: #FF7862;
+    box-shadow: 0vw 0vw 1.07vw 0vw rgba(188, 46, 46, 0.3);
+    border-radius: 2.13vw;
+    margin-left: 4vw;
+    padding: 0.8vw;
+}
+
+#list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    position: absolute;
+    width: 84.27vw;
+    height: auto;
+    padding-bottom: 1.07vw;
+    background: #BC2E2E;
+    border-radius: 2.13vw;
+    margin-top: 2.8vw;
+    margin-left: 2.7vw;
+}
+
+#list li,
+#list span {
+    padding: 0;
+    margin: 0;
+    float: left;
+    width: 26.67vw;
+    height: 23.47vw;
+    background-color: #F8D0C3;
+    border-radius: 2.13vw;
+    overflow: hidden;
+    margin-top: 1.07vw;
+    margin-left: 1.07vw;
+}
+
+#list span {
+    background: #EB9F39;
+}
+
+
+#list li .bgc,
+#list span .bgc {
+    width: 26.67vw;
+    height: 21.34vw;
+    text-align: center;
+    border-radius: 2.13vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#list li .bgc {
+    background: #FDF2EF;
+}
+
+#list span .bgc {
+    background: #FAD549;
+    background: url(../img/back.png);
+    font-family: HYk1gj;
+    color: #F25432;
+    font-size: 5.33vw;
+}
+
+#list span .bgc div {
+    width: 20.27vw;
+    text-align: center;
+    height: 4.53vw;
+    line-height: 4.53vw;
+    background: #F5BC41;
+    border-radius: 2.13vw;
+    font-size: 2.67vw;
+    font-family: PingFangSC-Medium,
+        PingFang SC;
+    font-weight: 500;
+    color: #BC2E2E;
+    margin-top: 2.13vw;
+}
+
+#list li .bgc img {
+    width: 11.47vw;
+    height: 8vw;
+    margin-bottom: 2.67vw;
+}
+
+#list li .bgc div {
+    font-size: 3.2vw;
+    font-family: PingFangSC-Medium,
+        PingFang SC;
+    color: #A04E38;
+}
+
+#list li .mask {
+    width: 26.67vw;
+    height: 23.47vw;
+    position: absolute;
+    margin-left: 0vw;
+    margin-top: 0vw;
+    border-radius: 2.13vw;
+    background: #000;
+    opacity: 0.4;
+    display: none;
+}
+
+#list .active .mask {
+    display: block;
+}
+
+#message {
+    position: absolute;
+    text-align: center;
+    width: 72.27vw;
+    height: 49.33vw;
+    border-radius: 1.87vw;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+}
+
+#message img {
+    position: absolute;
+    width: 72.27vw;
+    height: 49.33vw;
+    top: 0;
+    left: 0;
+}
+
+#message .title,
+#message .content {
+    position: relative;
+    color: #745C45;
+    font-size: 5.07vw;
+    line-height: 6.93vw;
+}
+
+#message .title {
+    margin-top: 10.93vw;
+}
+
+#message .content {
+    margin-top: 0.53vw;
+}
+
+#message .short {
+    font-size: 3.47vw;
+}
+
+#message .button {
+    position: relative;
+    margin-top: 5.6vw;
+    width: 44vw;
+    text-align: center;
+    height: 9.07vw;
+    line-height: 9.07vw;
+    border-radius: 4.53vw;
+    border: 0.27vw solid #D87250;
+    color: #D87250;
+    font-size: 3.47vw;
+    margin-left: 50%;
+    transform: translate(-50%);
+}
+
+.square {
+    width: 89.6vw;
+    height: 80vw;
+}
+
+.column {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+
+.row .color01,
+.column-active .row .color02 {
+    background: linear-gradient(180deg, #EEEEEE 0%, #FADF5F 100%);
+    box-shadow: 0vw 0.53vw 0.8vw 0vw rgba(188, 46, 46, 0.48);
+}
+
+.row .color02,
+.column-active .row .color01 {
+    background: linear-gradient(360deg, #DC4E24 0%, #F19B7F 100%);
+    box-shadow: 0vw 0.53vw 0.8vw 0vw rgba(188, 46, 46, 0.75);
+}
+
+.cricle {
+    border-radius: 50%;
+    width: 2.4vw;
+    height: 2.4vw;
+}
+
+.myRecord {
+    width: 100%;
+    text-align: center;
+    margin-top: 3.47vw;
+    font-size: 3.73vw;
+    color: #FFEBCA;
+}
+
+.winning-list {
+    width: 92vw;
+    height: 50.67vw;
+    background: #FFF3E5;
+    box-shadow: 0vw 0vw 1.07vw 0vw #C5AF81;
+    border-radius: 2.13vw;
+    margin: 5.33vw auto;
+    text-align: center;
+    padding-top: 6.67vw;
+
+}
+
+.winning-list .title {
+    font-size: 4.8vw;
+    margin-bottom: 4vw;
+}
+
+#marquee {
+    overflow: hidden;
+    height: 35.2vw;
+    width: 100%;
+    position: relative;
+}
+
+#marquee li {
+    text-align: left;
+    padding-left: 4vw;
+    font-size: 3.73vw;
+    color: #666;
+    width: 80vw;
+    margin-bottom: 2.67vw;
+}
+
+.price-list {
+    padding: 0;
+    width: 92vw;
+    background: #FFF3E5;
+    box-shadow: 0vw 0vw 1.07vw 0vw #C5AF81;
+    border-radius: 2.13vw;
+    margin-left: 4vw;
+    padding: 6.67vw 0vw;
+    overflow: hidden;
+}
+
+/* ul {
+    padding: 0;
+} */
+
+.price-list .title {
+    width: 100%;
+    text-align: center;
+    font-size: 4.8vw;
+    margin-bottom: 4vw;
+}
+
+.price-list li {
+    padding-left: 8vw;
+    text-indent: -4vw;
+    font-size: 3.73vw;
+    line-height: 5.33vw;
+    width: 80vw;
+    color: #666;
+    margin-bottom: 1.6vw;
+}
+
+.rule {
+    width: 84vw;
+    background: #FFF3E5;
+    box-shadow: 0vw 0vw 1.07vw 0vw #C5AF81;
+    border-radius: 2.13vw;
+    margin: 4.8vw 4vw 17.33vw 4vw;
+    padding: 7.2vw 4vw;
+    font-size: 3.73vw;
+    color: #666;
+}
+
+.rule .title {
+    width: 100%;
+    text-align: center;
+    color: #333;
+    font-size: 4.8vw;
+    margin-bottom: 4vw;
+}
+
+.rule .content {
+    line-height: 5.33vw;
+}

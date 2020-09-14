@@ -42,11 +42,11 @@
        cangyuxyidong/appraisal.php?item_id
        icangyu.jade.activities.community.IdentifyDetailsActivity
        KCAppraiseMessVC
-严选列表
+众选列表
        cangyuxyidong/selectList.php?id
        icangyu.jade.activities.select.SelectSessionActivity
        KCStrictListVC
-严选详情
+众选详情
        cangyuxyidong/select.php?item_id
        icangyu.jade.activities.select.SelectDetailsActiity
        KCStrictMessVC

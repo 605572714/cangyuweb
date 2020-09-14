@@ -10,7 +10,7 @@ $signPackage = $jssdk->GetSignPackage();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>藏玉严选</title>
+    <title>藏玉众选</title>
     <link rel="stylesheet" href="css/my-app.css">
     <link rel="stylesheet" href="css/vant.css">
     <link rel="stylesheet" href="css/pickupList.css">
@@ -40,7 +40,7 @@ $signPackage = $jssdk->GetSignPackage();
     <div ref=vue id="vue" class="vue">
         <div class="header-title" v-text="`${header.title}·${header.total}件商品`"></div>
         <div class="rule">
-            <span v-text="'点击查看严选规则'" @click="ruleDetail"></span>
+            <span v-text="'点击查看众选规则'" @click="ruleDetail"></span>
         </div>
         <div class="list">
             <div class="item" v-for="item,index in list" @click="spickDetail(item.id)">

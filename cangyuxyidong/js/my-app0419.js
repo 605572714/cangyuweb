@@ -4,34 +4,34 @@ var yanXuanVue = new Vue({
         YanXuanList: []
     },
 
-    mounted: function(){
+    mounted: function () {
         this.load(1);
     },
 
     methods: {
-        load: function(pageIndex, cb, isReset){
+        load: function (pageIndex, cb, isReset) {
             this.$http.get(`${CYHOST}/icy/product_list?page=${pageIndex}`)
-                .then(function(response){
+                .then(function (response) {
                     // console.log(response);
 
-                    if(!response.body.data) return;
-                    if(isReset){
+                    if (!response.body.data) return;
+                    if (isReset) {
                         this.$data.YanXuanList = [];
                     }
-                    for(let item of response.body.data.list){
-                        this.$data.YanXuanList.push(item);    
+                    for (let item of response.body.data.list) {
+                        this.$data.YanXuanList.push(item);
                     }
 
                     cb && cb();
 
-                    setTimeout(function() {
+                    setTimeout(function () {
                         var mySwiper3 = myApp.swiper('.swiper-3', {
                             pagination: '.swiper-3 .swiper-pagination',
                             preloadImages: false,
                             lazyLoading: true,
                             spaceBetween: 60,
-                            observer: true,//修改swiper自己或子元素时，自动初始化swiper
-                            observeParents: true,//修改swiper的父元素时，自动初始化swiper
+                            observer: true, //修改swiper自己或子元素时，自动初始化swiper
+                            observeParents: true, //修改swiper的父元素时，自动初始化swiper
                             autoplay: 1500,
                             autoplayDisableOnInteraction: false,
                             touchRatio: 1
@@ -47,18 +47,18 @@ var homeLunBoVue = new Vue({
     data: {
         LunBoList: []
     },
-    mounted: function(){
+    mounted: function () {
         this.load();
     },
     methods: {
-        load: function(){
+        load: function () {
             this.$http.get(`${CYHOST}/icy/carousel_recommend`)
-                .then(function(response){
+                .then(function (response) {
                     // console.log(response);
 
-                    if(!response.body.data) return;
-                    for(let item of response.body.data){
-                        this.$data.LunBoList.push(item);    
+                    if (!response.body.data) return;
+                    for (let item of response.body.data) {
+                        this.$data.LunBoList.push(item);
                     }
 
                     var mySwiper1 = myApp.swiper('.icangyu-yyzg-gudong', {
@@ -66,14 +66,14 @@ var homeLunBoVue = new Vue({
                         preloadImages: false,
                         lazyLoading: true,
                         spaceBetween: 60,
-                        observer: true,//修改swiper自己或子元素时，自动初始化swiper
-                        observeParents: true,//修改swiper的父元素时，自动初始化swiper
+                        observer: true, //修改swiper自己或子元素时，自动初始化swiper
+                        observeParents: true, //修改swiper的父元素时，自动初始化swiper
                         autoplay: 5000,
                         autoplayDisableOnInteraction: false
                     });
-                });            
+                });
         },
-        goTopic: function(item){
+        goTopic: function (item) {
             window.location.href = `zhuanti——xiangqing.html?type=4&item_id=${item.id}`;
         }
     }
@@ -119,8 +119,8 @@ var mySwiper2 = myApp.swiper('.swiper-2', {
     paginationClickable: true,
     longSwipesRatio: 0.3,
     touchRatio: 1,
-    observer: true,//修改swiper自己或子元素时，自动初始化swiper
-    observeParents: true,//修改swiper的父元素时，自动初始化swiper
+    observer: true, //修改swiper自己或子元素时，自动初始化swiper
+    observeParents: true, //修改swiper的父元素时，自动初始化swiper
 });
 
 // var mySwiper3 = myApp.swiper('.swiper-3', {
@@ -144,17 +144,17 @@ var mySwiper5 = myApp.swiper('.swiper-5', {
     paginationClickable: true,
     longSwipesRatio: 0.3,
     touchRatio: 1,
-    observer: true,//修改swiper自己或子元素时，自动初始化swiper
-    observeParents: true,//修改swiper的父元素时，自动初始化swiper
+    observer: true, //修改swiper自己或子元素时，自动初始化swiper
+    observeParents: true, //修改swiper的父元素时，自动初始化swiper
 });
 
 //---------------------------------------
 yanXuanVue.$mount('#yanxuan_list');
 homeLunBoVue.$mount('#home_scroll_list');
 
-(function(){
+(function () {
     let nickname = HttpHelper.getCookie('USER_NAME');
-    $.getJSON(`${CYHOST}/icy/personal_center_top?token=${token}`, function(data){
+    $.getJSON(`${CYHOST}/icy/personal_center_top?token=${token}`, function (data) {
         // console.log(data);
         document.cookie = `USER_AVATAR=${data.data.avatar}`;
         $('#nickname').html(`${nickname}<span class="cangyu_bbs_dengji">Lv.${data.data.rating}</span>`);
@@ -164,7 +164,7 @@ homeLunBoVue.$mount('#home_scroll_list');
 })();
 
 
-// 严选详情
+// 众选详情
 $.getJSON(`${CYHOST}/icy/details_product?id=0&token=${token}`, function (data) {
     // console.log(data);
     var Odata = data.data;
@@ -181,18 +181,18 @@ $.getJSON(`${CYHOST}/icy/carousel_list?page=0`, function (data) {
 })
 
 //首页话题
-$.getJSON('https://app.icangyu.com/icy/topic_recommend',function (data) {
-    var html = template('homeTopic',data);
+$.getJSON('https://app.icangyu.com/icy/topic_recommend', function (data) {
+    var html = template('homeTopic', data);
     // console.log(data);
     $('.home-talk').html(html);
 
     var urlObj = [];
-    for(var i = 0; i < data.data.length; i ++){
+    for (var i = 0; i < data.data.length; i++) {
         var obj = {
-            content : data.data[i].content,
-            title :data.data[i].title,
-            bgurl :data.data[i].background_image_big,
-            id : data.data[i].id
+            content: data.data[i].content,
+            title: data.data[i].title,
+            bgurl: data.data[i].background_image_big,
+            id: data.data[i].id
         }
         urlObj.push(obj);
     }
@@ -242,11 +242,11 @@ $.getJSON(`${CYHOST}/icy/attention_dynamic?page=0&token=${token}`, function (dat
 })
 
 // 点赞
-function praise(square_id){
-    $.getJSON(`${CYHOST}/icy/square_praise_add?square_id=${square_id}&token=${token}`,function (data) {
-        if(data.result === 100){
+function praise(square_id) {
+    $.getJSON(`${CYHOST}/icy/square_praise_add?square_id=${square_id}&token=${token}`, function (data) {
+        if (data.result === 100) {
             myApp.alert('点赞成功。', '提示');
-        }else{
+        } else {
             myApp.alert(data.info, '提示');
         }
     })

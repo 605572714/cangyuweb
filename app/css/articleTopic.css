@@ -1,0 +1,130 @@
+ /* 375px = 100vw;
+    336px = 89.6vw;
+    325px = 86.67vw;
+    290px = 77.33vw;
+    250px = 66.67vw;
+    210px = 56vw;
+    113px = 30.13vw;
+    77px = 20.53vw;
+    50px = 13.33vw;
+    40px = 10.67vw;
+    33px = 8.8vw;
+    30px = 8vw;
+    28px = 7.47vw;
+    22.5px = 6vw;
+    20px = 5.33vw;
+    18px = 4.8vw;
+    16px = 4.27vw;
+    15px = 4vw;
+    14px = 3.7vw;
+    13px = 3.45vw;
+    12px = 3.2vw;
+    10px = 2.7vw;
+    9px = 2.4vw;
+    5px = 1.33vw;
+    4px = 1.07vw;
+    3px = 0.8vw;
+ */
+ .vue {
+     background: #f7f7f7;
+     width: 100%;
+ }
+
+ .topic-header {
+     width: 100%;
+ }
+
+ .topic {
+     width: 86.67vw;
+     padding: 6.67vw 4vw 9.33vw 4vw;
+     background: rgba(255, 255, 255, 1);
+     border-radius: 1.07vw;
+     margin-left: 2.7vw;
+     transform: translateY(-12.267vw);
+ }
+
+ .topic-title {
+     width: 100%;
+     text-align: center;
+     font-size: 7.47vw;
+     font-family: PingFangSC-Light,
+         PingFang SC;
+     font-weight: 300;
+     color: rgba(51, 51, 51, 1);
+     line-height: 10.67vw;
+ }
+
+ .topic-summary {
+     font-size: 4.27vw;
+     font-family: PingFangSC-Regular,
+         PingFang SC;
+     font-weight: 400;
+     color: rgba(102, 102, 102, 1);
+     line-height: 5.33vw;
+     margin-top: 3.45vw;
+ }
+
+ .topic-about {
+     width: 100%;
+     text-align: center;
+     font-size: 3.7vw;
+     font-family: PingFangSC-Medium,
+         PingFang SC;
+     font-weight: 500;
+     color: rgba(51, 51, 51, 1);
+     margin-top: -4vw;
+     margin-bottom: 4vw;
+ }
+
+ .topic-about::after {
+     content: '';
+     display: block;
+     width: 4em;
+     height: 2.4vw;
+     background: rgba(188, 46, 46, 0.16);
+     margin-left: 50%;
+     transform: translate(-50%, -2vw);
+
+ }
+
+ .item {
+     width: 94.67vw;
+     margin: 2.7vw 2.7vw 0vw 2.7vw;
+     background: #fff;
+     border-radius: 1.07vw;
+     padding-bottom: 4.8vw;
+ }
+
+ .item:last-child {
+     margin-bottom: 1.4vw;
+ }
+
+ .item .item-createdate {
+     height: 11.47vw;
+     line-height: 11.47vw;
+     padding-left: 1.4vw;
+     font-size: 3.2vw;
+     color: #333;
+ }
+
+ .item .item-img {
+     width: 100%;
+     height: 47.33vw;
+     vertical-align: middle;
+ }
+
+ .item .item-title {
+     font-size: 4.8vw;
+     line-height: 6.67vw;
+     padding-left: 1.4vw;
+     margin-top: 1.6vw;
+ }
+
+ .item .item-content {
+     font-size: 3.7vw;
+     line-height: 4.53vw;
+     height: 9.06vw;
+     color: #888;
+     padding: 0vw 1.4vw;
+     margin-top: 1.4vw;
+ }

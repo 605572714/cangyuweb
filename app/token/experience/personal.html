@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的抽奖记录</title>
+    <!-- <link rel="stylesheet" href="css/style.css"> -->
+    <style>
+        body {
+            background: #fff;
+            padding: 0;
+            margin: 0;
+        }
+
+
+        .list {
+            width: 92vw;
+            height: 13.33vw;
+            line-height: 14.67vw;
+            margin-left: 4vw;
+            padding-right: 4vw;
+            border-bottom: 0.13vw solid #d9d9d9;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            font-size: 3.73vw;
+        }
+
+        .left {
+            color: #333;
+        }
+
+        .right {
+            color: #888;
+        }
+
+        .finish {
+            width: 100%;
+            text-align: center;
+            margin: 2.67vw 0px;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+    <div ref="vue" id="vue" class="vue">
+        <div class="list" v-for="item in list">
+            <div class="left">获得“{{checkGarde(item.grade)}}”</div>
+            <div class="right">{{item.createdate}}</div>
+        </div>
+        <div class="finish">{{finish?'已全部加载':'加载中...'}}</div>
+    </div>
+</body>
+<script type="text/javascript" src="../../js/config.js"></script>
+<!-- vue -->
+<script type="text/javascript" src="../../js/vue.min.js"></script>
+<!-- axios -->
+<script type="text/javascript" src="../../js/axios.min.js"></script>
+<script>
+    var token = HttpHelper.getQuery('token');
+    var vue = new Vue({
+        el: '#vue',
+        data() {
+            return {
+                list: [],
+                page: 0,
+                finish: false
+            }
+        },
+        created() {
+            var that = this;
+            window.addEventListener('scroll', that.scroll, true)
+        },
+        mounted() {
+            var that = this;
+            that.recordList();
+        },
+        destroyed() {
+            var that = this;
+            window.removeEventListener('scroll', that.scroll, true)
+        },
+        methods: {
+            recordList() {
+                var that = this;
+                var data = {
+                    token: token,
+                    page: that.page
+                }
+                axios.get(`${CYHOST_TEST}/icyApi/experienceList?token=${token}&page=${that.page}`)
+                    .then(res => {
+                        console.log(res.data);
+                        var data = res.data.data;
+                        if (that.page == 0) {
+                            that.list = data.list;
+                        } else {
+                            that.list = that.list.concat(data.list);
+                        }
+                        that.page += data.list.length;
+                        if (that.list.length == data.total) {
+                            that.finish = true;
+                        }
+                    })
+            },
+            checkGarde(garde) {
+                switch (Number(garde)) {
+                    case 1:
+                        return '66元优惠券';
+                    case 2:
+                        return '20元优惠券';
+                    case 3:
+                        return '10元优惠券';
+                    case 4:
+                        return '200经验值';
+                    case 5:
+                        return '50经验值';
+                    case 6:
+                        return '谢谢惠顾';
+                }
+            },
+            scroll() {
+                var that = this;
+                var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                var windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+                var scrollHeight = document.body.scrollHeight;
+                if (scrollTop + windowHeight >= scrollHeight) { //测试浏览器有的时候相加 会出现小数点 这里用 >= 不用 ==
+                    console.log('加载更多');
+                    if (!this.timer) {
+                        this.timer = setTimeout(() => {
+                            this.timer = null;
+                            if (!that.finish) that.recordList();
+                        }, 800)
+                    }
+                } else if (scrollTop <= 0) {
+                    console.log('刷新');
+                    this.timer = setTimeout(() => {
+                        this.timer = null;
+                        that.page = 0;
+                        that.finish = false;
+                        that.recordList();
+                    }, 800)
+                }
+            }
+        },
+    })
+</script>
+
+</html>

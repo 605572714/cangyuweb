@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>经验值抽奖</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="../../css/vant.css">
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div ref="vue" id="vue">
+        <img class="pageBack" src="img/pageBack.png" alt="">
+        <div class="integral" v-text="'我的经验值：'+integral"></div>
+        <div id="container">
+            <ul id="list">
+                <li>
+                    <div class="mask"></div>
+                    <div class="bgc">
+                        <img src="img/03.png" />
+                        <div>10元通用优惠券</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="mask"></div>
+                    <div class="bgc">
+                        <img src="img/04.png" />
+                        <div>50经验值</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="mask"></div>
+                    <div class="bgc">
+                        <img src="img/02.png" />
+                        <div>20元通用优惠券</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="mask"></div>
+                    <div class="bgc">
+                        <img src="img/04.png" />
+                        <div>200经验值</div>
+                    </div>
+                </li>
+
+                <span @click="startlottery">
+                    <div class="bgc">
+                        立即抽奖
+                        <div>-100经验值</div>
+                    </div>
+                </span>
+
+                <li>
+                    <div class="mask"></div>
+                    <div class="bgc">
+                        <img src="img/01.png" />
+                        <div>66元通用优惠券</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="mask"></div>
+                    <div class="bgc">
+                        <img src="img/02.png" />
+                        <div>20元通用优惠券</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="mask"></div>
+                    <div class="bgc">
+                        <img src="img/05.png" />
+                        <div>谢谢惠顾</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="mask"></div>
+                    <div class="bgc">
+                        <img src="img/03.png" />
+                        <div>10元通用优惠券</div>
+                    </div>
+
+                </li>
+            </ul>
+            <div class="square">
+                <div id="column" class="column column-active">
+                    <div class="row" v-for="i in 8">
+                        <div id="cricle" :class="(i+j)%2==0?'cricle color01':'cricle color02'" v-for="j in 9 "></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="myRecord" @click="goMyList">
+            查看我的抽奖记录 >
+        </div>
+        <div class="winning-list">
+            <div class="title">中奖名单</div>
+            <div id="marquee">
+                <div id="marquee1">
+                    <li v-for="item in lotteryList">{{item.nickname}}获得了{{checkGarde(item.grade)}}</li>
+                </div>
+                <div id="marquee2"></div>
+            </div>
+        </div>
+        <div class="price-list">
+            <div class="title">奖品一览</div>
+            <li>66元通用优惠券一张，适用范围：藏玉直播、拍卖、首发、众选、秒杀、商城（普通商品），单个商品单个订单满1500元即可使用，有效期为自系统发放后30天。
+            </li>
+            <li>20元通用优惠券一张，适用范围：藏玉直播、拍卖、首发、众选、秒杀、商城（普通商品），无使用门槛，单个商品单个订单即可使用，有效期为自系统发放后30天。，单个商品单个订单，满足使用门槛即可使用；
+            </li>
+            <li>10元通用优惠券一张，适用范围：藏玉直播、拍卖、首发、众选、秒杀、商城（普通商品），无使用门槛，单个商品单个订单即可使用，有效期为自系统发放后30天。
+            </li>
+            <li>200经验值，中奖后可获得200经验值</li>
+            <li>50经验值，中奖后可获得50经验值</li>
+            <li>谢谢参与</li>
+        </div>
+        <div class="rule">
+            <div class="title">规则说明</div>
+            <div class="content">经验值抽奖每一期活动开放时间不限，每抽一次消耗100经验值（开始抽奖时系统自动扣除），每位用户均可参与抽奖且抽奖次数不限，有可用经验值可多次抽取。</div>
+        </div>
+        <!-- 获奖信息展示 -->
+        <van-overlay :show="show" @click="close">
+            <div id="message" @click.stop>
+                <img src="img/alert.png" alt="">
+                <div class="title">{{alert.title}}</div>
+                <div id="alertContent" class="content">{{alert.content}}</div>
+                <div class="button" @click="close">确定</div>
+            </div>
+        </van-overlay>
+
+    </div>
+</body>
+<!-- 公共文件 -->
+<script type="text/javascript" src="../../js/config.js"></script>
+<!-- vue -->
+<script type="text/javascript" src="../../js/vue.min.js"></script>
+<!-- axios -->
+<script type="text/javascript" src="../../js/axios.min.js"></script>
+<!-- vant -->
+<script type="text/javascript" src="../../js/vant.js"></script>
+<script type="text/javascript">
+    // var token = HttpHelper.getQuery('token');
+    var token = 'e6m8bf96ok421778'
+    // var token = '4e2ut3su0a2o41516'
+    var vue = new Vue({
+        el: '#vue',
+        data() {
+            return {
+                bReady: true, //定义一个抽奖开关
+                integral: 0,
+                lotteryList: [],
+                alert: {
+                    title: '',
+                    content: ''
+                },
+                show: false
+            }
+        },
+        mounted() {
+            var that = this;
+            that.experienceHome();
+        },
+        methods: {
+            // 页面初始化
+            experienceHome() {
+                var that = this;
+                axios.get(`${CYHOST_TEST}/icyApi/experienceHome?token=${token}`)
+                    .then(res => {
+                        if (res.data.result == 201) {
+                            that.$dialog({
+                                message: '请先登录，再进行抽奖',
+                            }).then(() => { //点击确认按钮后的调用
+                                console.log("点击了确认按钮噢")
+                                self.location = document.referrer
+                            })
+                        }
+                        var list = res.data.data.list;
+                        that.integral = list.integral; // 积分
+                        that.lotteryList = list.lotteryList // 中奖记录
+                        that.speed(); // 中奖信息滚动
+                        that.$refs.vue.style.display = "block"; // 页面显示
+                    })
+            },
+
+            startlottery() {
+                var that = this;
+                // 积分不足
+                if (that.integral < 100) {
+                    that.alert.title = '剩余经验值不满足抽奖条件！';
+                    that.alert.content = '“可通过签到、发帖等获得经验值哦～”';
+                    alertContent.className = "content short";
+                    that.show = true;
+                    return;
+                };
+                // 开始抽奖
+                axios.get(`${CYHOST_TEST}/icyApi/experienceLottery?token=${token}`)
+                    .then(res => {
+                        var grade = res.data.data.list.grade;
+                        if (!grade) return;
+                        that.integral -= 100; // 扣除积分
+                        if (that.bReady) { //当抽奖开关为true的时候，可点击抽奖
+                            that.bReady = false; //抽奖开关设为false 处于抽奖中 即不能点击抽奖
+                            switch (Number(grade)) { // 获取奖项信息
+                                case 1:
+                                    startinit(5);
+                                    break;
+                                case 2:
+                                    var num = getrandomnum(1, 9) // 得到一个随机数（即奖品位置）
+                                    if (num <= 4) {
+                                        startinit(3);
+                                    } else {
+                                        startinit(6);
+                                    }
+                                    break;
+                                case 3:
+                                    var num = getrandomnum(1, 9) // 得到一个随机数（即奖品位置）
+                                    if (num <= 4) {
+                                        startinit(1);
+                                    } else {
+                                        startinit(8);
+                                    }
+                                    break;
+                                case 4:
+                                    startinit(4);
+                                    break;
+                                case 5:
+                                    startinit(2);
+                                    break;
+                                case 6:
+                                    startinit(7);
+                                    break;
+                            }
+
+                        }
+                    })
+            },
+            // 根据奖项返回文字
+            checkGarde(garde) {
+                switch (Number(garde)) {
+                    case 1:
+                        return '66元优惠券';
+                    case 2:
+                        return '20元优惠券';
+                    case 3:
+                        return '10元优惠券';
+                    case 4:
+                        return '200经验值';
+                    case 5:
+                        return '50经验值';
+                    case 6:
+                        return '谢谢惠顾';
+                }
+            },
+            // 跳转我的中奖记录
+            goMyList() {
+                window.location.href = `personal.html?token=${token}`;
+            },
+            // 中奖列表滚动
+            speed() {
+                var speed = 40; // 滚动距离
+                var time = 100; // 滚动速度
+                // 向上滚动
+                setTimeout(() => {
+                    // 将列表复制一份，接在列表末尾
+                    marquee2.innerHTML = marquee1.innerHTML;
+                    // 执行滚动
+                    function Marquee() {
+                        if (marquee.scrollTop >= marquee1.offsetHeight) {
+                            marquee.scrollTop = 0;
+                        } else {
+                            marquee.scrollTop = marquee.scrollTop + 1;
+                        }
+                    }
+                    setInterval(Marquee, speed)
+                }, time);
+
+            },
+            // 关闭弹框
+            close() {
+                var that = this;
+                for (var j = 0; j < li.length; j++) {
+                    li[j].className = '';
+                }
+                that.show = false;
+                that.alert.title = '';
+                that.alert.content = '';
+                alertContent.className = "content";
+            }
+        },
+    })
+</script>
+
+<script src="js/index.js" charset="utf-8"></script>
+
+</html>

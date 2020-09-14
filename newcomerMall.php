@@ -192,17 +192,13 @@ $signPackage = $jssdk->GetSignPackage();
                     listHTML +=
                         '<div class="detailItem">' +
                         '<a  onclick="godetail(' + list[i].id +
-                        ')" href="javescrip:void(0);"  target="_self" rel="nofollow" id="btnOpenApp">' +
+                        ')" href="javescrip:void(0);" target="_self" rel="nofollow" id="btnOpenApp">' +
                         '<img src = "' + list[i].headlines + ' ">' +
-                        '<div class = "content" >  <div class = "title" id = "title">' + list[i].title +
+                        '<div class = "content" > <div class = "title" id = "title">' + list[i].title +
                         '</div> <div class = "price" >￥' + list[i].price + '<span>' + '￥' + list[i].old_price +
-                        '</span>' +
-                        '</div>' +
-                        '<div class="progress" ><p id="progress" style="width:' + progress[i] + 'px"><span >' +
-                        '仅剩' + list[i].nums + '件' +
-                        '</span>' + '</p></div>' +
-                        '<div  class="goBuy">立即购买</div>' +
-                        '</div >' + '</a>' + '</div>';
+                        '</span>' + '</div>' + '<div class="progress" ><p id="progress" style="width:' + progress[i] +
+                        'px"><span >' + '仅剩' + list[i].nums + '件' + '</span>' + '</p></div>' +
+                        '<div  class="goBuy">立即购买</div>' + '</div >' + '</a>' + '</div>';
                 }
                 $('#listDetail').html(listHTML)
                 window.share_config = {
@@ -250,33 +246,6 @@ $signPackage = $jssdk->GetSignPackage();
             }
         }
     </script>
-    <!-- Bottom Tabbar-->
-    <!-- <div class="cangyu_bbs_tabber">
-        <a href="javascript:void(0)" class="close"></a>
-        <a id="btnOpenApp">
-            <div class="logo"></div>
-            <div class="banner-label">
-                <p class="tb" data-node="appName">下载APP</p>
-                <p class="title-sub">了解最新业内资讯</p>
-            </div>
-            <div class="open">立即打开</div>
-        </a>
-    </div>
-    <script>
-        $("#btnOpenApp").click(function () {
-            var square_id = '';
-            var configs = [{
-                jmlink: 'https://a0ipue.jmlk.co/AA09',
-                button: document.querySelector('a#btnOpenApp'),
-                params: {
-                    'shareID': square_id,
-                    'shareIOS': 'KCNoviceShopVC',
-                    'shareAndroid': 'icangyu.jade.activities.seckill.NoviceDetailsActivity'
-                }
-            }];
-            new JMLink(configs);
-        });
-    </script> -->
 </body>
 
 </html>

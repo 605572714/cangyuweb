@@ -86,10 +86,10 @@ $signPackage = $jssdk->GetSignPackage();
                     console.log(that.detail);
                     window.share_config = {
                         "share": {
-                            "imgUrl": "http://www.icangyu.com/cangyuxyidong/img/icon.png",
+                            "imgUrl": that.detail.pic_url,
                             //分享图，默认当相对路径处理，所以使用绝对路径的的话，“http://”协议前缀必须在。
                             "desc": that.detail.content, //摘要,如果分享到朋友圈的话，不显示摘要。
-                            "title": '鉴定详情', //分享卡片标题
+                            "title": that.detail.title, //分享卡片标题
                             "link": window.location.href, //分享出去后的链接，这里可以将链接设置为另一个页面。
                             "success": function() { //分享成功后的回调函数
                             },
@@ -116,7 +116,7 @@ $signPackage = $jssdk->GetSignPackage();
                     button: document.querySelector('a#btnOpenApp'),
                     params: {
                         'shareID': square_id,
-                        'shareIOS': 'KCTopicMessVC',
+                        'shareIOS': 'KCArticleDetailVC',
                         'shareAndroid': 'icangyu.jade.activities.articles.ArticleActivity'
                     }
                 }];
